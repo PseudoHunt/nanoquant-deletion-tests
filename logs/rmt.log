@@ -1,0 +1,143 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Rank calculation: Bits = (1.00), Scales: 2
+0.self_attn.q_proj     2048x2048 r= 992 sigma=0.01695 edge=1.534 smax=31.358 k_RMT= 414 16k= 6624 E_top=0.8598  [1s]
+0.self_attn.v_proj     512x2048 r= 384 sigma=0.00791 edge=0.537 smax=1.050 k_RMT=  93 16k= 1488 E_top=0.4686  [1s]
+0.self_attn.o_proj     2048x2048 r= 992 sigma=0.00656 edge=0.593 smax=3.294 k_RMT= 465 16k= 7440 E_top=0.7985  [1s]
+0.self_attn.k_proj     512x2048 r= 384 sigma=0.02825 edge=1.917 smax=16.442 k_RMT= 151 16k= 2416 E_top=0.8299  [2s]
+0.mlp.gate_proj        8192x2048 r=1600 sigma=0.01856 edge=2.520 smax=7.353 k_RMT=  86 16k= 1376 E_top=0.1638  [3s]
+0.mlp.up_proj          8192x2048 r=1600 sigma=0.01708 edge=2.319 smax=5.239 k_RMT=  50 16k=  800 E_top=0.0805  [4s]
+0.mlp.down_proj        2048x8192 r=1600 sigma=0.01716 edge=2.330 smax=4.973 k_RMT=  45 16k=  720 E_top=0.0787  [10s]
+1.self_attn.q_proj     2048x2048 r= 992 sigma=0.01778 edge=1.609 smax=13.033 k_RMT= 364 16k= 5824 E_top=0.7186  [10s]
+1.self_attn.v_proj     512x2048 r= 384 sigma=0.00945 edge=0.641 smax=0.929 k_RMT=  25 16k=  400 E_top=0.1379  [11s]
+1.self_attn.o_proj     2048x2048 r= 992 sigma=0.00946 edge=0.857 smax=3.422 k_RMT= 263 16k= 4208 E_top=0.5393  [11s]
+1.self_attn.k_proj     512x2048 r= 384 sigma=0.03133 edge=2.127 smax=8.676 k_RMT= 127 16k= 2032 E_top=0.6530  [11s]
+1.mlp.gate_proj        8192x2048 r=1600 sigma=0.01943 edge=2.638 smax=10.329 k_RMT=  99 16k= 1584 E_top=0.1676  [12s]
+1.mlp.up_proj          8192x2048 r=1600 sigma=0.01718 edge=2.333 smax=7.030 k_RMT=  27 16k=  432 E_top=0.0450  [13s]
+1.mlp.down_proj        2048x8192 r=1600 sigma=0.01689 edge=2.293 smax=4.842 k_RMT=  57 16k=  912 E_top=0.0897  [20s]
+2.self_attn.q_proj     2048x2048 r= 992 sigma=0.01837 edge=1.662 smax=10.910 k_RMT= 334 16k= 5344 E_top=0.6743  [20s]
+2.self_attn.v_proj     512x2048 r= 384 sigma=0.01122 edge=0.761 smax=1.039 k_RMT=  31 16k=  496 E_top=0.1691  [20s]
+2.self_attn.o_proj     2048x2048 r= 992 sigma=0.01003 edge=0.908 smax=3.022 k_RMT= 225 16k= 3600 E_top=0.4848  [21s]
+2.self_attn.k_proj     512x2048 r= 384 sigma=0.03183 edge=2.161 smax=7.082 k_RMT= 105 16k= 1680 E_top=0.5435  [21s]
+2.mlp.gate_proj        8192x2048 r=1600 sigma=0.02007 edge=2.725 smax=11.133 k_RMT=  84 16k= 1344 E_top=0.1489  [22s]
+2.mlp.up_proj          8192x2048 r=1600 sigma=0.01653 edge=2.245 smax=3.348 k_RMT=  17 16k=  272 E_top=0.0238  [23s]
+2.mlp.down_proj        2048x8192 r=1600 sigma=0.01604 edge=2.178 smax=5.234 k_RMT=  98 16k= 1568 E_top=0.1540  [30s]
+3.self_attn.q_proj     2048x2048 r= 992 sigma=0.01803 edge=1.632 smax=11.514 k_RMT= 322 16k= 5152 E_top=0.6778  [30s]
+3.self_attn.v_proj     512x2048 r= 384 sigma=0.01363 edge=0.925 smax=1.079 k_RMT=  10 16k=  160 E_top=0.0508  [30s]
+3.self_attn.o_proj     2048x2048 r= 992 sigma=0.01254 edge=1.135 smax=2.637 k_RMT= 155 16k= 2480 E_top=0.3447  [31s]
+3.self_attn.k_proj     512x2048 r= 384 sigma=0.02942 edge=1.997 smax=8.293 k_RMT= 112 16k= 1792 E_top=0.6026  [31s]
+3.mlp.gate_proj        8192x2048 r=1600 sigma=0.02094 edge=2.844 smax=14.547 k_RMT= 146 16k= 2336 E_top=0.2517  [32s]
+3.mlp.up_proj          8192x2048 r=1600 sigma=0.01588 edge=2.157 smax=3.780 k_RMT=  32 16k=  512 E_top=0.0460  [33s]
+3.mlp.down_proj        2048x8192 r=1600 sigma=0.01536 edge=2.085 smax=4.629 k_RMT=  95 16k= 1520 E_top=0.1485  [40s]
+4.self_attn.q_proj     2048x2048 r= 992 sigma=0.01650 edge=1.493 smax=11.328 k_RMT= 356 16k= 5696 E_top=0.7243  [40s]
+4.self_attn.v_proj     512x2048 r= 384 sigma=0.01339 edge=0.909 smax=1.068 k_RMT=   6 16k=   96 E_top=0.0325  [40s]
+4.self_attn.o_proj     2048x2048 r= 992 sigma=0.01118 edge=1.012 smax=2.502 k_RMT= 270 16k= 4320 E_top=0.5351  [41s]
+4.self_attn.k_proj     512x2048 r= 384 sigma=0.02975 edge=2.020 smax=8.229 k_RMT=  96 16k= 1536 E_top=0.5388  [41s]
+4.mlp.gate_proj        8192x2048 r=1600 sigma=0.02146 edge=2.914 smax=15.745 k_RMT= 169 16k= 2704 E_top=0.2775  [42s]
+4.mlp.up_proj          8192x2048 r=1600 sigma=0.01568 edge=2.128 smax=3.266 k_RMT=  41 16k=  656 E_top=0.0590  [43s]
+4.mlp.down_proj        2048x8192 r=1600 sigma=0.01513 edge=2.054 smax=5.138 k_RMT= 102 16k= 1632 E_top=0.1658  [49s]
+5.self_attn.q_proj     2048x2048 r= 992 sigma=0.01380 edge=1.249 smax=10.903 k_RMT= 435 16k= 6960 E_top=0.8182  [50s]
+5.self_attn.v_proj     512x2048 r= 384 sigma=0.01069 edge=0.725 smax=1.047 k_RMT=  40 16k=  640 E_top=0.2254  [50s]
+5.self_attn.o_proj     2048x2048 r= 992 sigma=0.00910 edge=0.824 smax=2.499 k_RMT= 336 16k= 5376 E_top=0.6553  [51s]
+5.self_attn.k_proj     512x2048 r= 384 sigma=0.02996 edge=2.034 smax=8.281 k_RMT= 107 16k= 1712 E_top=0.5793  [51s]
+5.mlp.gate_proj        8192x2048 r=1600 sigma=0.01995 edge=2.709 smax=14.206 k_RMT= 195 16k= 3120 E_top=0.3057  [52s]
+5.mlp.up_proj          8192x2048 r=1600 sigma=0.01570 edge=2.131 smax=3.702 k_RMT=  68 16k= 1088 E_top=0.0962  [53s]
+5.mlp.down_proj        2048x8192 r=1600 sigma=0.01490 edge=2.023 smax=6.157 k_RMT= 139 16k= 2224 E_top=0.2231  [59s]
+6.self_attn.q_proj     2048x2048 r= 992 sigma=0.01365 edge=1.236 smax=10.940 k_RMT= 402 16k= 6432 E_top=0.7923  [60s]
+6.self_attn.v_proj     512x2048 r= 384 sigma=0.01263 edge=0.857 smax=1.120 k_RMT=  28 16k=  448 E_top=0.1423  [60s]
+6.self_attn.o_proj     2048x2048 r= 992 sigma=0.01012 edge=0.916 smax=2.261 k_RMT= 308 16k= 4928 E_top=0.6033  [60s]
+6.self_attn.k_proj     512x2048 r= 384 sigma=0.02700 edge=1.833 smax=8.699 k_RMT= 128 16k= 2048 E_top=0.7140  [61s]
+6.mlp.gate_proj        8192x2048 r=1600 sigma=0.01919 edge=2.606 smax=12.658 k_RMT= 222 16k= 3552 E_top=0.3412  [61s]
+6.mlp.up_proj          8192x2048 r=1600 sigma=0.01543 edge=2.095 smax=3.429 k_RMT=  82 16k= 1312 E_top=0.1186  [62s]
+6.mlp.down_proj        2048x8192 r=1600 sigma=0.01465 edge=1.989 smax=6.865 k_RMT= 136 16k= 2176 E_top=0.2219  [68s]
+7.self_attn.q_proj     2048x2048 r= 992 sigma=0.01338 edge=1.211 smax=10.337 k_RMT= 427 16k= 6832 E_top=0.8320  [69s]
+7.self_attn.v_proj     512x2048 r= 384 sigma=0.01243 edge=0.844 smax=1.235 k_RMT=  63 16k= 1008 E_top=0.3304  [69s]
+7.self_attn.o_proj     2048x2048 r= 992 sigma=0.00914 edge=0.827 smax=2.468 k_RMT= 380 16k= 6080 E_top=0.7266  [70s]
+7.self_attn.k_proj     512x2048 r= 384 sigma=0.02904 edge=1.971 smax=7.746 k_RMT= 125 16k= 2000 E_top=0.6584  [70s]
+7.mlp.gate_proj        8192x2048 r=1600 sigma=0.01813 edge=2.461 smax=12.688 k_RMT= 263 16k= 4208 E_top=0.4007  [71s]
+7.mlp.up_proj          8192x2048 r=1600 sigma=0.01567 edge=2.128 smax=4.435 k_RMT= 105 16k= 1680 E_top=0.1558  [72s]
+7.mlp.down_proj        2048x8192 r=1600 sigma=0.01502 edge=2.039 smax=7.080 k_RMT= 130 16k= 2080 E_top=0.2131  [78s]
+8.self_attn.q_proj     2048x2048 r= 992 sigma=0.01294 edge=1.171 smax=9.520 k_RMT= 425 16k= 6800 E_top=0.8316  [78s]
+8.self_attn.v_proj     512x2048 r= 384 sigma=0.01233 edge=0.837 smax=1.040 k_RMT=  36 16k=  576 E_top=0.1837  [79s]
+8.self_attn.o_proj     2048x2048 r= 992 sigma=0.00972 edge=0.880 smax=2.406 k_RMT= 347 16k= 5552 E_top=0.6644  [79s]
+8.self_attn.k_proj     512x2048 r= 384 sigma=0.02808 edge=1.906 smax=8.211 k_RMT= 122 16k= 1952 E_top=0.6838  [79s]
+8.mlp.gate_proj        8192x2048 r=1600 sigma=0.01822 edge=2.474 smax=12.455 k_RMT= 237 16k= 3792 E_top=0.3579  [80s]
+8.mlp.up_proj          8192x2048 r=1600 sigma=0.01603 edge=2.177 smax=3.785 k_RMT=  79 16k= 1264 E_top=0.1110  [81s]
+8.mlp.down_proj        2048x8192 r=1600 sigma=0.01544 edge=2.096 smax=5.568 k_RMT=  91 16k= 1456 E_top=0.1525  [88s]
+9.self_attn.q_proj     2048x2048 r= 992 sigma=0.01501 edge=1.358 smax=12.095 k_RMT= 416 16k= 6656 E_top=0.8306  [88s]
+9.self_attn.v_proj     512x2048 r= 384 sigma=0.01431 edge=0.971 smax=1.030 k_RMT=   1 16k=   16 E_top=0.0051  [89s]
+9.self_attn.o_proj     2048x2048 r= 992 sigma=0.01112 edge=1.006 smax=2.700 k_RMT= 323 16k= 5168 E_top=0.6150  [89s]
+9.self_attn.k_proj     512x2048 r= 384 sigma=0.02764 edge=1.876 smax=8.441 k_RMT= 116 16k= 1856 E_top=0.6514  [89s]
+9.mlp.gate_proj        8192x2048 r=1600 sigma=0.01930 edge=2.620 smax=13.848 k_RMT= 227 16k= 3632 E_top=0.3434  [90s]
+9.mlp.up_proj          8192x2048 r=1600 sigma=0.01654 edge=2.246 smax=4.007 k_RMT=  71 16k= 1136 E_top=0.1009  [91s]
+9.mlp.down_proj        2048x8192 r=1600 sigma=0.01612 edge=2.188 smax=5.371 k_RMT=  62 16k=  992 E_top=0.1020  [98s]
+10.self_attn.q_proj     2048x2048 r= 992 sigma=0.01331 edge=1.204 smax=10.878 k_RMT= 436 16k= 6976 E_top=0.8429  [99s]
+10.self_attn.v_proj     512x2048 r= 384 sigma=0.01250 edge=0.848 smax=1.212 k_RMT=  13 16k=  208 E_top=0.0756  [99s]
+10.self_attn.o_proj     2048x2048 r= 992 sigma=0.00898 edge=0.813 smax=3.063 k_RMT= 389 16k= 6224 E_top=0.7346  [99s]
+10.self_attn.k_proj     512x2048 r= 384 sigma=0.02597 edge=1.763 smax=7.352 k_RMT= 121 16k= 1936 E_top=0.6658  [100s]
+10.mlp.gate_proj        8192x2048 r=1600 sigma=0.01986 edge=2.697 smax=13.338 k_RMT= 184 16k= 2944 E_top=0.2730  [101s]
+10.mlp.up_proj          8192x2048 r=1600 sigma=0.01677 edge=2.276 smax=3.718 k_RMT=  60 16k=  960 E_top=0.0835  [102s]
+10.mlp.down_proj        2048x8192 r=1600 sigma=0.01639 edge=2.225 smax=4.759 k_RMT=  61 16k=  976 E_top=0.0942  [108s]
+11.self_attn.q_proj     2048x2048 r= 992 sigma=0.01675 edge=1.516 smax=10.797 k_RMT= 337 16k= 5392 E_top=0.7220  [108s]
+11.self_attn.v_proj     512x2048 r= 384 sigma=0.01325 edge=0.899 smax=1.062 k_RMT=   8 16k=  128 E_top=0.0411  [108s]
+11.self_attn.o_proj     2048x2048 r= 992 sigma=0.01143 edge=1.035 smax=2.880 k_RMT= 282 16k= 4512 E_top=0.5391  [109s]
+11.self_attn.k_proj     512x2048 r= 384 sigma=0.02783 edge=1.889 smax=8.946 k_RMT= 106 16k= 1696 E_top=0.6385  [109s]
+11.mlp.gate_proj        8192x2048 r=1600 sigma=0.02049 edge=2.781 smax=11.617 k_RMT= 152 16k= 2432 E_top=0.2191  [110s]
+11.mlp.up_proj          8192x2048 r=1600 sigma=0.01716 edge=2.330 smax=4.057 k_RMT=  62 16k=  992 E_top=0.0843  [111s]
+11.mlp.down_proj        2048x8192 r=1600 sigma=0.01691 edge=2.295 smax=4.442 k_RMT=  52 16k=  832 E_top=0.0756  [117s]
+12.self_attn.q_proj     2048x2048 r= 992 sigma=0.01667 edge=1.509 smax=11.235 k_RMT= 339 16k= 5424 E_top=0.7237  [118s]
+12.self_attn.v_proj     512x2048 r= 384 sigma=0.01445 edge=0.981 smax=1.122 k_RMT=   7 16k=  112 E_top=0.0368  [118s]
+12.self_attn.o_proj     2048x2048 r= 992 sigma=0.01188 edge=1.075 smax=3.617 k_RMT= 255 16k= 4080 E_top=0.4969  [118s]
+12.self_attn.k_proj     512x2048 r= 384 sigma=0.02839 edge=1.927 smax=8.213 k_RMT= 107 16k= 1712 E_top=0.6071  [118s]
+12.mlp.gate_proj        8192x2048 r=1600 sigma=0.02058 edge=2.794 smax=8.514 k_RMT= 136 16k= 2176 E_top=0.1921  [119s]
+12.mlp.up_proj          8192x2048 r=1600 sigma=0.01743 edge=2.366 smax=3.820 k_RMT=  90 16k= 1440 E_top=0.1192  [121s]
+12.mlp.down_proj        2048x8192 r=1600 sigma=0.01711 edge=2.322 smax=3.944 k_RMT=  87 16k= 1392 E_top=0.1277  [127s]
+13.self_attn.q_proj     2048x2048 r= 992 sigma=0.01654 edge=1.497 smax=10.615 k_RMT= 332 16k= 5312 E_top=0.7068  [128s]
+13.self_attn.v_proj     512x2048 r= 384 sigma=0.01668 edge=1.132 smax=1.258 k_RMT=  13 16k=  208 E_top=0.0627  [128s]
+13.self_attn.o_proj     2048x2048 r= 992 sigma=0.01412 edge=1.278 smax=3.814 k_RMT= 192 16k= 3072 E_top=0.3783  [128s]
+13.self_attn.k_proj     512x2048 r= 384 sigma=0.02717 edge=1.844 smax=7.475 k_RMT=  89 16k= 1424 E_top=0.5387  [129s]
+13.mlp.gate_proj        8192x2048 r=1600 sigma=0.01991 edge=2.703 smax=8.432 k_RMT= 153 16k= 2448 E_top=0.2207  [130s]
+13.mlp.up_proj          8192x2048 r=1600 sigma=0.01778 edge=2.414 smax=4.411 k_RMT= 101 16k= 1616 E_top=0.1389  [131s]
+13.mlp.down_proj        2048x8192 r=1600 sigma=0.01756 edge=2.385 smax=3.746 k_RMT=  91 16k= 1456 E_top=0.1239  [137s]
+14.self_attn.q_proj     2048x2048 r= 992 sigma=0.01171 edge=1.060 smax=12.300 k_RMT= 452 16k= 7232 E_top=0.8800  [138s]
+14.self_attn.v_proj     512x2048 r= 384 sigma=0.01834 edge=1.245 smax=2.776 k_RMT=  90 16k= 1440 E_top=0.5623  [138s]
+14.self_attn.o_proj     2048x2048 r= 992 sigma=0.01499 edge=1.357 smax=3.968 k_RMT= 288 16k= 4608 E_top=0.5402  [138s]
+14.self_attn.k_proj     512x2048 r= 384 sigma=0.01893 edge=1.285 smax=6.991 k_RMT= 155 16k= 2480 E_top=0.8269  [139s]
+14.mlp.gate_proj        8192x2048 r=1600 sigma=0.02026 edge=2.751 smax=9.996 k_RMT= 178 16k= 2848 E_top=0.2629  [140s]
+14.mlp.up_proj          8192x2048 r=1600 sigma=0.01728 edge=2.346 smax=6.491 k_RMT= 161 16k= 2576 E_top=0.2245  [141s]
+14.mlp.down_proj        2048x8192 r=1600 sigma=0.01703 edge=2.312 smax=4.155 k_RMT= 123 16k= 1968 E_top=0.1591  [147s]
+15.self_attn.q_proj     2048x2048 r= 992 sigma=0.01203 edge=1.089 smax=12.881 k_RMT= 409 16k= 6544 E_top=0.8437  [148s]
+15.self_attn.v_proj     512x2048 r= 384 sigma=0.01941 edge=1.318 smax=2.133 k_RMT=  66 16k= 1056 E_top=0.4183  [148s]
+15.self_attn.o_proj     2048x2048 r= 992 sigma=0.01458 edge=1.319 smax=2.876 k_RMT= 271 16k= 4336 E_top=0.5345  [149s]
+15.self_attn.k_proj     512x2048 r= 384 sigma=0.02047 edge=1.389 smax=8.064 k_RMT= 138 16k= 2208 E_top=0.7569  [149s]
+15.mlp.gate_proj        8192x2048 r=1600 sigma=0.02088 edge=2.835 smax=15.294 k_RMT= 181 16k= 2896 E_top=0.2964  [150s]
+15.mlp.up_proj          8192x2048 r=1600 sigma=0.01780 edge=2.416 smax=13.873 k_RMT= 194 16k= 3104 E_top=0.3254  [151s]
+15.mlp.down_proj        2048x8192 r=1600 sigma=0.01680 edge=2.280 smax=4.235 k_RMT= 149 16k= 2384 E_top=0.1913  [157s]
+
+k_RMT: min=1 med=126 max=465 mean=168.3
+layers with k_RMT<=2: 1/112
