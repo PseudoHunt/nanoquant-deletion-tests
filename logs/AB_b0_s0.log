@@ -101,3 +101,93 @@
 [   140.68] 		(Epoch 04/08) Block Loss: 1.8170e-06
 [   142.51] 		(Epoch 05/08) Block Loss: 1.7893e-06
 [   144.34] 		(Epoch 06/08) Block Loss: 1.7769e-06
+[   146.16] 		(Epoch 07/08) Block Loss: 1.7616e-06
+[   147.99] 		(Epoch 08/08) Block Loss: 1.7573e-06
+[   148.37] 		[SBH] 0.self_attn.k_proj post = 1.788100e-02  J_post = 3.333462e-02  fro_post = 3.482589e-01
+[   150.69] 		(Epoch 01/08) Block Loss: 1.8107e-06
+[   152.84] 		(Epoch 02/08) Block Loss: 1.7195e-06
+[   154.98] 		(Epoch 03/08) Block Loss: 1.6910e-06
+[   157.13] 		(Epoch 04/08) Block Loss: 1.6243e-06
+[   159.27] 		(Epoch 05/08) Block Loss: 1.5264e-06
+[   161.41] 		(Epoch 06/08) Block Loss: 1.4792e-06
+[   163.57] 		(Epoch 07/08) Block Loss: 1.4569e-06
+[   165.71] 		(Epoch 08/08) Block Loss: 1.4479e-06
+[   174.93] 		ADMM weight recon error: raw=2916.7825, norm=0.4443, per_el=1.7385e-04, ADMM time=8.77s | [A] Vt_relerr=1.49e-03 J_admm=4.8927e+01 J_refit=1.2533e+01 J_bin=6.4190e+01 change1=0.28s
+[   175.52] 		[SBH] 0.mlp.gate_proj pre = 8.328343e-02  J_pre = 1.861294e-01  fro_pre = 4.442822e-01
+[   177.65] 		(Epoch 01/08) Block Loss: 9.8330e-06
+[   179.79] 		(Epoch 02/08) Block Loss: 9.0781e-06
+[   181.92] 		(Epoch 03/08) Block Loss: 9.4524e-06
+[   184.06] 		(Epoch 04/08) Block Loss: 9.0268e-06
+[   186.19] 		(Epoch 05/08) Block Loss: 9.1089e-06
+[   188.32] 		(Epoch 06/08) Block Loss: 8.5883e-06
+[   190.46] 		(Epoch 07/08) Block Loss: 8.2817e-06
+[   192.59] 		(Epoch 08/08) Block Loss: 7.6332e-06
+[   192.99] 		[SBH] 0.mlp.gate_proj post = 5.489886e-02  J_post = 2.108303e-01  fro_post = 4.741108e-01
+[   195.21] 		(Epoch 01/08) Block Loss: 6.0240e-06
+[   197.26] 		(Epoch 02/08) Block Loss: 4.9785e-06
+[   199.32] 		(Epoch 03/08) Block Loss: 4.5385e-06
+[   201.37] 		(Epoch 04/08) Block Loss: 4.2866e-06
+[   203.42] 		(Epoch 05/08) Block Loss: 4.1278e-06
+[   205.47] 		(Epoch 06/08) Block Loss: 4.0340e-06
+[   207.52] 		(Epoch 07/08) Block Loss: 3.9809e-06
+[   209.58] 		(Epoch 08/08) Block Loss: 3.9607e-06
+[   218.81] 		ADMM weight recon error: raw=2388.8081, norm=0.4520, per_el=1.4238e-04, ADMM time=8.77s | [A] Vt_relerr=1.31e-03 J_admm=4.0347e+01 J_refit=1.0511e+01 J_bin=5.1563e+01 change1=0.28s
+[   219.40] 		[SBH] 0.mlp.up_proj pre = 1.014105e-01  J_pre = 2.442271e-01  fro_pre = 4.519426e-01
+[   221.57] 		(Epoch 01/08) Block Loss: 1.2267e-05
+[   223.74] 		(Epoch 02/08) Block Loss: 1.1721e-05
+[   225.91] 		(Epoch 03/08) Block Loss: 1.2456e-05
+[   228.09] 		(Epoch 04/08) Block Loss: 1.1899e-05
+[   230.26] 		(Epoch 05/08) Block Loss: 1.1744e-05
+[   232.43] 		(Epoch 06/08) Block Loss: 1.1152e-05
+[   234.60] 		(Epoch 07/08) Block Loss: 1.0806e-05
+[   236.77] 		(Epoch 08/08) Block Loss: 1.0176e-05
+[   237.17] 		[SBH] 0.mlp.up_proj post = 7.906866e-02  J_post = 2.741344e-01  fro_post = 4.841378e-01
+[   239.31] 		(Epoch 01/08) Block Loss: 8.8397e-06
+[   241.27] 		(Epoch 02/08) Block Loss: 8.0604e-06
+[   243.23] 		(Epoch 03/08) Block Loss: 7.6853e-06
+[   245.19] 		(Epoch 04/08) Block Loss: 7.4632e-06
+[   247.16] 		(Epoch 05/08) Block Loss: 7.3205e-06
+[   249.12] 		(Epoch 06/08) Block Loss: 7.2352e-06
+[   251.09] 		(Epoch 07/08) Block Loss: 7.1889e-06
+[   253.05] 		(Epoch 08/08) Block Loss: 7.1721e-06
+[   271.67] 		ADMM weight recon error: raw=2339.6221, norm=0.4302, per_el=1.3945e-04, ADMM time=17.95s | [A] Vt_relerr=1.55e-03 J_admm=1.1085e+00 J_refit=7.0329e-01 J_bin=1.0706e+00 change1=0.50s
+[   272.47] 		[SBH] 0.mlp.down_proj pre = 1.402459e-01  J_pre = 1.812851e-01  fro_pre = 4.302147e-01
+[   274.69] 		(Epoch 01/08) Block Loss: 1.9559e-05
+[   276.91] 		(Epoch 02/08) Block Loss: 1.9382e-05
+[   279.12] 		(Epoch 03/08) Block Loss: 1.9519e-05
+[   281.33] 		(Epoch 04/08) Block Loss: 1.9597e-05
+[   283.54] 		(Epoch 05/08) Block Loss: 1.9840e-05
+[   285.76] 		(Epoch 06/08) Block Loss: 1.9775e-05
+[   287.98] 		(Epoch 07/08) Block Loss: 1.9754e-05
+[   290.20] 		(Epoch 08/08) Block Loss: 1.9364e-05
+[   290.62] 		[SBH] 0.mlp.down_proj post = 1.319251e-01  J_post = 1.901764e-01  fro_post = 4.590544e-01
+[   295.59] Token indices sequence length is longer than the specified maximum sequence length for this model (289077 > 131072). Running this sequence through the model will result in indexing errors
+[   295.81] Using sequence length: 2048 (model max: 2048)
+[   308.99] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[   309.03] LlamaForCausalLM(
+[   309.03]   (model): LlamaModel(
+[   309.03]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[   309.03]     (layers): ModuleList(
+[   309.03]       (0-15): 16 x LlamaDecoderLayer(
+[   309.03]         (self_attn): LlamaAttention(
+[   309.03]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[   309.03]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[   309.03]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[   309.03]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[   309.03]         )
+[   309.03]         (mlp): LlamaMLP(
+[   309.03]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[   309.03]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[   309.03]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[   309.03]           (act_fn): SiLUActivation()
+[   309.03]         )
+[   309.03]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[   309.03]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[   309.03]       )
+[   309.03]     )
+[   309.03]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[   309.03]     (rotary_emb): LlamaRotaryEmbedding()
+[   309.03]   )
+[   309.03]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[   309.03] )
+[   316.15] [SBH] FINAL {"tag": "AB_b0_s0", "block": 0, "block_pre": 0.14024592179387071, "block_post": 0.13192506115876163, "ppl_wiki2": 11.486321449279785, "kl_to_fp": 0.16810678166802973}
