@@ -37,4 +37,11 @@ run_arm A     testA  '{}'
 run_arm A4    testA  '{"als_rounds":3}'
 run_arm B     testB  '{}'
 run_arm AB    testAB '{}'
+push_arm "matrix complete"
 echo "[chain] ALL ARMS DONE $(date -u)"
+echo "[chain] === Appendix C config repro run start $(date -u) ==="
+/home/work/exp/run_paper_cfg.sh 0 repro_paper_seed0
+/home/work/venv/bin/python /home/work/exp/parse_step0.py /home/work/exp/logs/repro_paper_seed0.log \
+    /home/work/exp/artifacts/step0_paper_seed0.json > /home/work/exp/logs/parse_paper.txt 2>&1
+push_arm "Appendix C config repro run"
+echo "[chain] DONE $(date -u)"

@@ -310,3 +310,44 @@ def compress_block_recon_instr(model, fp_model, dataloader, quant_config, ctx):
 def factorize_stock(layer, name, rank, quant_config, ctx=None, key=None, hin_key=None):
     """Upstream factorize_and_replace, signature-adapted for the Ctx hook."""
     return factorize_and_replace(layer, name, rank, quant_config)
+
+
+# ---------------------------------------------------------------------------
+# 4. Per-layer reconstruction objective, logged next to the block error.
+#    Tells apart "the refit moved where Step 3 starts" from "the refit changed
+#    what Step 3 is optimising".
+# ---------------------------------------------------------------------------
+@torch.no_grad()
+def effective_weight(m):
+    """The weight the NanoQuantLinear actually applies:
+    diag(scale_post) U diag(scale_mid) V diag(scale_pre), with U/V hardened."""
+    V = m.V_latent if (m.do_train and hasattr(m, "V_latent")) else m.V
+    U = m.U_latent if (m.do_train and hasattr(m, "U_latent")) else m.U
+    V, U = V.float(), U.float()
+    if not m._binarized:
+        V = torch.sign(V)
+        V[V == 0] = 1
+        U = torch.sign(U)
+        U[U == 0] = 1
+    sp = m.scale_pre.float().view(-1)
+    po = m.scale_post.float().view(-1)
+    sm = getattr(m, "scale_mid", None)
+    inner = V * sp.unsqueeze(0)
+    if sm is not None:
+        inner = sm.float().view(-1).unsqueeze(1) * inner
+    return (U @ inner) * po.unsqueeze(1)
+
+
+@torch.no_grad()
+def recon_objectives(W_ref, module, H):
+    """Returns (H-weighted relative objective, plain relative Frobenius error).
+    H-weighted = tr((W-W^)H(W-W^)^T) / tr(W H W^T): the quantity the ADMM refit
+    and the block error both ultimately care about."""
+    W_ref = W_ref.float()
+    M = W_ref - effective_weight(module)
+    fro = M.square().sum().item() / max(W_ref.square().sum().item(), 1e-30)
+    if H is None:
+        return None, fro
+    j = (M * (M @ H)).sum().item()
+    j0 = (W_ref * (W_ref @ H)).sum().item()
+    return j / max(j0, 1e-30), fro

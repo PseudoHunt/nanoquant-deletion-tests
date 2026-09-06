@@ -34,7 +34,13 @@ CACHE = "/home/work/exp/artifacts/sbh"
 N_HO = 32
 
 
+# Appendix C: gamma = 0.2 for Llama/Qwen. The repo default is 0.4, which matches
+# neither of the paper's two stated regimes (0.2 Llama/Qwen, 0.6 Gemma).
+PAPER_GAMMA = 0.2
+
+
 def _qc(seed=0, **kw):
+    kw.setdefault("calib_shrinkage", PAPER_GAMMA)
     c = NanoQuantConfigDataclass(seed=seed, **kw)
     return c.to_dict()
 
@@ -170,17 +176,22 @@ def do_run(args):
             tune_nonfact(blk, cal_in_d, cal_out_d, importance, kwargs, qd)
             ctx.rec["timing"]["tune_nonfact_s"] += time.time() - t
             cleanup_memory()
+        hin_key = f"model.layers.{b}.{name}"
+        W_ref = sub[name].weight.data.clone()          # FP weight entering the ADMM
         t = time.time()
-        nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key,
-                                      hin_key=f"model.layers.{b}.{name}")
+        nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key, hin_key=hin_key)
         ctx.rec["timing"]["admm_stage_s"] += time.time() - t
         cleanup_memory()
 
+        H_obj = I.prep_hin(hin_key, f"{CACHE}/hin", shrinkage=qd['calib_shrinkage'], device=dev)
         e_pre = I.block_err(blk, ho_in, ho_out, kwargs)
+        j_pre, f_pre = I.recon_objectives(W_ref, nano_linear, H_obj)
         ent = ctx.rec["layers"].setdefault(key, {})
         ent["rank"] = ranks[key]
         ent["pre"] = e_pre
-        print(f"\t\t[SBH] {key} pre = {e_pre:.6e}", flush=True)
+        ent["J_pre"] = j_pre
+        ent["fro_pre"] = f_pre
+        print(f"\t\t[SBH] {key} pre = {e_pre:.6e}  J_pre = {j_pre:.6e}  fro_pre = {f_pre:.6e}", flush=True)
 
         if qd['tune_fact'] and not args.no_step3:
             t = time.time()
@@ -190,8 +201,13 @@ def do_run(args):
         else:
             nano_linear.finalize()
         e_post = I.block_err(blk, ho_in, ho_out, kwargs)
+        j_post, f_post = I.recon_objectives(W_ref, nano_linear, H_obj)
         ent["post"] = e_post
-        print(f"\t\t[SBH] {key} post = {e_post:.6e}", flush=True)
+        ent["J_post"] = j_post
+        ent["fro_post"] = f_post
+        print(f"\t\t[SBH] {key} post = {e_post:.6e}  J_post = {j_post:.6e}  fro_post = {f_post:.6e}", flush=True)
+        del W_ref, H_obj
+        cleanup_memory()
         ctx.dump()
 
     last = f"{b}.{names[-1]}"
