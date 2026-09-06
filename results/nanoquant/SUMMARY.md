@@ -33,6 +33,8 @@ for promotion**.
 | **C** (`spike-fp` / `err-fp` / `more-rank`) | — | — | — | — | — | **0 — not constructible** |
 | **D** control: STE, joint Step 3 | 0 | 1.43661e-1 | **1.14852e-1** | — | — | 1 |
 | **D** best mirror (`hard`, η=3e-2) | 0 | 1.43661e-1 | 1.37533e-1 *(+19.75%)* | — | — | 1 |
+| **D2** best mirror (`H2`/conf, lr=3e-3) | 0 | 1.43661e-1 | 1.22876e-1 *(+6.99%)* | — | — | 1 |
+| **D2** scales only (signs frozen) | 0 | 1.43661e-1 | 1.37853e-1 *(+20.03%)* | — | — | 1 |
 
 † PPL with **only that one block** quantised, the harness's secondary metric.
 Percentages are paired against the baseline at the same seed.
@@ -51,6 +53,7 @@ regression on block 0 is more than ten times it, so seeds 1-2 were not spent
 | **Test B** (Change 2) | **Fails.** `pre` −1.97% / **−8.89%**, `post` **+3.44%** / +0.13%. Wins on `up_proj` (−1.4% / −5.2%) and loses on attention and `down_proj`. |
 | **A+B** | **Fails, worst of the three.** `post` +6.91% / +3.42%, despite a smaller `pre` gain than B alone. |
 | **Test C** (Change 7) | **Not constructible.** Stopped at the gate. |
+| **Test D2** (mirror descent, corrected) | **Fails.** Best of 16 cells **+6.99%** vs the STE control, 22x the floor. Both fixes worked mechanically — Adam in the dual space removed every divergence and the flip-rate cliff; the corner-aware init removed variant R's hardening catastrophe. All ten flipping cells plus the control lie on **one log-linear `post`-vs-sign-flip-rate curve (R²=0.923)**, so the binary update rule is not the active variable in Step 3 — the sign-flip budget is. |
 | **Test D** (mirror descent for Step 3) | **Fails.** Best of 8 mirror cells is **+19.75%** worse than the STE control, 64x the floor; 4 of 8 diverge. Measured cause: raw `dL/dU` spans 139-525x within a layer, so a scalar step size either moves nothing (0.01% sign flips vs STE's 1.03%) or randomises signs (50%); and `atanh(proxy/max)` starts the relaxed forward at the real-valued proxy, not the binary point. |
 
 ## The single result that matters
@@ -75,6 +78,23 @@ So the answer to the framing question is negative in a specific and useful way:
 **at 1 bpw on this model, initialisation quality measured on layer-wise
 reconstruction is not the binding constraint. Step 3 is.** It removes 14% of the
 block error, and it does so from wherever it starts.
+
+## What Step 3 is actually made of (Test D2)
+
+Eight D2 cells flipped **zero** signs — the `atanh(0.95)` corner init puts every
+|Θ₀| at 1.8318, beyond Adam's `lr x 1024` displacement ceiling — which
+accidentally isolates Step 3's scale tuning from its sign flipping:
+
+| | block error | share of the gain |
+|---|---|---|
+| post-ADMM `pre` | 0.143661 | — |
+| scales only, signs frozen | 0.137853 | 20.2% |
+| STE control (scales + 1.03% flips) | 0.114852 | **79.8%** |
+
+**About four fifths of what Step 3 buys comes from flipping ~1% of the binary
+signs.** That is the mechanism behind every negative result in this repo: Tests
+A and B move where Step 3 starts, and Step 3's gain does not come from where it
+starts.
 
 ## Incidental result from Test D, worth a follow-up
 
@@ -108,5 +128,6 @@ designed-but-not-run comparison at the RMT-implied ~2.7 bpw budget.
 | `testB.md` | Change 2: the divergence and its fix, bit-exact reduction test, per-layer results |
 | `testC.md` | RMT analysis, infeasibility, heavy-tail interpretation |
 | `testD.md` | Mirror descent vs STE in Step 3: 9-cell table, sign-flip fractions, mechanism |
+| `testD2.md` | Mirror descent corrected: 16-cell sweep, the one-curve result, the 80% sign-flip decomposition |
 | `NOTES.md` | The `requires_grad` harness bug, ADMM chaos, config drift |
 | `nqx/` | All instrumentation and variants; nothing in the upstream repo was edited |
