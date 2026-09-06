@@ -2,45 +2,49 @@
 arm      blk  n                 pre                post      ppl(1 blk)   KL-to-FP
 base       0  3 1.41595e-01+- 7e-04 1.23275e-01+- 3e-04  11.1307+-0.020    0.13951
 base       8  1 1.40450e-02+- 0e+00 1.14722e-02+- 0e+00  10.3604+-0.000    0.06404
+dup        0  1 1.41555e-01+- 0e+00 1.23014e-01+- 0e+00  11.1366+-0.000    0.13938
 
 === per-layer post block error (mean over seeds) ===
 -- block 0 --
-layer                           base
-self_attn.q_proj          5.8020e-04
-self_attn.v_proj          1.1216e-02
-self_attn.o_proj          1.8830e-02
-self_attn.k_proj          1.4716e-02
-mlp.gate_proj             5.0662e-02
-mlp.up_proj               7.4951e-02
-mlp.down_proj             1.2327e-01
+layer                           base          dup
+self_attn.q_proj          5.8020e-04   5.8277e-04
+self_attn.v_proj          1.1216e-02   1.1050e-02
+self_attn.o_proj          1.8830e-02   1.8843e-02
+self_attn.k_proj          1.4716e-02   1.4870e-02
+mlp.gate_proj             5.0662e-02   5.0392e-02
+mlp.up_proj               7.4951e-02   7.4819e-02
+mlp.down_proj             1.2327e-01   1.2301e-01
 -- block 8 --
-layer                           base
-self_attn.q_proj          2.8327e-04
-self_attn.v_proj          1.3210e-03
-self_attn.o_proj          2.2511e-03
-self_attn.k_proj          1.7904e-03
-mlp.gate_proj             3.2876e-03
-mlp.up_proj               7.7349e-03
-mlp.down_proj             1.1472e-02
+layer                           base          dup
+self_attn.q_proj          2.8327e-04            -
+self_attn.v_proj          1.3210e-03            -
+self_attn.o_proj          2.2511e-03            -
+self_attn.k_proj          1.7904e-03            -
+mlp.gate_proj             3.2876e-03            -
+mlp.up_proj               7.7349e-03            -
+mlp.down_proj             1.1472e-02            -
 
 === per-layer H-weighted reconstruction objective J (pre -> post), mean over seeds ===
 -- block 0 --
-layer                       base pre    base post
-self_attn.q_proj          7.8692e-03   7.0206e-03
-self_attn.v_proj          2.6403e-01   2.3386e-01
-self_attn.o_proj          8.4034e-02   8.0690e-02
-self_attn.k_proj          1.8997e-02   2.0133e-02
-mlp.gate_proj             1.9327e-01   2.0269e-01
-mlp.up_proj               2.6463e-01   2.6921e-01
-mlp.down_proj             1.9608e-01   1.8427e-01
+layer                       base pre    base post      dup pre     dup post
+self_attn.q_proj          7.8692e-03   7.0206e-03   7.7353e-03   7.0296e-03
+self_attn.v_proj          2.6403e-01   2.3386e-01   2.6623e-01   2.3393e-01
+self_attn.o_proj          8.4034e-02   8.0690e-02   8.4098e-02   8.1298e-02
+self_attn.k_proj          1.8997e-02   2.0133e-02   1.8783e-02   1.9934e-02
+mlp.gate_proj             1.9327e-01   2.0269e-01   1.9467e-01   2.0387e-01
+mlp.up_proj               2.6463e-01   2.6921e-01   2.6562e-01   2.6940e-01
+mlp.down_proj             1.9608e-01   1.8427e-01   1.9627e-01   1.8429e-01
 -- block 8 --
-layer                       base pre    base post
-self_attn.q_proj          2.7278e-02   2.8367e-02
-self_attn.v_proj          2.7122e-01   2.5349e-01
-self_attn.o_proj          2.7332e-01   2.2946e-01
-self_attn.k_proj          3.0083e-02   2.8872e-02
-mlp.gate_proj             5.7851e-02   5.9202e-02
-mlp.up_proj               2.4366e-01   2.6482e-01
-mlp.down_proj             2.8448e-01   2.6018e-01
+layer                       base pre    base post      dup pre     dup post
+self_attn.q_proj          2.7278e-02   2.8367e-02            -            -
+self_attn.v_proj          2.7122e-01   2.5349e-01            -            -
+self_attn.o_proj          2.7332e-01   2.2946e-01            -            -
+self_attn.k_proj          3.0083e-02   2.8872e-02            -            -
+mlp.gate_proj             5.7851e-02   5.9202e-02            -            -
+mlp.up_proj               2.4366e-01   2.6482e-01            -            -
+mlp.down_proj             2.8448e-01   2.6018e-01            -            -
 
 === paired vs baseline, post block error (the verdict number) ===
+
+=== determinism floor (dup vs base, identical config and seed) ===
+  blk0 seed0: base=1.234022662e-01  dup=1.230141117e-01  reldiff=3.145e-03  differs
