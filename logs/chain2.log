@@ -1,2 +1,10 @@
 [chain] === arm base (stock) start 15:36:56 ===
 === base_b0_s0 ===
+[   353.61] [SBH] FINAL {"tag": "base_b0_s0", "block": 0, "block_pre": 0.14153890451517737, "block_post": 0.12340226624124279, "ppl_wiki2": 11.153918266296387, "kl_to_fp": 0.13983095763251185}
+=== base_b0_s1 ===
+[   448.19] [SBH] FINAL {"tag": "base_b0_s1", "block": 0, "block_pre": 0.14092818451861716, "block_post": 0.12287933399001627, "ppl_wiki2": 11.116898536682129, "kl_to_fp": 0.13721955474466085}
+=== base_b0_s2 ===
+[   309.74] [SBH] FINAL {"tag": "base_b0_s2", "block": 0, "block_pre": 0.14231880818682938, "block_post": 0.12354288020197335, "ppl_wiki2": 11.121211051940918, "kl_to_fp": 0.1414687493816018}
+=== base_b8_s0 ===
+[   299.12] [SBH] FINAL {"tag": "base_b8_s0", "block": 8, "block_pre": 0.014044992689375618, "block_post": 0.01147215172649651, "ppl_wiki2": 10.360366821289062, "kl_to_fp": 0.06404016888700426}
+=== base_b8_s1 ===
