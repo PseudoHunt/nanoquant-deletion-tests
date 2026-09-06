@@ -1,50 +1,50 @@
-[     5.32] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
-[     5.67] LlamaForCausalLM(
-[     5.67]   (model): LlamaModel(
-[     5.67]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
-[     5.67]     (layers): ModuleList(
-[     5.67]       (0-15): 16 x LlamaDecoderLayer(
-[     5.67]         (self_attn): LlamaAttention(
-[     5.67]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[     5.67]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
-[     5.67]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
-[     5.67]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[     5.67]         )
-[     5.67]         (mlp): LlamaMLP(
-[     5.67]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[     5.67]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[     5.67]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
-[     5.67]           (act_fn): SiLUActivation()
-[     5.67]         )
-[     5.67]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.67]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.67]       )
-[     5.67]     )
-[     5.67]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.67]     (rotary_emb): LlamaRotaryEmbedding()
-[     5.67]   )
-[     5.67]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
-[     5.67] )
-[     5.70] Attaching statistics to 112 layers...
-[     5.70] Registered i_norm and o_norm buffers to 112 layers
-[     5.70] Rank calculation: Bits = (1.00), Scales: 2
-[    12.45] 		(Epoch 01/08) Block Loss: 0.0000e+00
-[    16.87] 		(Epoch 02/08) Block Loss: 0.0000e+00
-[    21.30] 		(Epoch 03/08) Block Loss: 0.0000e+00
-[    25.72] 		(Epoch 04/08) Block Loss: 0.0000e+00
-[    30.15] 		(Epoch 05/08) Block Loss: 0.0000e+00
-[    34.57] 		(Epoch 06/08) Block Loss: 0.0000e+00
-[    39.00] 		(Epoch 07/08) Block Loss: 0.0000e+00
-[    43.43] 		(Epoch 08/08) Block Loss: 0.0000e+00
-[    49.14] Traceback (most recent call last):
-[    49.14]   File "/home/work/exp/nqx/sbh.py", line 256, in <module>
-[    49.14]     (do_cache if a.mode == "cache" else do_run)(a)
-[    49.14]   File "/home/work/exp/nqx/sbh.py", line 182, in do_run
-[    49.14]     nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key, hin_key=hin_key)
-[    49.14]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-[    49.14]     return func(*args, **kwargs)
-[    49.14]   File "/home/work/exp/nqx/variants.py", line 335, in factorize_testA
-[    49.14]     J_bin = _obj(s1.unsqueeze(1) * U_bin @ (s3.unsqueeze(1) * Vt))
-[    49.14]   File "/home/work/exp/nqx/variants.py", line 323, in _obj
-[    49.14]     M = Wf - A @ Vt
-[    49.14] RuntimeError: mat1 and mat2 shapes cannot be multiplied (2048x2048 and 992x2048)
+[     5.31] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[     5.66] LlamaForCausalLM(
+[     5.66]   (model): LlamaModel(
+[     5.66]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[     5.66]     (layers): ModuleList(
+[     5.66]       (0-15): 16 x LlamaDecoderLayer(
+[     5.66]         (self_attn): LlamaAttention(
+[     5.66]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.66]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.66]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.66]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.66]         )
+[     5.66]         (mlp): LlamaMLP(
+[     5.66]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.66]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.66]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[     5.66]           (act_fn): SiLUActivation()
+[     5.66]         )
+[     5.66]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.66]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.66]       )
+[     5.66]     )
+[     5.66]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.66]     (rotary_emb): LlamaRotaryEmbedding()
+[     5.66]   )
+[     5.66]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[     5.66] )
+[     5.68] Attaching statistics to 112 layers...
+[     5.69] Registered i_norm and o_norm buffers to 112 layers
+[     5.69] Rank calculation: Bits = (1.00), Scales: 2
+[    10.22] 		(Epoch 01/08) Block Loss: 0.0000e+00
+[    12.25] 		(Epoch 02/08) Block Loss: 0.0000e+00
+[    14.29] 		(Epoch 03/08) Block Loss: 0.0000e+00
+[    16.34] 		(Epoch 04/08) Block Loss: 0.0000e+00
+[    18.38] 		(Epoch 05/08) Block Loss: 0.0000e+00
+[    20.51] 		(Epoch 06/08) Block Loss: 0.0000e+00
+[    22.55] 		(Epoch 07/08) Block Loss: 0.0000e+00
+[    24.59] 		(Epoch 08/08) Block Loss: 0.0000e+00
+[    27.59] Traceback (most recent call last):
+[    27.59]   File "/home/work/exp/nqx/sbh.py", line 262, in <module>
+[    27.59]     (do_cache if a.mode == "cache" else do_run)(a)
+[    27.59]   File "/home/work/exp/nqx/sbh.py", line 188, in do_run
+[    27.59]     nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key, hin_key=hin_key)
+[    27.59]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[    27.59]     return func(*args, **kwargs)
+[    27.59]   File "/home/work/exp/nqx/variants.py", line 335, in factorize_testA
+[    27.59]     J_bin = _obj(s1.unsqueeze(1) * U_bin @ (s3.unsqueeze(1) * Vt))
+[    27.59]   File "/home/work/exp/nqx/variants.py", line 323, in _obj
+[    27.59]     M = Wf - A @ Vt
+[    27.59] RuntimeError: mat1 and mat2 shapes cannot be multiplied (2048x2048 and 992x2048)
