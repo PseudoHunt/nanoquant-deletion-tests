@@ -31,6 +31,8 @@ for promotion**.
 | **A+B** | 0 | 1.40246e-1 | 1.31925e-1 *(+6.91%)* | 11.486 † | — | 1 |
 | **A+B** | 8 | 1.29534e-2 | 1.18644e-2 *(+3.42%)* | 10.389 † | — | 1 |
 | **C** (`spike-fp` / `err-fp` / `more-rank`) | — | — | — | — | — | **0 — not constructible** |
+| **D** control: STE, joint Step 3 | 0 | 1.43661e-1 | **1.14852e-1** | — | — | 1 |
+| **D** best mirror (`hard`, η=3e-2) | 0 | 1.43661e-1 | 1.37533e-1 *(+19.75%)* | — | — | 1 |
 
 † PPL with **only that one block** quantised, the harness's secondary metric.
 Percentages are paired against the baseline at the same seed.
@@ -49,6 +51,7 @@ regression on block 0 is more than ten times it, so seeds 1-2 were not spent
 | **Test B** (Change 2) | **Fails.** `pre` −1.97% / **−8.89%**, `post` **+3.44%** / +0.13%. Wins on `up_proj` (−1.4% / −5.2%) and loses on attention and `down_proj`. |
 | **A+B** | **Fails, worst of the three.** `post` +6.91% / +3.42%, despite a smaller `pre` gain than B alone. |
 | **Test C** (Change 7) | **Not constructible.** Stopped at the gate. |
+| **Test D** (mirror descent for Step 3) | **Fails.** Best of 8 mirror cells is **+19.75%** worse than the STE control, 64x the floor; 4 of 8 diverge. Measured cause: raw `dL/dU` spans 139-525x within a layer, so a scalar step size either moves nothing (0.01% sign flips vs STE's 1.03%) or randomises signs (50%); and `atanh(proxy/max)` starts the relaxed forward at the real-valued proxy, not the binary point. |
 
 ## The single result that matters
 
@@ -73,6 +76,16 @@ So the answer to the framing question is negative in a specific and useful way:
 reconstruction is not the binding constraint. Step 3 is.** It removes 14% of the
 block error, and it does so from wherever it starts.
 
+## Incidental result from Test D, worth a follow-up
+
+Deferring all of Step 3 to a **single joint pass** over the fully-quantised block
+reached **0.114852** against the released interleaved schedule's **0.123275** —
+**6.8% better block error using 1024 Step-3 steps instead of 7 x 1024**, and from
+a worse starting point. One seed, one block, and the two schedules were not
+otherwise controlled, so this is an observation rather than a claim. It is the
+only thing measured across all four tests that moved `post` in the right
+direction.
+
 ## Test C
 
 `k_RMT` is **large**, not small: median 126, max 465, only 1 of 112 layers at
@@ -94,5 +107,6 @@ designed-but-not-run comparison at the RMT-implied ~2.7 bpw budget.
 | `testA.md` | Change 1: implementation, unit tests, per-layer results, mechanism |
 | `testB.md` | Change 2: the divergence and its fix, bit-exact reduction test, per-layer results |
 | `testC.md` | RMT analysis, infeasibility, heavy-tail interpretation |
+| `testD.md` | Mirror descent vs STE in Step 3: 9-cell table, sign-flip fractions, mechanism |
 | `NOTES.md` | The `requires_grad` harness bug, ADMM chaos, config drift |
 | `nqx/` | All instrumentation and variants; nothing in the upstream repo was edited |
