@@ -1,0 +1,50 @@
+{
+ "tag": "B_b0_s0",
+ "layers": {
+  "0.self_attn.q_proj": {
+   "admm_s": 2.9495046138763428,
+   "recon_norm": 0.22516678532816498,
+   "rank": 992,
+   "pre": 0.0022369020364287574,
+   "J_pre": 0.0114968435944966,
+   "fro_pre": 0.22814027895212136,
+   "post": 0.0006234490836941752,
+   "J_post": 0.006272157699519464,
+   "fro_post": 0.23641980794302606
+  },
+  "0.self_attn.v_proj": {
+   "admm_s": 1.335536241531372,
+   "recon_norm": 3.602296400547684e+34,
+   "rank": 384,
+   "pre": 2162386398621.5596,
+   "J_pre": 1.3481931258645567e+34,
+   "fro_pre": 1.93015023758846e+34,
+   "post": 137184319857.67725,
+   "J_post": 9484449946214.66,
+   "fro_post": 15000666276133.88
+  }
+ },
+ "blocks": {},
+ "timing": {
+  "tune_nonfact_s": 33.862282276153564,
+  "admm_stage_s": 4.666118144989014,
+  "block_refine_s": 38.79519605636597
+ },
+ "args": {
+  "mode": "run",
+  "model_id": "/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da",
+  "tag": "B_b0_s0",
+  "block": 0,
+  "seed": 0,
+  "calib_seed": 0,
+  "variant": "testB",
+  "variant_opts": "{}",
+  "nonfact_epochs": 8,
+  "fact_epochs": 8,
+  "admm_outer_iters": 400,
+  "no_step3": false,
+  "no_eval": false
+ },
+ "block": 0,
+ "variant_opts": {}
+}

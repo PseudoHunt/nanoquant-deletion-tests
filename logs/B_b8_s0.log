@@ -1,0 +1,79 @@
+[     5.36] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[     5.72] LlamaForCausalLM(
+[     5.72]   (model): LlamaModel(
+[     5.72]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[     5.72]     (layers): ModuleList(
+[     5.72]       (0-15): 16 x LlamaDecoderLayer(
+[     5.72]         (self_attn): LlamaAttention(
+[     5.72]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.72]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.72]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.72]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.72]         )
+[     5.72]         (mlp): LlamaMLP(
+[     5.72]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.72]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.72]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[     5.72]           (act_fn): SiLUActivation()
+[     5.72]         )
+[     5.72]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.72]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.72]       )
+[     5.72]     )
+[     5.72]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.72]     (rotary_emb): LlamaRotaryEmbedding()
+[     5.72]   )
+[     5.72]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[     5.72] )
+[     5.75] Attaching statistics to 112 layers...
+[     5.75] Registered i_norm and o_norm buffers to 112 layers
+[     5.75] Rank calculation: Bits = (1.00), Scales: 2
+[    10.46] 		(Epoch 01/08) Block Loss: 0.0000e+00
+[    12.50] 		(Epoch 02/08) Block Loss: 0.0000e+00
+[    14.55] 		(Epoch 03/08) Block Loss: 0.0000e+00
+[    16.59] 		(Epoch 04/08) Block Loss: 0.0000e+00
+[    18.64] 		(Epoch 05/08) Block Loss: 0.0000e+00
+[    20.69] 		(Epoch 06/08) Block Loss: 0.0000e+00
+[    22.74] 		(Epoch 07/08) Block Loss: 0.0000e+00
+[    24.78] 		(Epoch 08/08) Block Loss: 0.0000e+00
+[    27.90] 		ADMM weight recon error: raw=708.4889, norm=0.2599, per_el=1.6892e-04, ADMM time=2.94s [B: H_in-weighted]
+[    28.46] 		[SBH] 8.self_attn.q_proj pre = 5.111036e-04  J_pre = 2.436432e-02  fro_pre = 2.607105e-01
+[    30.24] 		(Epoch 01/08) Block Loss: 7.1885e-07
+[    32.01] 		(Epoch 02/08) Block Loss: 6.0343e-07
+[    33.79] 		(Epoch 03/08) Block Loss: 5.8177e-07
+[    35.57] 		(Epoch 04/08) Block Loss: 5.7256e-07
+[    37.35] 		(Epoch 05/08) Block Loss: 5.7239e-07
+[    39.13] 		(Epoch 06/08) Block Loss: 5.3048e-07
+[    40.91] 		(Epoch 07/08) Block Loss: 5.1273e-07
+[    42.69] 		(Epoch 08/08) Block Loss: 4.7249e-07
+[    43.05] 		[SBH] 8.self_attn.q_proj post = 2.824746e-04  J_post = 2.652584e-02  fro_post = 2.800319e-01
+[    45.33] 		(Epoch 01/08) Block Loss: 1.1982e-06
+[    47.46] 		(Epoch 02/08) Block Loss: 7.2924e-07
+[    49.59] 		(Epoch 03/08) Block Loss: 5.8729e-07
+[    51.72] 		(Epoch 04/08) Block Loss: 4.6130e-07
+[    53.85] 		(Epoch 05/08) Block Loss: 3.9875e-07
+[    55.98] 		(Epoch 06/08) Block Loss: 3.4198e-07
+[    58.12] 		(Epoch 07/08) Block Loss: 3.1722e-07
+[    60.25] 		(Epoch 08/08) Block Loss: 3.1147e-07
+[    61.78] Traceback (most recent call last):
+[    61.78]   File "/home/work/exp/nqx/sbh.py", line 262, in <module>
+[    61.78]     (do_cache if a.mode == "cache" else do_run)(a)
+[    61.78]   File "/home/work/exp/nqx/sbh.py", line 188, in do_run
+[    61.78]     nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key, hin_key=hin_key)
+[    61.78]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[    61.78]     return func(*args, **kwargs)
+[    61.78]   File "/home/work/exp/nqx/variants.py", line 412, in factorize_testB
+[    61.78]     fr = factorize_admm_hin(
+[    61.78]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[    61.78]     return func(*args, **kwargs)
+[    61.78]   File "/home/work/exp/nqx/variants.py", line 88, in factorize_admm_hin
+[    61.78]     results = factorize_admm_hin(W.mT, o_norm, i_norm, mid_rank, H_in, outer_iters, inner_iters, reg,
+[    61.78]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[    61.78]     return func(*args, **kwargs)
+[    61.78]   File "/home/work/exp/nqx/variants.py", line 152, in factorize_admm_hin
+[    61.78]     A_ls = _admm_solve_step(X_A, W_norm.mT, A_z.mT, A_u.mT, rho, reg, eps).mT
+[    61.78]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[    61.78]     return func(*args, **kwargs)
+[    61.78]   File "/home/work/NanoQuant/src/nanoquant/core/admm_nq.py", line 89, in _admm_solve_step
+[    61.78]     Factor = torch.linalg.solve(system_matrix, rhs)
+[    61.78] torch._C._LinAlgError: torch.linalg.solve: The solver failed because the input matrix is singular.

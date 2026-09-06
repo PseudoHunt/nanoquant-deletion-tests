@@ -1,0 +1,94 @@
+[     5.25] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[     5.61] LlamaForCausalLM(
+[     5.61]   (model): LlamaModel(
+[     5.61]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[     5.61]     (layers): ModuleList(
+[     5.61]       (0-15): 16 x LlamaDecoderLayer(
+[     5.61]         (self_attn): LlamaAttention(
+[     5.61]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.61]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.61]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.61]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.61]         )
+[     5.61]         (mlp): LlamaMLP(
+[     5.61]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.61]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.61]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[     5.61]           (act_fn): SiLUActivation()
+[     5.61]         )
+[     5.61]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.61]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.61]       )
+[     5.61]     )
+[     5.61]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.61]     (rotary_emb): LlamaRotaryEmbedding()
+[     5.61]   )
+[     5.61]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[     5.61] )
+[     5.64] Attaching statistics to 112 layers...
+[     5.64] Registered i_norm and o_norm buffers to 112 layers
+[     5.64] Rank calculation: Bits = (1.00), Scales: 2
+[    10.16] 		(Epoch 01/08) Block Loss: 0.0000e+00
+[    12.20] 		(Epoch 02/08) Block Loss: 0.0000e+00
+[    14.25] 		(Epoch 03/08) Block Loss: 0.0000e+00
+[    16.29] 		(Epoch 04/08) Block Loss: 0.0000e+00
+[    18.33] 		(Epoch 05/08) Block Loss: 0.0000e+00
+[    20.39] 		(Epoch 06/08) Block Loss: 0.0000e+00
+[    22.43] 		(Epoch 07/08) Block Loss: 0.0000e+00
+[    24.48] 		(Epoch 08/08) Block Loss: 0.0000e+00
+[    27.61] 		ADMM weight recon error: raw=1284.1855, norm=0.2252, per_el=3.0617e-04, ADMM time=2.95s [B: H_in-weighted]
+[    28.17] 		[SBH] 0.self_attn.q_proj pre = 2.236902e-03  J_pre = 1.149684e-02  fro_pre = 2.281403e-01
+[    29.95] 		(Epoch 01/08) Block Loss: 1.8386e-07
+[    31.72] 		(Epoch 02/08) Block Loss: 1.4413e-07
+[    33.50] 		(Epoch 03/08) Block Loss: 1.2873e-07
+[    35.28] 		(Epoch 04/08) Block Loss: 1.2225e-07
+[    37.06] 		(Epoch 05/08) Block Loss: 1.1563e-07
+[    38.84] 		(Epoch 06/08) Block Loss: 1.0892e-07
+[    40.62] 		(Epoch 07/08) Block Loss: 1.0088e-07
+[    42.40] 		(Epoch 08/08) Block Loss: 9.6775e-08
+[    42.76] 		[SBH] 0.self_attn.q_proj post = 6.234491e-04  J_post = 6.272158e-03  fro_post = 2.364198e-01
+[    45.05] 		(Epoch 01/08) Block Loss: 1.9271e-06
+[    47.18] 		(Epoch 02/08) Block Loss: 1.0655e-06
+[    49.31] 		(Epoch 03/08) Block Loss: 8.9987e-07
+[    51.45] 		(Epoch 04/08) Block Loss: 5.5619e-07
+[    53.58] 		(Epoch 05/08) Block Loss: 2.5255e-07
+[    55.71] 		(Epoch 06/08) Block Loss: 1.5108e-07
+[    57.84] 		(Epoch 07/08) Block Loss: 1.0838e-07
+[    59.98] 		(Epoch 08/08) Block Loss: 9.9972e-08
+[    61.49] 		ADMM weight recon error: raw=3159112694654070605584634806469132288.0000, norm=36022964005476841314841159790493696.0000, per_el=3.0128e+30, ADMM time=1.34s [B: H_in-weighted]
+[    62.06] 		[SBH] 0.self_attn.v_proj pre = 2.162386e+12  J_pre = 1.348193e+34  fro_pre = 1.930150e+34
+[    63.85] 		(Epoch 01/08) Block Loss: 1.6041e+08
+[    67.47] 		(Epoch 02/08) Block Loss: 8.7536e+07
+[    69.95] 		(Epoch 03/08) Block Loss: 6.3311e+07
+[    73.64] 		(Epoch 04/08) Block Loss: 5.0592e+07
+[    76.85] 		(Epoch 05/08) Block Loss: 4.0190e+07
+[    79.85] 		(Epoch 06/08) Block Loss: 3.4524e+07
+[    83.48] 		(Epoch 07/08) Block Loss: 3.1402e+07
+[    86.63] 		(Epoch 08/08) Block Loss: 2.9038e+07
+[    87.29] 		[SBH] 0.self_attn.v_proj post = 1.371843e+11  J_post = 9.484450e+12  fro_post = 1.500067e+13
+[    91.18] 		(Epoch 01/08) Block Loss: 7.2877e+06
+[    95.19] 		(Epoch 02/08) Block Loss: 1.8663e+06
+[    99.66] 		(Epoch 03/08) Block Loss: 1.0561e+06
+[   103.66] 		(Epoch 04/08) Block Loss: 7.5197e+05
+[   107.68] 		(Epoch 05/08) Block Loss: 6.0832e+05
+[   111.67] 		(Epoch 06/08) Block Loss: 5.2537e+05
+[   116.14] 		(Epoch 07/08) Block Loss: 4.8791e+05
+[   120.20] 		(Epoch 08/08) Block Loss: 4.7586e+05
+[   125.68] Traceback (most recent call last):
+[   125.68]   File "/home/work/exp/nqx/sbh.py", line 262, in <module>
+[   125.68]     (do_cache if a.mode == "cache" else do_run)(a)
+[   125.68]   File "/home/work/exp/nqx/sbh.py", line 188, in do_run
+[   125.68]     nano_linear, _ = factorize_fn(blk, name, ranks[key], qd, ctx=ctx, key=key, hin_key=hin_key)
+[   125.68]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[   125.68]     return func(*args, **kwargs)
+[   125.68]   File "/home/work/exp/nqx/variants.py", line 407, in factorize_testB
+[   125.68]     is_transpose = W.shape[0] < W.shape[1]
+[   125.68]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[   125.68]     return func(*args, **kwargs)
+[   125.68]   File "/home/work/exp/nqx/variants.py", line 159, in factorize_admm_hin
+[   125.68]     B_ls = _admm_solve_step(X_B, W_norm, B_z, B_u, rho, reg, eps)
+[   125.68]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+[   125.68]     return func(*args, **kwargs)
+[   125.68]   File "/home/work/NanoQuant/src/nanoquant/core/admm_nq.py", line 89, in _admm_solve_step
+[   125.68]     Factor = torch.linalg.solve(system_matrix, rhs)
+[   125.68] torch._C._LinAlgError: torch.linalg.solve: The solver failed because the input matrix is singular.

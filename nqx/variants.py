@@ -319,9 +319,14 @@ def factorize_testA(layer, name, rank, quant_config, ctx=None, key=None, hin_key
     A_star = (torch.cholesky_solve(rhs.mT, Lc)).mT if info.item() == 0 else \
         torch.linalg.solve(Hr, rhs.mT).mT
 
-    def _obj(A):
-        M = Wf - A @ Vt
+    def _objW(Wh):
+        """H-weighted reconstruction objective of a full weight estimate."""
+        M = Wf - Wh
         return (M * (M @ H)).sum().item()
+
+    def _obj(A):
+        """Same, for an outer factor A paired with the fixed input factor Vt."""
+        return _objW(A @ Vt)
 
     J_admm, J_star = _obj(A_f), _obj(A_star)
 
@@ -332,14 +337,14 @@ def factorize_testA(layer, name, rank, quant_config, ctx=None, key=None, hin_key
     U_bin = _gptq_binarize_columns(A_star, Hr, s1, s3, blocksize=opts.get("blocksize", 128))
 
     mid = s_mid_B * s3
-    J_bin = _obj(s1.unsqueeze(1) * U_bin @ (s3.unsqueeze(1) * Vt))
+    J_bin = _obj(s1.unsqueeze(1) * U_bin * s3.unsqueeze(0))
 
     # 4) optional Change 4: ALS refit of the three scale vectors
     J_als = None
     if opts.get("als_rounds", 0) > 0:
         s1, mid, s2 = _als_refit_scales(Wf, H, U_bin, V_b, s1, mid, s2,
                                         rounds=int(opts["als_rounds"]))
-        J_als = _obj(s1.unsqueeze(1) * U_bin @ (mid.unsqueeze(1) * V_b * s2.unsqueeze(0)))
+        J_als = _objW(s1.unsqueeze(1) * (U_bin @ (mid.unsqueeze(1) * V_b * s2.unsqueeze(0))))
     change_time = time.time() - t1
 
     W_final = s1.unsqueeze(1) * (U_bin @ (mid.unsqueeze(1) * V_b * s2.unsqueeze(0)))
