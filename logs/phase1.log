@@ -2,3 +2,7 @@
 [skip] base_b0_s0
 [skip] base_b8_s0
 [p1] === base seed 0 done in 0s at 16:28:47 ===
+[p1] === dup seed 0, blocks 0 and 8, start 16:28:49 ===
+[skip] dup_b0_s0
+[skip] dup_b8_s0
+[p1] === dup seed 0 done in 0s at 16:28:49 ===
