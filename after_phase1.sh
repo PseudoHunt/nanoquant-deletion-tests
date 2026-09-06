@@ -1,14 +1,6 @@
 #!/bin/bash
 set -u
 cd /home/work/exp
-while pgrep -f "[p]hase1.sh" > /dev/null; do sleep 20; done
-echo "[after] phase1 done $(date -u)"
-/home/work/venv/bin/python decide.py > artifacts/decide_seed0.txt 2>&1
-git add -A && git commit -qm "phase 1 complete: A+B arm
-
-Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01YAQwZnt4tN9kRonGomC5bi" || true
-git push -q origin master || true
 echo "[after] === Appendix C config repro run start $(date -u) ==="
 /home/work/exp/run_paper_cfg.sh 0 repro_paper_seed0
 /home/work/venv/bin/python /home/work/exp/parse_step0.py \

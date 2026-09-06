@@ -1,0 +1,71 @@
+{
+ "tag": "H_1e-1",
+ "mode": "hard",
+ "eta": 0.1,
+ "beta_end": 10.0,
+ "seed": 0,
+ "pre": 0.14366140267175126,
+ "step3_s": 24.935668468475342,
+ "post": 77127996462490.05,
+ "layers": {
+  "self_attn.q_proj": {
+   "J_pre": 0.007735288261215197,
+   "fro_pre": 0.18930057693802652,
+   "J_post": 68.54216443258467,
+   "fro_post": 164.62023834351973
+  },
+  "self_attn.v_proj": {
+   "J_pre": 0.2636580932329425,
+   "fro_pre": 0.3158041597251896,
+   "J_post": 2221.1701218485746,
+   "fro_post": 104.64850271753721
+  },
+  "self_attn.o_proj": {
+   "J_pre": 0.08212134376456359,
+   "fro_pre": 0.2541778654123359,
+   "J_post": 445.71705918079994,
+   "fro_post": 338.09782249126533
+  },
+  "self_attn.k_proj": {
+   "J_pre": 0.019132570772497474,
+   "fro_pre": 0.2036301668896271,
+   "J_post": 210.00447132601212,
+   "fro_post": 66.81585660419312
+  },
+  "mlp.gate_proj": {
+   "J_pre": 0.19139048943042603,
+   "fro_pre": 0.3302337822095895,
+   "J_post": 1287.539190856549,
+   "fro_post": 1233.0986528493547
+  },
+  "mlp.up_proj": {
+   "J_pre": 0.25079461600794717,
+   "fro_pre": 0.34389301019348656,
+   "J_post": 1741.2747109324732,
+   "fro_post": 1209.7514019078064
+  },
+  "mlp.down_proj": {
+   "J_pre": 0.1661540237576141,
+   "fro_pre": 0.34879393474063314,
+   "J_post": 597.6904085539928,
+   "fro_post": 1142.051660276504
+  }
+ },
+ "flips": {
+  "self_attn.q_proj.V_latent": 0.5021440982818604,
+  "self_attn.q_proj.U_latent": 0.49852433800697327,
+  "self_attn.k_proj.V_latent": 0.500616729259491,
+  "self_attn.k_proj.U_latent": 0.4968821108341217,
+  "self_attn.v_proj.V_latent": 0.50115966796875,
+  "self_attn.v_proj.U_latent": 0.5019378662109375,
+  "self_attn.o_proj.V_latent": 0.5000128149986267,
+  "self_attn.o_proj.U_latent": 0.4932821989059448,
+  "mlp.gate_proj.V_latent": 0.5066384673118591,
+  "mlp.gate_proj.U_latent": 0.4940824806690216,
+  "mlp.up_proj.V_latent": 0.5098162889480591,
+  "mlp.up_proj.U_latent": 0.4990852475166321,
+  "mlp.down_proj.V_latent": 0.498993843793869,
+  "mlp.down_proj.U_latent": 0.4905136227607727
+ },
+ "flip_mean": 0.4995492696762085
+}
