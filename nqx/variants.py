@@ -34,6 +34,24 @@ class no_tf32:
         torch.backends.cuda.matmul.allow_tf32 = self.prev
 
 
+def _unit_mean_diag(H):
+    """Rescale H~ to unit mean diagonal.
+
+    The LS solution (X^T H X)^-1 X^T H Y is invariant to the scale of H, so this
+    changes no estimate. What it does fix is the ADMM bookkeeping: upstream sets
+    stabilizer = rho*mean(diag(X^T X)) + reg on the LHS against rho*(Z-U) on the
+    RHS, which is consistent only because their X has unit-norm columns, making
+    mean(diag(X^T X)) = 1. Weighting by H~ moves that mean and silently rescales
+    the consensus penalty. Measured without this: the ADMM diverges on every
+    transposed layer (v_proj J 4.5e2 -> 3.4e9 -> 9.2e31 at 60/150/400 iters)
+    while direct layers survive. With it, v_proj reaches J = 0.2221 against
+    stock's 0.2624 and is flat from 150 iterations on.
+    At H_in = D_in^2 the mean diagonal is exactly 1.0, so the division is a
+    no-op and the bit-exact identity unit test is unaffected.
+    """
+    return H / H.diagonal().mean()
+
+
 def _sign(x):
     s = x.sign()
     s[s == 0] = 1
@@ -114,12 +132,14 @@ def factorize_admm_hin(W, i_norm, o_norm, mid_rank, H_in=None, outer_iters=400, 
             # upstream's arithmetic exactly rather than to within 1e-7
             H_t = H_in.to(torch.float32) / (d.unsqueeze(0) * d.unsqueeze(1))
             H_t = 0.5 * (H_t + H_t.mT)
+            H_t = _unit_mean_diag(H_t)
             with no_tf32():
                 HY = H_t @ W_norm.mT.to(torch.float32)
         elif _h_side == 'B' and H_in.shape[0] == out_features:
             d = norm_o.squeeze(1).to(torch.float32)
             H_t = H_in.to(torch.float32) / (d.unsqueeze(0) * d.unsqueeze(1))
             H_t = 0.5 * (H_t + H_t.mT)
+            H_t = _unit_mean_diag(H_t)
             with no_tf32():
                 HY = H_t @ W_norm.to(torch.float32)
         else:
