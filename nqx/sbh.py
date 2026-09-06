@@ -106,17 +106,23 @@ def do_cache(args):
 
 # ---------------------------------------------------------------------------
 @torch.no_grad()
-def kl_to_fp(qmodel, fpmodel, seqs, dev="cuda"):
-    """Mean token-level KL(FP || quantised) on the held-out sequences."""
+def kl_to_fp(qmodel, fpmodel, seqs, dev="cuda", chunk=256):
+    """Mean token-level KL(FP || quantised) on the held-out sequences.
+
+    Chunked over positions: a full-vocab fp32 log_softmax over 2048 x 128256 is
+    ~1 GB per tensor, enough to OOM a 24 GB card once a second model is resident."""
     tot, n = 0.0, 0
     for j in range(seqs.shape[0]):
         b = seqs[j:j + 1].to(dev)
-        lt = fpmodel(b, use_cache=False).logits.float()
-        ls = qmodel(b, use_cache=False).logits.float()
-        p = F.log_softmax(lt, dim=-1)
-        q = F.log_softmax(ls, dim=-1)
-        tot += (p.exp() * (p - q)).sum(-1).mean().item()
-        n += 1
+        lt = fpmodel(b, use_cache=False).logits
+        ls = qmodel(b, use_cache=False).logits
+        for i in range(0, lt.shape[1], chunk):
+            p = F.log_softmax(lt[:, i:i + chunk].float(), dim=-1)
+            q = F.log_softmax(ls[:, i:i + chunk].float(), dim=-1)
+            tot += (p.exp() * (p - q)).sum(-1).sum().item()
+            n += p.shape[1]
+            del p, q
+        del lt, ls
     return tot / max(n, 1)
 
 

@@ -17,14 +17,14 @@ cell () {  # arm variant opts block seed
     | /home/work/venv/bin/python -u /home/work/exp/ts.py > /home/work/exp/logs/${TAG}.log)
 }
 
-pair () {  # arm variant opts seed -> both blocks concurrently
-  echo "[p1] === $1 seed $4, blocks 0 and 8 concurrently, start $(date -u +%H:%M:%S) ==="
+pair () {  # arm variant opts seed -> both blocks, sequentially
+  # Measured: the two blocks run concurrently took 602 s wall against ~640 s
+  # sequential -- 6% saved -- and OOM'd the KL stage, which needs a second
+  # resident model. Not worth it on a 24 GB card.
+  echo "[p1] === $1 seed $4, blocks 0 and 8, start $(date -u +%H:%M:%S) ==="
   local T0=$SECONDS
-  cell "$1" "$2" "$3" 0 "$4" &
-  local P1=$!
-  cell "$1" "$2" "$3" 8 "$4" &
-  local P2=$!
-  wait $P1 $P2
+  cell "$1" "$2" "$3" 0 "$4"
+  cell "$1" "$2" "$3" 8 "$4"
   echo "[p1] === $1 seed $4 done in $((SECONDS-T0))s at $(date -u +%H:%M:%S) ==="
 }
 

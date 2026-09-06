@@ -1,6 +1,4 @@
-[p1] === base seed 0, blocks 0 and 8 concurrently, start 16:02:29 ===
+[p1] === base seed 0, blocks 0 and 8, start 16:14:06 ===
 [skip] base_b0_s0
 [skip] base_b8_s0
-[p1] === base seed 0 done in 0s at 16:02:29 ===
-[p1] === dup seed 0, blocks 0 and 8 concurrently, start 16:02:31 ===
-[p1] === dup seed 0 done in 602s at 16:12:33 ===
+[p1] === base seed 0 done in 0s at 16:14:06 ===
