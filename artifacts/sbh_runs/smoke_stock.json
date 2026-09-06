@@ -1,0 +1,38 @@
+{
+ "tag": "smoke_stock",
+ "layers": {
+  "0.self_attn.q_proj": {
+   "rank": 992,
+   "pre": 0.027439594116155284,
+   "post": 0.005717640798845546
+  },
+  "0.self_attn.v_proj": {
+   "rank": 384,
+   "pre": 0.12261910791921606,
+   "post": 0.04253414843682325
+  }
+ },
+ "blocks": {},
+ "timing": {
+  "tune_nonfact_s": 315.1178135871887,
+  "admm_stage_s": 1.1604225635528564,
+  "block_refine_s": 312.3152873516083
+ },
+ "args": {
+  "mode": "run",
+  "model_id": "/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da",
+  "tag": "smoke_stock",
+  "block": 0,
+  "seed": 0,
+  "calib_seed": 0,
+  "variant": "stock",
+  "variant_opts": "{}",
+  "nonfact_epochs": 1,
+  "fact_epochs": 1,
+  "admm_outer_iters": 20,
+  "no_step3": false,
+  "no_eval": true
+ },
+ "block": 0,
+ "variant_opts": {}
+}

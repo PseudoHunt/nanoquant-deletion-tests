@@ -1,0 +1,4 @@
+# large cached tensors (regenerable: nqx/sbh.py cache)
+*.pt
+artifacts/sbh/
+artifacts/hin/
