@@ -1,12 +1,4 @@
-[p1] === base seed 0, blocks 0 and 8, start 16:14:06 ===
+[p1] === base seed 0, blocks 0 and 8, start 16:28:47 ===
 [skip] base_b0_s0
 [skip] base_b8_s0
-[p1] === base seed 0 done in 0s at 16:14:06 ===
-[p1] === dup seed 0, blocks 0 and 8, start 16:14:08 ===
-[skip] dup_b0_s0
-[p1] === dup seed 0 done in 300s at 16:19:08 ===
-[p1] === A seed 0, blocks 0 and 8, start 16:19:10 ===
-[p1] === A seed 0 done in 58s at 16:20:08 ===
-[p1] === B seed 0, blocks 0 and 8, start 16:20:10 ===
-[p1] === B seed 0 done in 191s at 16:23:21 ===
-[p1] === AB seed 0, blocks 0 and 8, start 16:23:22 ===
+[p1] === base seed 0 done in 0s at 16:28:47 ===
