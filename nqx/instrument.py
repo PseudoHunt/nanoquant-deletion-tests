@@ -59,8 +59,10 @@ def _hin_hook(module, inputs, outputs, layer_name, acc, run_states):
 
 
 @torch.no_grad()
-def _register_hin_hooks(model, dev):
+def _register_hin_hooks(model, dev, name_filter=None):
     linear_layers = {n: m for n, m in model.named_modules() if isinstance(m, nn.Linear) and "lm_head" not in n}
+    if name_filter is not None:
+        linear_layers = {n: m for n, m in linear_layers.items() if name_filter(n)}
     acc, run_states, handles = {}, defaultdict(lambda: {"global_max": None, "n": 0}), []
     for n, m in linear_layers.items():
         acc[n] = torch.zeros(m.weight.shape[1], m.weight.shape[1], dtype=torch.float32, device=dev)
@@ -68,7 +70,7 @@ def _register_hin_hooks(model, dev):
     return acc, run_states, handles
 
 
-def collect_hin(model, dataloader, dev, out_dir, strategy="online"):
+def collect_hin(model, dataloader, dev, out_dir, strategy="online", name_filter=None):
     """Runs NanoQuant's calibration pass once, collecting i_norm/o_norm exactly as
     upstream does *and* the full H_in. Returns their raw_stats unchanged."""
     from nanoquant.core import importance as imp
@@ -79,7 +81,7 @@ def collect_hin(model, dataloader, dev, out_dir, strategy="online"):
         print(f"[INSTR] H_in already on disk at {out_dir}, skipping collection")
         return None
 
-    acc, run_states, handles = _register_hin_hooks(model, dev)
+    acc, run_states, handles = _register_hin_hooks(model, dev, name_filter)
     orig = imp._run_calibration_loop
     state = {"n_calls": 0}
 
@@ -235,6 +237,8 @@ def compress_block_recon_instr(model, fp_model, dataloader, quant_config, ctx):
             importance = importance_layer.o_norm.to(dev)
         tuning_inputs = tuning_inputs.to(dev)
         target_outputs = target_outputs.to(dev)
+        # [INSTR] module-path prefix, so variants can find this block's H_in on disk
+        blk_prefix = next(n for n, mm in model.named_modules() if mm is q_blocks[i])
 
         for name in layers_to_factorize:
             if name not in sublayers:
@@ -250,7 +254,8 @@ def compress_block_recon_instr(model, fp_model, dataloader, quant_config, ctx):
             curr_rank = admm_ranks.get(key)
             t = time.time()
             nano_linear, final_factor_results = ctx.factorize_fn(q_block, name, curr_rank, quant_config,
-                                                                 ctx=ctx, key=key)
+                                                                 ctx=ctx, key=key,
+                                                                 hin_key=f"{blk_prefix}.{name}")
             ctx.rec["timing"]["admm_stage_s"] += time.time() - t
             del final_factor_results
             cleanup_memory()
@@ -302,6 +307,6 @@ def compress_block_recon_instr(model, fp_model, dataloader, quant_config, ctx):
     return model
 
 
-def factorize_stock(layer, name, rank, quant_config, ctx=None, key=None):
+def factorize_stock(layer, name, rank, quant_config, ctx=None, key=None, hin_key=None):
     """Upstream factorize_and_replace, signature-adapted for the Ctx hook."""
     return factorize_and_replace(layer, name, rank, quant_config)
