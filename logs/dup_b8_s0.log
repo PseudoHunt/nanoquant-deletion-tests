@@ -1,202 +1,193 @@
-[     5.45] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
-[     5.82] LlamaForCausalLM(
-[     5.82]   (model): LlamaModel(
-[     5.82]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
-[     5.82]     (layers): ModuleList(
-[     5.82]       (0-15): 16 x LlamaDecoderLayer(
-[     5.82]         (self_attn): LlamaAttention(
-[     5.82]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[     5.82]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
-[     5.82]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
-[     5.82]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[     5.82]         )
-[     5.82]         (mlp): LlamaMLP(
-[     5.82]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[     5.82]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[     5.82]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
-[     5.82]           (act_fn): SiLUActivation()
-[     5.82]         )
-[     5.82]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.82]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.82]       )
-[     5.82]     )
-[     5.82]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
-[     5.82]     (rotary_emb): LlamaRotaryEmbedding()
-[     5.82]   )
-[     5.82]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
-[     5.82] )
-[     5.85] Attaching statistics to 112 layers...
-[     5.85] Registered i_norm and o_norm buffers to 112 layers
-[     5.85] Rank calculation: Bits = (1.00), Scales: 2
-[    12.82] 		(Epoch 01/08) Block Loss: 0.0000e+00
-[    17.22] 		(Epoch 02/08) Block Loss: 0.0000e+00
-[    21.61] 		(Epoch 03/08) Block Loss: 0.0000e+00
-[    26.01] 		(Epoch 04/08) Block Loss: 0.0000e+00
-[    30.42] 		(Epoch 05/08) Block Loss: 0.0000e+00
-[    34.83] 		(Epoch 06/08) Block Loss: 0.0000e+00
-[    39.23] 		(Epoch 07/08) Block Loss: 0.0000e+00
-[    43.65] 		(Epoch 08/08) Block Loss: 0.0000e+00
-[    49.43] 		ADMM weight recon error: raw=599.0150, norm=0.2202, per_el=1.4282e-04, ADMM time=5.53s
-[    50.22] 		[SBH] 8.self_attn.q_proj pre = 7.184625e-04  J_pre = 2.727764e-02  fro_pre = 2.202151e-01
-[    53.95] 		(Epoch 01/08) Block Loss: 8.1105e-07
-[    57.69] 		(Epoch 02/08) Block Loss: 6.2790e-07
-[    61.40] 		(Epoch 03/08) Block Loss: 6.2206e-07
-[    65.11] 		(Epoch 04/08) Block Loss: 6.3366e-07
-[    68.83] 		(Epoch 05/08) Block Loss: 6.0099e-07
-[    72.54] 		(Epoch 06/08) Block Loss: 5.6408e-07
-[    76.25] 		(Epoch 07/08) Block Loss: 5.3475e-07
-[    79.97] 		(Epoch 08/08) Block Loss: 4.7901e-07
-[    80.39] 		[SBH] 8.self_attn.q_proj post = 2.837993e-04  J_post = 2.829022e-02  fro_post = 2.418111e-01
-[    85.12] 		(Epoch 01/08) Block Loss: 1.1259e-06
-[    89.69] 		(Epoch 02/08) Block Loss: 8.2529e-07
-[    94.26] 		(Epoch 03/08) Block Loss: 6.2475e-07
-[    98.84] 		(Epoch 04/08) Block Loss: 4.4915e-07
-[   103.41] 		(Epoch 05/08) Block Loss: 3.8470e-07
-[   107.99] 		(Epoch 06/08) Block Loss: 3.3570e-07
-[   112.56] 		(Epoch 07/08) Block Loss: 3.1496e-07
-[   117.01] 		(Epoch 08/08) Block Loss: 3.0932e-07
-[   118.91] 		ADMM weight recon error: raw=61.3825, norm=0.3548, per_el=5.8539e-05, ADMM time=1.70s
-[   119.73] 		[SBH] 8.self_attn.v_proj pre = 2.889764e-03  J_pre = 2.726140e-01  fro_pre = 3.543027e-01
-[   123.37] 		(Epoch 01/08) Block Loss: 3.2990e-06
-[   127.01] 		(Epoch 02/08) Block Loss: 2.6218e-06
-[   130.64] 		(Epoch 03/08) Block Loss: 2.6124e-06
-[   134.26] 		(Epoch 04/08) Block Loss: 2.5886e-06
-[   137.90] 		(Epoch 05/08) Block Loss: 2.5195e-06
-[   141.54] 		(Epoch 06/08) Block Loss: 2.4294e-06
-[   145.19] 		(Epoch 07/08) Block Loss: 2.3538e-06
-[   148.75] 		(Epoch 08/08) Block Loss: 2.1651e-06
-[   149.24] 		[SBH] 8.self_attn.v_proj post = 1.314609e-03  J_post = 2.526794e-01  fro_post = 4.114534e-01
-[   153.99] 		(Epoch 01/08) Block Loss: 1.9507e-06
-[   158.57] 		(Epoch 02/08) Block Loss: 1.5197e-06
-[   163.14] 		(Epoch 03/08) Block Loss: 1.3863e-06
-[   167.73] 		(Epoch 04/08) Block Loss: 1.2165e-06
-[   172.31] 		(Epoch 05/08) Block Loss: 1.1048e-06
-[   176.89] 		(Epoch 06/08) Block Loss: 1.0505e-06
-[   181.48] 		(Epoch 07/08) Block Loss: 1.0212e-06
-[   185.81] 		(Epoch 08/08) Block Loss: 1.0100e-06
-[   191.02] 		ADMM weight recon error: raw=241.0212, norm=0.2702, per_el=5.7464e-05, ADMM time=5.01s
-[   191.86] 		[SBH] 8.self_attn.o_proj pre = 4.019260e-03  J_pre = 2.721965e-01  fro_pre = 2.701601e-01
-[   195.64] 		(Epoch 01/08) Block Loss: 5.2122e-06
-[   199.44] 		(Epoch 02/08) Block Loss: 4.1297e-06
-[   203.23] 		(Epoch 03/08) Block Loss: 3.9165e-06
-[   207.02] 		(Epoch 04/08) Block Loss: 3.8145e-06
-[   210.80] 		(Epoch 05/08) Block Loss: 3.7913e-06
-[   214.59] 		(Epoch 06/08) Block Loss: 3.7453e-06
-[   218.39] 		(Epoch 07/08) Block Loss: 3.6277e-06
-[   221.98] 		(Epoch 08/08) Block Loss: 3.4307e-06
-[   222.49] 		[SBH] 8.self_attn.o_proj post = 2.238277e-03  J_post = 2.280454e-01  fro_post = 3.342262e-01
-[   227.22] 		(Epoch 01/08) Block Loss: 2.7748e-06
-[   231.76] 		(Epoch 02/08) Block Loss: 2.2346e-06
-[   236.31] 		(Epoch 03/08) Block Loss: 2.0524e-06
-[   240.85] 		(Epoch 04/08) Block Loss: 1.9268e-06
-[   245.41] 		(Epoch 05/08) Block Loss: 1.8488e-06
-[   249.97] 		(Epoch 06/08) Block Loss: 1.7983e-06
-[   254.52] 		(Epoch 07/08) Block Loss: 1.7682e-06
-[   258.79] 		(Epoch 08/08) Block Loss: 1.7548e-06
-[   260.63] 		ADMM weight recon error: raw=441.2406, norm=0.2772, per_el=4.2080e-04, ADMM time=1.65s
-[   261.46] 		[SBH] 8.self_attn.k_proj pre = 2.189420e-03  J_pre = 2.968464e-02  fro_pre = 2.785954e-01
-[   265.19] 		(Epoch 01/08) Block Loss: 2.2385e-06
-[   268.92] 		(Epoch 02/08) Block Loss: 2.0814e-06
-[   272.64] 		(Epoch 03/08) Block Loss: 2.0289e-06
-[   276.37] 		(Epoch 04/08) Block Loss: 2.0046e-06
-[   280.08] 		(Epoch 05/08) Block Loss: 1.9937e-06
-[   283.80] 		(Epoch 06/08) Block Loss: 1.9854e-06
-[   287.51] 		(Epoch 07/08) Block Loss: 1.9805e-06
-[   291.04] 		(Epoch 08/08) Block Loss: 1.9751e-06
-[   291.56] 		[SBH] 8.self_attn.k_proj post = 1.784902e-03  J_post = 2.860806e-02  fro_post = 2.987732e-01
-[   296.28] 		(Epoch 01/08) Block Loss: 2.1674e-06
-[   300.83] 		(Epoch 02/08) Block Loss: 2.0092e-06
-[   305.39] 		(Epoch 03/08) Block Loss: 1.9367e-06
-[   309.94] 		(Epoch 04/08) Block Loss: 1.8582e-06
-[   314.50] 		(Epoch 05/08) Block Loss: 1.8084e-06
-[   319.06] 		(Epoch 06/08) Block Loss: 1.7730e-06
-[   323.62] 		(Epoch 07/08) Block Loss: 1.7507e-06
-[   327.96] 		(Epoch 08/08) Block Loss: 1.7401e-06
-[   345.58] 		ADMM weight recon error: raw=2295.4648, norm=0.3132, per_el=1.3682e-04, ADMM time=17.31s
-[   346.45] 		[SBH] 8.mlp.gate_proj pre = 4.553593e-03  J_pre = 5.793815e-02  fro_pre = 3.138822e-01
-[   350.90] 		(Epoch 01/08) Block Loss: 5.3091e-06
-[   355.34] 		(Epoch 02/08) Block Loss: 4.9804e-06
-[   359.78] 		(Epoch 03/08) Block Loss: 5.0638e-06
-[   364.22] 		(Epoch 04/08) Block Loss: 5.0808e-06
-[   368.65] 		(Epoch 05/08) Block Loss: 5.0917e-06
-[   373.10] 		(Epoch 06/08) Block Loss: 5.0163e-06
-[   377.54] 		(Epoch 07/08) Block Loss: 4.9077e-06
-[   381.74] 		(Epoch 08/08) Block Loss: 4.6070e-06
-[   382.29] 		[SBH] 8.mlp.gate_proj post = 3.286878e-03  J_post = 5.940327e-02  fro_post = 3.606730e-01
-[   386.80] 		(Epoch 01/08) Block Loss: 4.0739e-06
-[   391.14] 		(Epoch 02/08) Block Loss: 3.7171e-06
-[   395.48] 		(Epoch 03/08) Block Loss: 3.5647e-06
-[   399.82] 		(Epoch 04/08) Block Loss: 3.4675e-06
-[   404.17] 		(Epoch 05/08) Block Loss: 3.4013e-06
-[   408.51] 		(Epoch 06/08) Block Loss: 3.3578e-06
-[   412.84] 		(Epoch 07/08) Block Loss: 3.3291e-06
-[   416.97] 		(Epoch 08/08) Block Loss: 3.3156e-06
-[   434.60] 		ADMM weight recon error: raw=1685.5299, norm=0.3608, per_el=1.0047e-04, ADMM time=17.32s
-[   435.47] 		[SBH] 8.mlp.up_proj pre = 1.106567e-02  J_pre = 2.436471e-01  fro_pre = 3.606534e-01
-[   439.99] 		(Epoch 01/08) Block Loss: 1.5006e-05
-[   444.52] 		(Epoch 02/08) Block Loss: 1.3481e-05
-[   449.02] 		(Epoch 03/08) Block Loss: 1.3609e-05
-[   453.53] 		(Epoch 04/08) Block Loss: 1.3579e-05
-[   458.05] 		(Epoch 05/08) Block Loss: 1.3365e-05
-[   462.58] 		(Epoch 06/08) Block Loss: 1.3214e-05
-[   467.10] 		(Epoch 07/08) Block Loss: 1.2912e-05
-[   471.40] 		(Epoch 08/08) Block Loss: 1.2155e-05
-[   471.90] 		[SBH] 8.mlp.up_proj post = 7.730917e-03  J_post = 2.644183e-01  fro_post = 4.253478e-01
-[   476.18] 		(Epoch 01/08) Block Loss: 1.0239e-05
-[   480.30] 		(Epoch 02/08) Block Loss: 9.1225e-06
-[   484.42] 		(Epoch 03/08) Block Loss: 8.6182e-06
-[   488.54] 		(Epoch 04/08) Block Loss: 8.3348e-06
-[   492.66] 		(Epoch 05/08) Block Loss: 8.1603e-06
-[   496.78] 		(Epoch 06/08) Block Loss: 8.0577e-06
-[   500.89] 		(Epoch 07/08) Block Loss: 8.0033e-06
-[   504.80] 		(Epoch 08/08) Block Loss: 7.9832e-06
-[   522.49] 		ADMM weight recon error: raw=1528.1105, norm=0.3271, per_el=9.1082e-05, ADMM time=17.38s
-[   523.57] 		[SBH] 8.mlp.down_proj pre = 1.403054e-02  J_pre = 2.847204e-01  fro_pre = 3.276562e-01
-[   528.19] 		(Epoch 01/08) Block Loss: 2.0494e-05
-[   532.81] 		(Epoch 02/08) Block Loss: 2.0275e-05
-[   537.42] 		(Epoch 03/08) Block Loss: 1.9935e-05
-[   542.04] 		(Epoch 04/08) Block Loss: 1.9756e-05
-[   546.68] 		(Epoch 05/08) Block Loss: 1.9685e-05
-[   551.29] 		(Epoch 06/08) Block Loss: 1.9757e-05
-[   555.91] 		(Epoch 07/08) Block Loss: 1.9335e-05
-[   560.35] 		(Epoch 08/08) Block Loss: 1.8609e-05
-[   560.77] 		[SBH] 8.mlp.down_proj post = 1.148344e-02  J_post = 2.605116e-01  fro_post = 3.944485e-01
-[   566.00] Token indices sequence length is longer than the specified maximum sequence length for this model (289077 > 131072). Running this sequence through the model will result in indexing errors
-[   566.22] Using sequence length: 2048 (model max: 2048)
-[   593.84] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
-[   593.88] LlamaForCausalLM(
-[   593.88]   (model): LlamaModel(
-[   593.88]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
-[   593.88]     (layers): ModuleList(
-[   593.88]       (0-15): 16 x LlamaDecoderLayer(
-[   593.88]         (self_attn): LlamaAttention(
-[   593.88]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[   593.88]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
-[   593.88]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
-[   593.88]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
-[   593.88]         )
-[   593.88]         (mlp): LlamaMLP(
-[   593.88]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[   593.88]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
-[   593.88]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
-[   593.88]           (act_fn): SiLUActivation()
-[   593.88]         )
-[   593.88]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[   593.88]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
-[   593.88]       )
-[   593.88]     )
-[   593.88]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
-[   593.88]     (rotary_emb): LlamaRotaryEmbedding()
-[   593.88]   )
-[   593.88]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
-[   593.88] )
-[   594.81] Traceback (most recent call last):
-[   594.81]   File "/home/work/exp/nqx/sbh.py", line 256, in <module>
-[   594.81]     (do_cache if a.mode == "cache" else do_run)(a)
-[   594.81]   File "/home/work/exp/nqx/sbh.py", line 229, in do_run
-[   594.81]     ctx.rec["kl_to_fp"] = kl_to_fp(model, fp, seqs, dev)
-[   594.81]   File "/root/miniconda3/envs/py3.10/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-[   594.81]     return func(*args, **kwargs)
-[   594.81]   File "/home/work/exp/nqx/sbh.py", line 118, in kl_to_fp
-[   594.81]     tot += (p.exp() * (p - q)).sum(-1).mean().item()
-[   594.81] torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1002.00 MiB. GPU 0 has a total capacity of 23.60 GiB of which 342.88 MiB is free. Process 6564 has 12.44 GiB memory in use. Including non-PyTorch memory, this process has 10.81 GiB memory in use. Of the allocated memory 10.50 GiB is allocated by PyTorch, and 12.92 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+[     5.38] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[     5.74] LlamaForCausalLM(
+[     5.74]   (model): LlamaModel(
+[     5.74]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[     5.74]     (layers): ModuleList(
+[     5.74]       (0-15): 16 x LlamaDecoderLayer(
+[     5.74]         (self_attn): LlamaAttention(
+[     5.74]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.74]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.74]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[     5.74]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[     5.74]         )
+[     5.74]         (mlp): LlamaMLP(
+[     5.74]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.74]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[     5.74]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[     5.74]           (act_fn): SiLUActivation()
+[     5.74]         )
+[     5.74]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.74]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.74]       )
+[     5.74]     )
+[     5.74]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[     5.74]     (rotary_emb): LlamaRotaryEmbedding()
+[     5.74]   )
+[     5.74]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[     5.74] )
+[     5.76] Attaching statistics to 112 layers...
+[     5.76] Registered i_norm and o_norm buffers to 112 layers
+[     5.76] Rank calculation: Bits = (1.00), Scales: 2
+[    10.25] 		(Epoch 01/08) Block Loss: 0.0000e+00
+[    12.29] 		(Epoch 02/08) Block Loss: 0.0000e+00
+[    14.32] 		(Epoch 03/08) Block Loss: 0.0000e+00
+[    16.36] 		(Epoch 04/08) Block Loss: 0.0000e+00
+[    18.40] 		(Epoch 05/08) Block Loss: 0.0000e+00
+[    20.44] 		(Epoch 06/08) Block Loss: 0.0000e+00
+[    22.49] 		(Epoch 07/08) Block Loss: 0.0000e+00
+[    24.53] 		(Epoch 08/08) Block Loss: 0.0000e+00
+[    27.33] 		ADMM weight recon error: raw=599.0150, norm=0.2202, per_el=1.4282e-04, ADMM time=2.59s
+[    27.87] 		[SBH] 8.self_attn.q_proj pre = 7.184625e-04  J_pre = 2.727764e-02  fro_pre = 2.202151e-01
+[    29.63] 		(Epoch 01/08) Block Loss: 8.1092e-07
+[    31.40] 		(Epoch 02/08) Block Loss: 6.3321e-07
+[    33.17] 		(Epoch 03/08) Block Loss: 6.2436e-07
+[    34.95] 		(Epoch 04/08) Block Loss: 6.2301e-07
+[    36.72] 		(Epoch 05/08) Block Loss: 6.0202e-07
+[    38.49] 		(Epoch 06/08) Block Loss: 5.7077e-07
+[    40.26] 		(Epoch 07/08) Block Loss: 5.4014e-07
+[    42.04] 		(Epoch 08/08) Block Loss: 4.7961e-07
+[    42.40] 		[SBH] 8.self_attn.q_proj post = 2.835237e-04  J_post = 2.833487e-02  fro_post = 2.415867e-01
+[    44.68] 		(Epoch 01/08) Block Loss: 1.0802e-06
+[    46.80] 		(Epoch 02/08) Block Loss: 8.0278e-07
+[    48.93] 		(Epoch 03/08) Block Loss: 6.2240e-07
+[    51.06] 		(Epoch 04/08) Block Loss: 4.5796e-07
+[    53.19] 		(Epoch 05/08) Block Loss: 3.8651e-07
+[    55.32] 		(Epoch 06/08) Block Loss: 3.4003e-07
+[    57.45] 		(Epoch 07/08) Block Loss: 3.1490e-07
+[    59.58] 		(Epoch 08/08) Block Loss: 3.0891e-07
+[    60.93] 		ADMM weight recon error: raw=61.4512, norm=0.3552, per_el=5.8604e-05, ADMM time=1.16s
+[    61.46] 		[SBH] 8.self_attn.v_proj pre = 2.999234e-03  J_pre = 2.737371e-01  fro_pre = 3.546332e-01
+[    63.20] 		(Epoch 01/08) Block Loss: 3.3570e-06
+[    64.95] 		(Epoch 02/08) Block Loss: 2.6799e-06
+[    66.70] 		(Epoch 03/08) Block Loss: 2.6957e-06
+[    68.46] 		(Epoch 04/08) Block Loss: 2.5990e-06
+[    70.21] 		(Epoch 05/08) Block Loss: 2.5681e-06
+[    71.97] 		(Epoch 06/08) Block Loss: 2.4445e-06
+[    73.72] 		(Epoch 07/08) Block Loss: 2.3657e-06
+[    75.48] 		(Epoch 08/08) Block Loss: 2.1848e-06
+[    75.85] 		[SBH] 8.self_attn.v_proj post = 1.325546e-03  J_post = 2.534976e-01  fro_post = 4.116830e-01
+[    78.17] 		(Epoch 01/08) Block Loss: 1.9755e-06
+[    80.30] 		(Epoch 02/08) Block Loss: 1.5019e-06
+[    82.45] 		(Epoch 03/08) Block Loss: 1.3433e-06
+[    84.59] 		(Epoch 04/08) Block Loss: 1.1986e-06
+[    86.73] 		(Epoch 05/08) Block Loss: 1.1028e-06
+[    88.86] 		(Epoch 06/08) Block Loss: 1.0484e-06
+[    91.00] 		(Epoch 07/08) Block Loss: 1.0214e-06
+[    93.14] 		(Epoch 08/08) Block Loss: 1.0105e-06
+[    95.72] 		ADMM weight recon error: raw=240.8304, norm=0.2700, per_el=5.7418e-05, ADMM time=2.37s
+[    96.30] 		[SBH] 8.self_attn.o_proj pre = 4.008251e-03  J_pre = 2.729188e-01  fro_pre = 2.699336e-01
+[    98.11] 		(Epoch 01/08) Block Loss: 5.2302e-06
+[    99.93] 		(Epoch 02/08) Block Loss: 4.1360e-06
+[   101.75] 		(Epoch 03/08) Block Loss: 3.9668e-06
+[   103.57] 		(Epoch 04/08) Block Loss: 3.8555e-06
+[   105.39] 		(Epoch 05/08) Block Loss: 3.7863e-06
+[   107.21] 		(Epoch 06/08) Block Loss: 3.7491e-06
+[   109.02] 		(Epoch 07/08) Block Loss: 3.6187e-06
+[   110.84] 		(Epoch 08/08) Block Loss: 3.4560e-06
+[   111.20] 		[SBH] 8.self_attn.o_proj post = 2.251825e-03  J_post = 2.291427e-01  fro_post = 3.326496e-01
+[   113.52] 		(Epoch 01/08) Block Loss: 2.7989e-06
+[   115.64] 		(Epoch 02/08) Block Loss: 2.2483e-06
+[   117.75] 		(Epoch 03/08) Block Loss: 2.0600e-06
+[   119.87] 		(Epoch 04/08) Block Loss: 1.9385e-06
+[   121.99] 		(Epoch 05/08) Block Loss: 1.8613e-06
+[   124.11] 		(Epoch 06/08) Block Loss: 1.8084e-06
+[   126.23] 		(Epoch 07/08) Block Loss: 1.7777e-06
+[   128.35] 		(Epoch 08/08) Block Loss: 1.7642e-06
+[   129.67] 		ADMM weight recon error: raw=441.0370, norm=0.2770, per_el=4.2061e-04, ADMM time=1.14s
+[   130.20] 		[SBH] 8.self_attn.k_proj pre = 2.240973e-03  J_pre = 2.973351e-02  fro_pre = 2.783767e-01
+[   131.98] 		(Epoch 01/08) Block Loss: 2.2524e-06
+[   133.77] 		(Epoch 02/08) Block Loss: 2.0938e-06
+[   135.55] 		(Epoch 03/08) Block Loss: 2.0409e-06
+[   137.34] 		(Epoch 04/08) Block Loss: 2.0169e-06
+[   139.12] 		(Epoch 05/08) Block Loss: 2.0055e-06
+[   140.91] 		(Epoch 06/08) Block Loss: 1.9972e-06
+[   142.70] 		(Epoch 07/08) Block Loss: 1.9925e-06
+[   144.48] 		(Epoch 08/08) Block Loss: 1.9853e-06
+[   144.85] 		[SBH] 8.self_attn.k_proj post = 1.793915e-03  J_post = 2.910018e-02  fro_post = 2.975871e-01
+[   147.13] 		(Epoch 01/08) Block Loss: 2.1723e-06
+[   149.25] 		(Epoch 02/08) Block Loss: 2.0213e-06
+[   151.37] 		(Epoch 03/08) Block Loss: 1.9639e-06
+[   153.49] 		(Epoch 04/08) Block Loss: 1.8705e-06
+[   155.62] 		(Epoch 05/08) Block Loss: 1.8160e-06
+[   157.74] 		(Epoch 06/08) Block Loss: 1.7819e-06
+[   159.86] 		(Epoch 07/08) Block Loss: 1.7604e-06
+[   161.98] 		(Epoch 08/08) Block Loss: 1.7498e-06
+[   170.35] 		ADMM weight recon error: raw=2298.3003, norm=0.3136, per_el=1.3699e-04, ADMM time=8.08s
+[   170.93] 		[SBH] 8.mlp.gate_proj pre = 4.560047e-03  J_pre = 5.823447e-02  fro_pre = 3.140772e-01
+[   173.02] 		(Epoch 01/08) Block Loss: 5.3120e-06
+[   175.11] 		(Epoch 02/08) Block Loss: 4.9951e-06
+[   177.20] 		(Epoch 03/08) Block Loss: 5.0769e-06
+[   179.29] 		(Epoch 04/08) Block Loss: 5.0921e-06
+[   181.39] 		(Epoch 05/08) Block Loss: 5.1018e-06
+[   183.48] 		(Epoch 06/08) Block Loss: 5.0342e-06
+[   185.57] 		(Epoch 07/08) Block Loss: 4.9090e-06
+[   187.66] 		(Epoch 08/08) Block Loss: 4.6121e-06
+[   188.05] 		[SBH] 8.mlp.gate_proj post = 3.294080e-03  J_post = 5.956739e-02  fro_post = 3.608951e-01
+[   190.25] 		(Epoch 01/08) Block Loss: 4.0789e-06
+[   192.27] 		(Epoch 02/08) Block Loss: 3.7206e-06
+[   194.30] 		(Epoch 03/08) Block Loss: 3.5691e-06
+[   196.33] 		(Epoch 04/08) Block Loss: 3.4731e-06
+[   198.35] 		(Epoch 05/08) Block Loss: 3.4062e-06
+[   200.38] 		(Epoch 06/08) Block Loss: 3.3627e-06
+[   202.41] 		(Epoch 07/08) Block Loss: 3.3339e-06
+[   204.44] 		(Epoch 08/08) Block Loss: 3.3203e-06
+[   212.82] 		ADMM weight recon error: raw=1687.9569, norm=0.3613, per_el=1.0061e-04, ADMM time=8.10s
+[   213.39] 		[SBH] 8.mlp.up_proj pre = 1.107516e-02  J_pre = 2.441612e-01  fro_pre = 3.608803e-01
+[   215.52] 		(Epoch 01/08) Block Loss: 1.4963e-05
+[   217.65] 		(Epoch 02/08) Block Loss: 1.3493e-05
+[   219.78] 		(Epoch 03/08) Block Loss: 1.3686e-05
+[   221.91] 		(Epoch 04/08) Block Loss: 1.3441e-05
+[   224.04] 		(Epoch 05/08) Block Loss: 1.3500e-05
+[   226.18] 		(Epoch 06/08) Block Loss: 1.3190e-05
+[   228.32] 		(Epoch 07/08) Block Loss: 1.2883e-05
+[   230.45] 		(Epoch 08/08) Block Loss: 1.2153e-05
+[   230.85] 		[SBH] 8.mlp.up_proj post = 7.744532e-03  J_post = 2.647622e-01  fro_post = 4.260063e-01
+[   232.97] 		(Epoch 01/08) Block Loss: 1.0241e-05
+[   234.90] 		(Epoch 02/08) Block Loss: 9.1279e-06
+[   236.84] 		(Epoch 03/08) Block Loss: 8.6249e-06
+[   238.78] 		(Epoch 04/08) Block Loss: 8.3416e-06
+[   240.72] 		(Epoch 05/08) Block Loss: 8.1673e-06
+[   242.66] 		(Epoch 06/08) Block Loss: 8.0648e-06
+[   244.60] 		(Epoch 07/08) Block Loss: 8.0105e-06
+[   246.54] 		(Epoch 08/08) Block Loss: 7.9904e-06
+[   254.94] 		ADMM weight recon error: raw=1530.4784, norm=0.3276, per_el=9.1224e-05, ADMM time=8.09s
+[   255.77] 		[SBH] 8.mlp.down_proj pre = 1.405470e-02  J_pre = 2.850882e-01  fro_pre = 3.279120e-01
+[   257.95] 		(Epoch 01/08) Block Loss: 2.0436e-05
+[   260.13] 		(Epoch 02/08) Block Loss: 2.0441e-05
+[   262.30] 		(Epoch 03/08) Block Loss: 2.0095e-05
+[   264.48] 		(Epoch 04/08) Block Loss: 1.9944e-05
+[   266.66] 		(Epoch 05/08) Block Loss: 1.9764e-05
+[   268.83] 		(Epoch 06/08) Block Loss: 1.9539e-05
+[   271.01] 		(Epoch 07/08) Block Loss: 1.9360e-05
+[   273.19] 		(Epoch 08/08) Block Loss: 1.8646e-05
+[   273.60] 		[SBH] 8.mlp.down_proj post = 1.150079e-02  J_post = 2.609606e-01  fro_post = 3.942171e-01
+[   278.57] Token indices sequence length is longer than the specified maximum sequence length for this model (289077 > 131072). Running this sequence through the model will result in indexing errors
+[   278.78] Using sequence length: 2048 (model max: 2048)
+[   292.02] Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+[   292.06] LlamaForCausalLM(
+[   292.06]   (model): LlamaModel(
+[   292.06]     (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+[   292.06]     (layers): ModuleList(
+[   292.06]       (0-15): 16 x LlamaDecoderLayer(
+[   292.06]         (self_attn): LlamaAttention(
+[   292.06]           (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[   292.06]           (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+[   292.06]           (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+[   292.06]           (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+[   292.06]         )
+[   292.06]         (mlp): LlamaMLP(
+[   292.06]           (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[   292.06]           (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+[   292.06]           (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+[   292.06]           (act_fn): SiLUActivation()
+[   292.06]         )
+[   292.06]         (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[   292.06]         (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+[   292.06]       )
+[   292.06]     )
+[   292.06]     (norm): LlamaRMSNorm((2048,), eps=1e-05)
+[   292.06]     (rotary_emb): LlamaRotaryEmbedding()
+[   292.06]   )
+[   292.06]   (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+[   292.06] )
+[   299.18] [SBH] FINAL {"tag": "dup_b8_s0", "block": 8, "block_pre": 0.014054695040546022, "block_post": 0.01150078849820299, "ppl_wiki2": 10.353480339050293, "kl_to_fp": 0.06385014587431215}
