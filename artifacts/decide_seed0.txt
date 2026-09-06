@@ -1,0 +1,62 @@
+=== block level ===
+arm      blk  n                 pre                post      ppl(1 blk)   KL-to-FP
+A          0  1 1.39482e-01+- 0e+00 1.28324e-01+- 0e+00  11.2545+-0.000    0.15119
+A          8  1 1.36143e-02+- 0e+00 1.19923e-02+- 0e+00  10.3903+-0.000    0.06713
+B          0  1 1.38752e-01+- 0e+00 1.27651e-01+- 0e+00  11.2520+-0.000    0.15162
+B          8  1 1.27958e-02+- 0e+00 1.14865e-02+- 0e+00  10.3770+-0.000    0.06548
+base       0  3 1.41595e-01+- 7e-04 1.23275e-01+- 3e-04  11.1307+-0.020    0.13951
+base       8  1 1.40450e-02+- 0e+00 1.14722e-02+- 0e+00  10.3604+-0.000    0.06404
+dup        0  1 1.41555e-01+- 0e+00 1.23014e-01+- 0e+00  11.1366+-0.000    0.13938
+dup        8  1 1.40547e-02+- 0e+00 1.15008e-02+- 0e+00  10.3535+-0.000    0.06385
+
+=== per-layer post block error (mean over seeds) ===
+-- block 0 --
+layer                              A            B         base          dup
+self_attn.q_proj          9.2856e-04   7.7743e-04   5.8020e-04   5.8277e-04
+self_attn.v_proj          1.2108e-02   1.2301e-02   1.1216e-02   1.1050e-02
+self_attn.o_proj          2.0845e-02   1.9014e-02   1.8830e-02   1.8843e-02
+self_attn.k_proj          1.5892e-02   1.6061e-02   1.4716e-02   1.4870e-02
+mlp.gate_proj             5.3543e-02   5.0502e-02   5.0662e-02   5.0392e-02
+mlp.up_proj               7.8747e-02   7.3870e-02   7.4951e-02   7.4819e-02
+mlp.down_proj             1.2832e-01   1.2765e-01   1.2327e-01   1.2301e-01
+-- block 8 --
+layer                              A            B         base          dup
+self_attn.q_proj          3.4792e-04   3.4087e-04   2.8327e-04   2.8352e-04
+self_attn.v_proj          1.4874e-03   1.3893e-03   1.3210e-03   1.3255e-03
+self_attn.o_proj          2.2961e-03   2.3336e-03   2.2511e-03   2.2518e-03
+self_attn.k_proj          1.9212e-03   1.9442e-03   1.7904e-03   1.7939e-03
+mlp.gate_proj             3.5742e-03   3.3424e-03   3.2876e-03   3.2941e-03
+mlp.up_proj               8.1026e-03   7.3317e-03   7.7349e-03   7.7445e-03
+mlp.down_proj             1.1992e-02   1.1487e-02   1.1472e-02   1.1501e-02
+
+=== per-layer H-weighted reconstruction objective J (pre -> post), mean over seeds ===
+-- block 0 --
+layer                          A pre       A post        B pre       B post     base pre    base post      dup pre     dup post
+self_attn.q_proj          1.0621e-02   1.0945e-02   1.3314e-02   7.8940e-03   7.8692e-03   7.0206e-03   7.7353e-03   7.0296e-03
+self_attn.v_proj          2.2351e-01   2.3012e-01   2.2409e-01   2.2992e-01   2.6403e-01   2.3386e-01   2.6623e-01   2.3393e-01
+self_attn.o_proj          8.5310e-02   8.9871e-02   7.0675e-02   7.7409e-02   8.4034e-02   8.0690e-02   8.4098e-02   8.1298e-02
+self_attn.k_proj          1.6405e-02   2.3230e-02   4.1410e-02   2.6345e-02   1.8997e-02   2.0133e-02   1.8783e-02   1.9934e-02
+mlp.gate_proj             1.7539e-01   2.1618e-01   1.4276e-01   1.7964e-01   1.9327e-01   2.0269e-01   1.9467e-01   2.0387e-01
+mlp.up_proj               2.3502e-01   2.8137e-01   1.9236e-01   2.4222e-01   2.6463e-01   2.6921e-01   2.6562e-01   2.6940e-01
+mlp.down_proj             1.8567e-01   1.8937e-01   1.8885e-01   1.8958e-01   1.9608e-01   1.8427e-01   1.9627e-01   1.8429e-01
+-- block 8 --
+layer                          A pre       A post        B pre       B post     base pre    base post      dup pre     dup post
+self_attn.q_proj          2.6593e-02   3.2161e-02   2.9047e-02   3.2721e-02   2.7278e-02   2.8367e-02   2.7278e-02   2.8335e-02
+self_attn.v_proj          2.5732e-01   2.6446e-01   2.5510e-01   2.5887e-01   2.7122e-01   2.5349e-01   2.7374e-01   2.5350e-01
+self_attn.o_proj          2.2308e-01   2.4107e-01   2.3698e-01   2.3439e-01   2.7332e-01   2.2946e-01   2.7292e-01   2.2914e-01
+self_attn.k_proj          2.7660e-02   3.0299e-02   6.2740e-02   4.3510e-02   3.0083e-02   2.8872e-02   2.9734e-02   2.9100e-02
+mlp.gate_proj             5.8710e-02   6.6971e-02   4.8996e-02   5.7966e-02   5.7851e-02   5.9202e-02   5.8234e-02   5.9567e-02
+mlp.up_proj               2.2933e-01   2.8830e-01   1.8743e-01   2.3382e-01   2.4366e-01   2.6482e-01   2.4416e-01   2.6476e-01
+mlp.down_proj             2.6762e-01   2.7227e-01   2.6550e-01   2.6763e-01   2.8448e-01   2.6018e-01   2.8509e-01   2.6096e-01
+
+=== paired vs baseline, post block error (the verdict number) ===
+  A        blk0 n=1: d_pre=-2.057e-03 ( -1.45%)   d_post=+4.921e-03+-0.0e+00 ( +3.99%)   no
+  A        blk8 n=1: d_pre=-4.307e-04 ( -3.07%)   d_post=+5.202e-04+-0.0e+00 ( +4.53%)   no
+  -> A: do not promote
+  B        blk0 n=1: d_pre=-2.787e-03 ( -1.97%)   d_post=+4.248e-03+-0.0e+00 ( +3.44%)   no
+  B        blk8 n=1: d_pre=-1.249e-03 ( -8.89%)   d_post=+1.436e-05+-0.0e+00 ( +0.13%)   no
+  -> B: do not promote
+
+=== determinism floor (dup vs base, identical config and seed) ===
+  blk0 seed0: base=1.234022662e-01  dup=1.230141117e-01  reldiff=3.145e-03  differs
+  blk8 seed0: base=1.147215173e-02  dup=1.150078850e-02  reldiff=2.496e-03  differs

@@ -1,0 +1,79 @@
+{
+ "tag": "AB_b0_s0",
+ "layers": {
+  "0.self_attn.q_proj": {
+   "J_admm": 39.6199951171875,
+   "J_refit": 13.72935962677002,
+   "J_binarized": 158.52322387695312,
+   "J_als": null,
+   "refit_gain": 0.653473969742765,
+   "vtilde_rel_err": 0.0017001427477225661,
+   "admm_s": 2.9746410846710205,
+   "change1_s": 0.23715996742248535,
+   "rank": 992,
+   "pre": 0.010170454192302945,
+   "J_pre": 0.028271940633747508,
+   "fro_pre": 0.3219145185168443,
+   "post": 0.0010700259636509382,
+   "J_post": 0.023935732752407683,
+   "fro_post": 0.3419247554254674
+  },
+  "0.self_attn.v_proj": {
+   "J_admm": 0.8493248820304871,
+   "J_refit": 0.557953953742981,
+   "J_binarized": 0.8600786924362183,
+   "J_als": null,
+   "refit_gain": 0.3430618064443415,
+   "vtilde_rel_err": 0.0018292483873665333,
+   "admm_s": 1.295501470565796,
+   "change1_s": 0.07601451873779297,
+   "rank": 384,
+   "pre": 0.022580610444463918,
+   "J_pre": 0.22726910380160445,
+   "fro_pre": 0.3846932838147843,
+   "post": 0.01322638880410761,
+   "J_post": 0.23981923440289954,
+   "fro_post": 0.42128121937570995
+  },
+  "0.self_attn.o_proj": {
+   "J_admm": 0.04506620392203331,
+   "J_refit": 0.01615961454808712,
+   "J_binarized": 0.05770304054021835,
+   "J_als": null,
+   "refit_gain": 0.6414249894212517,
+   "vtilde_rel_err": 0.0015492158709093928,
+   "admm_s": 2.7385449409484863,
+   "change1_s": 0.1820697784423828,
+   "rank": 992,
+   "pre": 0.03191092397159121,
+   "J_pre": 0.08994961911360558,
+   "fro_pre": 0.32630722617977975,
+   "post": 0.022084470256422593,
+   "J_post": 0.09296338654167342,
+   "fro_post": 0.3498844602423197
+  }
+ },
+ "blocks": {},
+ "timing": {
+  "tune_nonfact_s": 51.25502800941467,
+  "admm_stage_s": 8.043560028076172,
+  "block_refine_s": 43.392797231674194
+ },
+ "args": {
+  "mode": "run",
+  "model_id": "/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da",
+  "tag": "AB_b0_s0",
+  "block": 0,
+  "seed": 0,
+  "calib_seed": 0,
+  "variant": "testAB",
+  "variant_opts": "{}",
+  "nonfact_epochs": 8,
+  "fact_epochs": 8,
+  "admm_outer_iters": 400,
+  "no_step3": false,
+  "no_eval": false
+ },
+ "block": 0,
+ "variant_opts": {}
+}
