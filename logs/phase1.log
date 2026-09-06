@@ -6,3 +6,5 @@
 [skip] dup_b0_s0
 [skip] dup_b8_s0
 [p1] === dup seed 0 done in 0s at 16:28:49 ===
+[p1] === A seed 0, blocks 0 and 8, start 16:28:51 ===
+[p1] === A seed 0 done in 608s at 16:38:59 ===
