@@ -16,6 +16,7 @@ run_arm () {
 
 Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01YAQwZnt4tN9kRonGomC5bi" || true
+  git push -q origin master || echo "[chain] push failed"
   echo "[chain] === arm $1 done $(date) ==="
 }
 

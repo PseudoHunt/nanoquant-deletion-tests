@@ -1,0 +1,33 @@
+import torch, time
+from nanoquant.modules.hub import NanoQuantConfigDataclass  # noqa
+from nanoquant.utils.load_utils import load_model
+from nanoquant.core.compress_block import fused_weighted_mse
+from nanoquant.optimi import AdamW
+MID="/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da"
+m = load_model(MID, 2048, "cpu"); blk = m.model.layers[0].cuda()
+kw_cached = torch.load('/home/work/exp/artifacts/sbh/kwargs.pt')
+kw_cached = {k:(v.cuda() if isinstance(v,torch.Tensor) else v) for k,v in kw_cached.items()}
+xr = torch.randn(8,2048,2048, dtype=torch.bfloat16, device="cuda")
+yr = torch.randn_like(xr)
+xreal = torch.load('/home/work/exp/artifacts/sbh/in_b0.pt')[:8].cuda()
+yreal = torch.load('/home/work/exp/artifacts/sbh/out_b0.pt')[:8].cuda()
+print("real x: min/max/absmax/nan/inf:", xreal.float().min().item(), xreal.float().max().item(),
+      xreal.float().abs().max().item(), torch.isnan(xreal).any().item(), torch.isinf(xreal).any().item())
+rot = m.model.rotary_emb.cuda()
+pos = rot(xr[:1], torch.arange(2048, device="cuda").unsqueeze(0))
+kw_min = {"position_embeddings": pos, "attention_mask": None, "use_cache": False}
+params=[mm.weight for mm in blk.modules() if isinstance(mm, torch.nn.Linear)]
+for p in params: p.requires_grad=True
+opt = AdamW(params, lr=1e-4, weight_decay=0)
+def bench(x,y,kwargs,tag,n=6):
+    for i in range(2):
+        o=blk(x[i:i+1], **kwargs)[0]; fused_weighted_mse(o,y[i:i+1],imp).backward(); opt.step(); opt.zero_grad(set_to_none=True)
+    torch.cuda.synchronize(); t=time.time()
+    for i in range(n):
+        o=blk(x[i:i+1], **kwargs)[0]; fused_weighted_mse(o,y[i:i+1],imp).backward(); opt.step(); opt.zero_grad(set_to_none=True)
+    torch.cuda.synchronize(); print(f"{tag:34s}: {(time.time()-t)/n*1000:8.1f} ms/step")
+imp = torch.ones(2048, device="cuda")
+bench(xr,yr,kw_min,    "random x, minimal kwargs")
+bench(xr,yr,kw_cached, "random x, cached kwargs")
+bench(xreal,yreal,kw_min,    "real x, minimal kwargs")
+bench(xreal,yreal,kw_cached, "real x, cached kwargs")

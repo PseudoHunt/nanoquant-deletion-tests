@@ -40,6 +40,7 @@ def _qc(seed=0, **kw):
 
 
 # ---------------------------------------------------------------------------
+@torch.no_grad()
 def do_cache(args):
     os.makedirs(CACHE, exist_ok=True)
     qd = _qc(seed=args.calib_seed, model_id=args.model_id)
@@ -80,7 +81,7 @@ def do_cache(args):
     torch.save({k: (v.cpu() if isinstance(v, torch.Tensor) else v) for k, v in kwargs.items()},
                f"{CACHE}/kwargs.pt")
 
-    x = x.cpu()
+    x = x.detach().cpu().requires_grad_(False)
     for b in range(max(targets) + 1):
         blk = blocks[b].to("cuda")
         y = torch.zeros_like(x)
@@ -134,8 +135,8 @@ def do_run(args):
 
     kwargs = torch.load(f"{CACHE}/kwargs.pt")
     kwargs = {k: (v.to(dev) if isinstance(v, torch.Tensor) else v) for k, v in kwargs.items()}
-    x = torch.load(f"{CACHE}/in_b{b}.pt")
-    y = torch.load(f"{CACHE}/out_b{b}.pt")
+    x = torch.load(f"{CACHE}/in_b{b}.pt").detach().requires_grad_(False)
+    y = torch.load(f"{CACHE}/out_b{b}.pt").detach().requires_grad_(False)
     n_cal = qd['num_calib_samples']
     cal_in, cal_out = x[:n_cal], y[:n_cal]
     ho_in, ho_out = x[n_cal:], y[n_cal:]
