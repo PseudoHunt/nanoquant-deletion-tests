@@ -1,0 +1,33 @@
+=== R2_conf_1e-4 18:07:42 ===
+[D2] FINAL {"tag": "R2_conf_1e-4", "variant": "R2", "init": "conf", "lr": 0.0001, "post": 0.13786349283473381, "flip_mean": 5.561658731169571e-05, "pre_assert_ok": true, "step3_s": 25.862869262695312}
+=== R2_conf_3e-4 18:08:22 ===
+[D2] FINAL {"tag": "R2_conf_3e-4", "variant": "R2", "init": "conf", "lr": 0.0003, "post": 0.13724931958760692, "flip_mean": 0.00013156586396689818, "pre_assert_ok": true, "step3_s": 25.930684566497803}
+=== R2_conf_1e-3 18:09:01 ===
+[D2] FINAL {"tag": "R2_conf_1e-3", "variant": "R2", "init": "conf", "lr": 0.001, "post": 0.1344712366940001, "flip_mean": 0.00044247670276880465, "pre_assert_ok": true, "step3_s": 25.96651577949524}
+=== R2_conf_3e-3 18:09:41 ===
+[D2] FINAL {"tag": "R2_conf_3e-3", "variant": "R2", "init": "conf", "lr": 0.003, "post": 0.12719116596752347, "flip_mean": 0.001811688727164957, "pre_assert_ok": true, "step3_s": 25.94733500480652}
+=== R2_corner_1e-4 18:10:20 ===
+[D2] FINAL {"tag": "R2_corner_1e-4", "variant": "R2", "init": "corner", "lr": 0.0001, "post": 0.1380093192130326, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 25.911086797714233}
+=== R2_corner_3e-4 18:10:59 ===
+[D2] FINAL {"tag": "R2_corner_3e-4", "variant": "R2", "init": "corner", "lr": 0.0003, "post": 0.13800064469163614, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 26.009467363357544}
+=== R2_corner_1e-3 18:11:39 ===
+[D2] FINAL {"tag": "R2_corner_1e-3", "variant": "R2", "init": "corner", "lr": 0.001, "post": 0.13801327374962596, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 25.91767191886902}
+=== R2_corner_3e-3 18:12:18 ===
+[D2] FINAL {"tag": "R2_corner_3e-3", "variant": "R2", "init": "corner", "lr": 0.003, "post": 0.1380590286018024, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 25.967374324798584}
+=== H2_conf_1e-4 18:12:58 ===
+[D2] FINAL {"tag": "H2_conf_1e-4", "variant": "H2", "init": "conf", "lr": 0.0001, "post": 0.13718116024100419, "flip_mean": 8.758791109033024e-05, "pre_assert_ok": true, "step3_s": 28.287286043167114}
+=== H2_conf_3e-4 18:13:39 ===
+[D2] FINAL {"tag": "H2_conf_3e-4", "variant": "H2", "init": "conf", "lr": 0.0003, "post": 0.13590036295749955, "flip_mean": 0.0002497110194131632, "pre_assert_ok": true, "step3_s": 28.305078268051147}
+=== H2_conf_1e-3 18:14:21 ===
+[D2] FINAL {"tag": "H2_conf_1e-3", "variant": "H2", "init": "conf", "lr": 0.001, "post": 0.13111295769622766, "flip_mean": 0.0009739368181596676, "pre_assert_ok": true, "step3_s": 28.289111852645874}
+=== H2_conf_3e-3 18:15:03 ===
+[D2] FINAL {"tag": "H2_conf_3e-3", "variant": "H2", "init": "conf", "lr": 0.003, "post": 0.12287595826530766, "flip_mean": 0.0033797672014251085, "pre_assert_ok": true, "step3_s": 28.29268765449524}
+=== H2_corner_1e-4 18:15:45 ===
+[D2] FINAL {"tag": "H2_corner_1e-4", "variant": "H2", "init": "corner", "lr": 0.0001, "post": 0.13785309910565155, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 28.309149980545044}
+=== H2_corner_3e-4 18:16:27 ===
+[D2] FINAL {"tag": "H2_corner_3e-4", "variant": "H2", "init": "corner", "lr": 0.0003, "post": 0.13785373606192985, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 28.271538019180298}
+=== H2_corner_1e-3 18:17:08 ===
+[D2] FINAL {"tag": "H2_corner_1e-3", "variant": "H2", "init": "corner", "lr": 0.001, "post": 0.13785289141292068, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 28.292392015457153}
+=== H2_corner_3e-3 18:17:50 ===
+[D2] FINAL {"tag": "H2_corner_3e-3", "variant": "H2", "init": "corner", "lr": 0.003, "post": 0.13785175532411176, "flip_mean": 0.0, "pre_assert_ok": true, "step3_s": 28.32213020324707}
+=== D2 DONE Sun Sep  6 18:18:32 UTC 2026 ===

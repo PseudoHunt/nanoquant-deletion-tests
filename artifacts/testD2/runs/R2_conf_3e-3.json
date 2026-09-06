@@ -1,0 +1,99 @@
+{
+ "tag": "R2_conf_3e-3",
+ "variant": "R2",
+ "init": "conf",
+ "lr": 0.003,
+ "seed": 0,
+ "pre_cached": 0.14366140267175126,
+ "pre_loaded": 0.14366140267175126,
+ "c_per_factor": {
+  "self_attn.q_proj.V_latent": 2.496104121208191,
+  "self_attn.q_proj.U_latent": 2.703683018684387,
+  "self_attn.k_proj.V_latent": 2.5238536596298218,
+  "self_attn.k_proj.U_latent": 2.7872308492660522,
+  "self_attn.v_proj.V_latent": 2.89943277835846,
+  "self_attn.v_proj.U_latent": 2.789565920829773,
+  "self_attn.o_proj.V_latent": 2.750740647315979,
+  "self_attn.o_proj.U_latent": 2.07927668094635,
+  "mlp.gate_proj.V_latent": 1.7530547976493833,
+  "mlp.gate_proj.U_latent": 2.577065110206604,
+  "mlp.up_proj.V_latent": 1.7521119713783266,
+  "mlp.up_proj.U_latent": 2.622024416923523,
+  "mlp.down_proj.V_latent": 2.5254684686660767,
+  "mlp.down_proj.U_latent": 1.799030005931854
+ },
+ "pre_sign_theta0": 0.14366140267175126,
+ "pre_assert_ok": true,
+ "step3_s": 25.94733500480652,
+ "post": 0.12719116596752347,
+ "flips": {
+  "self_attn.q_proj.V_latent": 0.0003755631041713059,
+  "self_attn.q_proj.U_latent": 0.0006935365963727236,
+  "self_attn.k_proj.V_latent": 0.00047810873365961015,
+  "self_attn.k_proj.U_latent": 0.0005289713735692203,
+  "self_attn.v_proj.V_latent": 0.0007044474477879703,
+  "self_attn.v_proj.U_latent": 0.00103759765625,
+  "self_attn.o_proj.V_latent": 0.0008495699730701745,
+  "self_attn.o_proj.U_latent": 0.0007058420451357961,
+  "mlp.gate_proj.V_latent": 5.8898924180539325e-05,
+  "mlp.gate_proj.U_latent": 0.004111328162252903,
+  "mlp.up_proj.V_latent": 9.826660243561491e-05,
+  "mlp.up_proj.U_latent": 0.0049314117059111595,
+  "mlp.down_proj.V_latent": 0.006756591610610485,
+  "mlp.down_proj.U_latent": 0.0040335082449018955
+ },
+ "flip_mean": 0.001811688727164957,
+ "layers": {
+  "self_attn.q_proj": {
+   "J_pre": 0.007735288261215197,
+   "fro_pre": 0.18930057693802652,
+   "J_post": 0.007888894665379766,
+   "fro_post": 0.19244720419469252
+  },
+  "self_attn.v_proj": {
+   "J_pre": 0.2636580932329425,
+   "fro_pre": 0.3158041597251896,
+   "J_post": 0.2621224829428165,
+   "fro_post": 0.3187474488062629
+  },
+  "self_attn.o_proj": {
+   "J_pre": 0.08212134376456359,
+   "fro_pre": 0.2541778654123359,
+   "J_post": 0.0828191789722946,
+   "fro_post": 0.25772208264701035
+  },
+  "self_attn.k_proj": {
+   "J_pre": 0.019132570772497474,
+   "fro_pre": 0.2036301668896271,
+   "J_post": 0.019788711273305056,
+   "fro_post": 0.20452725797636337
+  },
+  "mlp.gate_proj": {
+   "J_pre": 0.19139048943042603,
+   "fro_pre": 0.3302337822095895,
+   "J_post": 0.1942319138806303,
+   "fro_post": 0.33406935371138347
+  },
+  "mlp.up_proj": {
+   "J_pre": 0.25079461600794717,
+   "fro_pre": 0.34389301019348656,
+   "J_post": 0.24984119794428905,
+   "fro_post": 0.34550795278938706
+  },
+  "mlp.down_proj": {
+   "J_pre": 0.1661540237576141,
+   "fro_pre": 0.34879393474063314,
+   "J_post": 0.15886505440606144,
+   "fro_post": 0.3567319563983232
+  }
+ },
+ "layer_post_curve": {
+  "self_attn.q_proj": 0.14148552867973122,
+  "self_attn.v_proj": 0.14116656073986453,
+  "self_attn.o_proj": 0.14080689914211092,
+  "self_attn.k_proj": 0.14070815129823183,
+  "mlp.gate_proj": 0.1382669503210837,
+  "mlp.up_proj": 0.1349074447876679,
+  "mlp.down_proj": 0.12719116596752347
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "tag": "R2_conf_1e-4",
+ "variant": "R2",
+ "init": "conf",
+ "lr": 0.0001,
+ "seed": 0,
+ "pre_cached": 0.14366140267175126,
+ "pre_loaded": 0.14366140267175126,
+ "c_per_factor": {
+  "self_attn.q_proj.V_latent": 2.496104121208191,
+  "self_attn.q_proj.U_latent": 2.703683018684387,
+  "self_attn.k_proj.V_latent": 2.5238536596298218,
+  "self_attn.k_proj.U_latent": 2.7872308492660522,
+  "self_attn.v_proj.V_latent": 2.89943277835846,
+  "self_attn.v_proj.U_latent": 2.789565920829773,
+  "self_attn.o_proj.V_latent": 2.750740647315979,
+  "self_attn.o_proj.U_latent": 2.07927668094635,
+  "mlp.gate_proj.V_latent": 1.7530547976493833,
+  "mlp.gate_proj.U_latent": 2.577065110206604,
+  "mlp.up_proj.V_latent": 1.7521119713783266,
+  "mlp.up_proj.U_latent": 2.622024416923523,
+  "mlp.down_proj.V_latent": 2.5254684686660767,
+  "mlp.down_proj.U_latent": 1.799030005931854
+ },
+ "pre_sign_theta0": 0.14366140267175126,
+ "pre_assert_ok": true,
+ "step3_s": 25.862869262695312,
+ "post": 0.13786349283473381,
+ "flips": {
+  "self_attn.q_proj.V_latent": 3.1994233722798526e-05,
+  "self_attn.q_proj.U_latent": 4.1346396756125614e-05,
+  "self_attn.k_proj.V_latent": 6.103515625e-05,
+  "self_attn.k_proj.U_latent": 1.0172526344831567e-05,
+  "self_attn.v_proj.V_latent": 5.594889444182627e-05,
+  "self_attn.v_proj.U_latent": 6.612142169615254e-05,
+  "self_attn.o_proj.V_latent": 9.056829730980098e-05,
+  "self_attn.o_proj.U_latent": 2.0673198378062807e-05,
+  "mlp.gate_proj.V_latent": 4.272460955689894e-06,
+  "mlp.gate_proj.U_latent": 0.00011878967052325606,
+  "mlp.up_proj.V_latent": 7.324218586290954e-06,
+  "mlp.up_proj.U_latent": 0.0001878356997622177,
+  "mlp.down_proj.V_latent": 8.132934453897178e-05,
+  "mlp.down_proj.U_latent": 1.220703097715159e-06
+ },
+ "flip_mean": 5.561658731169571e-05,
+ "layers": {
+  "self_attn.q_proj": {
+   "J_pre": 0.007735288261215197,
+   "fro_pre": 0.18930057693802652,
+   "J_post": 0.007788985537526335,
+   "fro_post": 0.19509011938408347
+  },
+  "self_attn.v_proj": {
+   "J_pre": 0.2636580932329425,
+   "fro_pre": 0.3158041597251896,
+   "J_post": 0.2634598296794805,
+   "fro_post": 0.31906434421222873
+  },
+  "self_attn.o_proj": {
+   "J_pre": 0.08212134376456359,
+   "fro_pre": 0.2541778654123359,
+   "J_post": 0.08380218732807593,
+   "fro_post": 0.2610777771196395
+  },
+  "self_attn.k_proj": {
+   "J_pre": 0.019132570772497474,
+   "fro_pre": 0.2036301668896271,
+   "J_post": 0.021024650364071876,
+   "fro_post": 0.2052937224570847
+  },
+  "mlp.gate_proj": {
+   "J_pre": 0.19139048943042603,
+   "fro_pre": 0.3302337822095895,
+   "J_post": 0.19250729508127293,
+   "fro_post": 0.33276529518661757
+  },
+  "mlp.up_proj": {
+   "J_pre": 0.25079461600794717,
+   "fro_pre": 0.34389301019348656,
+   "J_post": 0.2505802887579317,
+   "fro_post": 0.3442419476490434
+  },
+  "mlp.down_proj": {
+   "J_pre": 0.1661540237576141,
+   "fro_pre": 0.34879393474063314,
+   "J_post": 0.16529487931217562,
+   "fro_post": 0.3491394020629625
+  }
+ },
+ "layer_post_curve": {
+  "self_attn.q_proj": 0.13818804622554134,
+  "self_attn.v_proj": 0.1381690375551202,
+  "self_attn.o_proj": 0.1381763788231798,
+  "self_attn.k_proj": 0.1381862604987551,
+  "mlp.gate_proj": 0.13809216468491464,
+  "mlp.up_proj": 0.13793707612007305,
+  "mlp.down_proj": 0.13786349283473381
+ }
+}

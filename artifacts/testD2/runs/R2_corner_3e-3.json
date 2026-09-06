@@ -1,0 +1,84 @@
+{
+ "tag": "R2_corner_3e-3",
+ "variant": "R2",
+ "init": "corner",
+ "lr": 0.003,
+ "seed": 0,
+ "pre_cached": 0.14366140267175126,
+ "pre_loaded": 0.14366140267175126,
+ "c_per_factor": {},
+ "pre_sign_theta0": 0.14366140267175126,
+ "pre_assert_ok": true,
+ "step3_s": 25.967374324798584,
+ "post": 0.1380590286018024,
+ "flips": {
+  "self_attn.q_proj.V_latent": 0.0,
+  "self_attn.q_proj.U_latent": 0.0,
+  "self_attn.k_proj.V_latent": 0.0,
+  "self_attn.k_proj.U_latent": 0.0,
+  "self_attn.v_proj.V_latent": 0.0,
+  "self_attn.v_proj.U_latent": 0.0,
+  "self_attn.o_proj.V_latent": 0.0,
+  "self_attn.o_proj.U_latent": 0.0,
+  "mlp.gate_proj.V_latent": 0.0,
+  "mlp.gate_proj.U_latent": 0.0,
+  "mlp.up_proj.V_latent": 0.0,
+  "mlp.up_proj.U_latent": 0.0,
+  "mlp.down_proj.V_latent": 0.0,
+  "mlp.down_proj.U_latent": 0.0
+ },
+ "flip_mean": 0.0,
+ "layers": {
+  "self_attn.q_proj": {
+   "J_pre": 0.007735288261215197,
+   "fro_pre": 0.18930057693802652,
+   "J_post": 0.007771821562448435,
+   "fro_post": 0.19536203058076326
+  },
+  "self_attn.v_proj": {
+   "J_pre": 0.2636580932329425,
+   "fro_pre": 0.3158041597251896,
+   "J_post": 0.2633283433715421,
+   "fro_post": 0.3192635306453432
+  },
+  "self_attn.o_proj": {
+   "J_pre": 0.08212134376456359,
+   "fro_pre": 0.2541778654123359,
+   "J_post": 0.08377049219884745,
+   "fro_post": 0.2619113348020984
+  },
+  "self_attn.k_proj": {
+   "J_pre": 0.019132570772497474,
+   "fro_pre": 0.2036301668896271,
+   "J_post": 0.021008241517856095,
+   "fro_post": 0.20527784743177593
+  },
+  "mlp.gate_proj": {
+   "J_pre": 0.19139048943042603,
+   "fro_pre": 0.3302337822095895,
+   "J_post": 0.1926656948714908,
+   "fro_post": 0.33300375564978335
+  },
+  "mlp.up_proj": {
+   "J_pre": 0.25079461600794717,
+   "fro_pre": 0.34389301019348656,
+   "J_post": 0.25059176396475463,
+   "fro_post": 0.34418241297689545
+  },
+  "mlp.down_proj": {
+   "J_pre": 0.1661540237576141,
+   "fro_pre": 0.34879393474063314,
+   "J_post": 0.16640637868204974,
+   "fro_post": 0.3496448132321101
+  }
+ },
+ "layer_post_curve": {
+  "self_attn.q_proj": 0.1380590286018024,
+  "self_attn.v_proj": 0.1380590286018024,
+  "self_attn.o_proj": 0.1380590286018024,
+  "self_attn.k_proj": 0.1380590286018024,
+  "mlp.gate_proj": 0.1380590286018024,
+  "mlp.up_proj": 0.1380590286018024,
+  "mlp.down_proj": 0.1380590286018024
+ }
+}

@@ -1,0 +1,39 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[D2] pre: cached=0.143661403 loaded=0.143661403 sign(Theta0)=0.143661403 -> OK
+		(Epoch 01/08) Block Loss: 2.0645e-05  beta=1.00
+		(Epoch 02/08) Block Loss: 1.9735e-05  beta=1.00
+		(Epoch 03/08) Block Loss: 1.9127e-05  beta=1.00
+		(Epoch 04/08) Block Loss: 1.8776e-05  beta=1.00
+		(Epoch 05/08) Block Loss: 1.8592e-05  beta=1.00
+		(Epoch 06/08) Block Loss: 1.8507e-05  beta=1.00
+		(Epoch 07/08) Block Loss: 1.8405e-05  beta=1.00
+		(Epoch 08/08) Block Loss: 1.8243e-05  beta=1.00
+[D2] FINAL {"tag": "H2_conf_3e-3", "variant": "H2", "init": "conf", "lr": 0.003, "post": 0.12287595826530766, "flip_mean": 0.0033797672014251085, "pre_assert_ok": true, "step3_s": 28.29268765449524}

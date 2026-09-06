@@ -1,0 +1,84 @@
+{
+ "tag": "H2_corner_1e-3",
+ "variant": "H2",
+ "init": "corner",
+ "lr": 0.001,
+ "seed": 0,
+ "pre_cached": 0.14366140267175126,
+ "pre_loaded": 0.14366140267175126,
+ "c_per_factor": {},
+ "pre_sign_theta0": 0.14366140267175126,
+ "pre_assert_ok": true,
+ "step3_s": 28.292392015457153,
+ "post": 0.13785289141292068,
+ "flips": {
+  "self_attn.q_proj.V_latent": 0.0,
+  "self_attn.q_proj.U_latent": 0.0,
+  "self_attn.k_proj.V_latent": 0.0,
+  "self_attn.k_proj.U_latent": 0.0,
+  "self_attn.v_proj.V_latent": 0.0,
+  "self_attn.v_proj.U_latent": 0.0,
+  "self_attn.o_proj.V_latent": 0.0,
+  "self_attn.o_proj.U_latent": 0.0,
+  "mlp.gate_proj.V_latent": 0.0,
+  "mlp.gate_proj.U_latent": 0.0,
+  "mlp.up_proj.V_latent": 0.0,
+  "mlp.up_proj.U_latent": 0.0,
+  "mlp.down_proj.V_latent": 0.0,
+  "mlp.down_proj.U_latent": 0.0
+ },
+ "flip_mean": 0.0,
+ "layers": {
+  "self_attn.q_proj": {
+   "J_pre": 0.007735288261215197,
+   "fro_pre": 0.18930057693802652,
+   "J_post": 0.007876922468446595,
+   "fro_post": 0.19675120913155877
+  },
+  "self_attn.v_proj": {
+   "J_pre": 0.2636580932329425,
+   "fro_pre": 0.3158041597251896,
+   "J_post": 0.26368099992767624,
+   "fro_post": 0.3196350991431465
+  },
+  "self_attn.o_proj": {
+   "J_pre": 0.08212134376456359,
+   "fro_pre": 0.2541778654123359,
+   "J_post": 0.08397236809004122,
+   "fro_post": 0.26292975331290064
+  },
+  "self_attn.k_proj": {
+   "J_pre": 0.019132570772497474,
+   "fro_pre": 0.2036301668896271,
+   "J_post": 0.02170127604317946,
+   "fro_post": 0.2057943436625479
+  },
+  "mlp.gate_proj": {
+   "J_pre": 0.19139048943042603,
+   "fro_pre": 0.3302337822095895,
+   "J_post": 0.1938087497564777,
+   "fro_post": 0.3343629840175201
+  },
+  "mlp.up_proj": {
+   "J_pre": 0.25079461600794717,
+   "fro_pre": 0.34389301019348656,
+   "J_post": 0.2506812436566672,
+   "fro_post": 0.3444128429480293
+  },
+  "mlp.down_proj": {
+   "J_pre": 0.1661540237576141,
+   "fro_pre": 0.34879393474063314,
+   "J_post": 0.167925285981345,
+   "fro_post": 0.35042895695302295
+  }
+ },
+ "layer_post_curve": {
+  "self_attn.q_proj": 0.13785289141292068,
+  "self_attn.v_proj": 0.13785289141292068,
+  "self_attn.o_proj": 0.13785289141292068,
+  "self_attn.k_proj": 0.13785289141292068,
+  "mlp.gate_proj": 0.13785289141292068,
+  "mlp.up_proj": 0.13785289141292068,
+  "mlp.down_proj": 0.13785289141292068
+ }
+}
