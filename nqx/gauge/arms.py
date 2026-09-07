@@ -391,6 +391,8 @@ def main():
         print(f"\n===== ARM {arm} =====", flush=True)
         if arm == "0a":
             out = r.arm0a()
+        elif arm.startswith("0a_r"):
+            out = r.arm0a(tag=arm)
         elif arm == "0a_dup":
             out = r.arm0a(tag="0a_dup")
         elif arm.startswith("0b_"):
@@ -405,7 +407,7 @@ def main():
             st_ = "greedy" if "greedy" in arm else "cyclic"
             fs_ = arm.endswith("fs")
             sx_ = ""
-            for k in ["b0123", "all50", "rand1", "fp64"]:
+            for k in ["b0123", "all50", "rand1", "fp64", "spread"]:
                 if k in arm:
                     sx_ = "_" + k
             out = r.arm4(tag=f"4_{st_}{sx_}" + ("_fixedscale" if fs_ else ""),

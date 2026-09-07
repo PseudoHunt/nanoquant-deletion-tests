@@ -152,21 +152,38 @@ the exact-equivalence premise held throughout.
 Net sign change over the whole layer: **0.002% of U, 0.022% of V**. Step 3 flips
 0.98% and 2.55%. The discrete gauge search moves ~100x fewer signs than Step 3.
 
-## Result 3 — the three numbers
+## Result 3 — the three numbers, scored against the baseline *distribution*
 
     E_ADMM  0.143766  ->  E_gauge  0.143728  ->  E_final  0.115354
 
-| arm | E_final | Δ vs 0a | verdict |
-|---|---|---|---|
-| 0a baseline | 0.115388 | — | — |
-| **0a duplicate** (identical state, re-run) | **0.115165** | **−0.193%** | replay floor |
-| 4_cyclic | 0.115354 | −0.030% | **FAIL** |
-| 4_cyclic, fixed ADMM scales | 0.115342 | −0.041% | **FAIL** |
-| gate threshold | 0.115030 | −0.31% | |
+`E_final` is the only stochastic quantity in this pipeline (NOTES.md#6):
+everything through `Q_NQ` export is bit-identical across processes, while Step 3
+diverges from a last-bit difference because it flips ~1% of the signs. Re-running
+the **identical** `0a` state eight times gives
 
-The gauge's improvement is **0.15x** the difference between running the identical
-baseline twice. Re-running 0a moves `E_final` 6.5x further than exhaustively
-searching every reachable one-plane binary model does.
+    mean 0.115231804   sd 8.69e-05 (0.0754%)   spread 0.2329%
+
+so a single-run difference below **2 sd = 0.15%** carries no information. The
+single `0a` draw originally used as "the baseline" is the **worst of the eight**.
+
+| arm | E_final | vs baseline mean | z | verdict |
+|---|---|---|---|---|
+| baseline distribution (n = 8) | 0.115232 +- 0.000087 | — | — | — |
+| 4_cyclic | 0.115354 | **+0.106%** | +1.41 | within noise |
+| 4_cyclic, fixed ADMM scales | 0.115342 | **+0.096%** | +1.27 | within noise |
+| 4_greedy | 0.115356 | **+0.107%** | +1.43 | within noise |
+| gauge, 4 rank blocks | 0.115399 | **+0.145%** | +1.92 | within noise |
+| `0b_200` extra STE (for contrast) | 0.118267 | +2.634% | +34.9 | **significant** |
+
+Every discrete-gauge arm is *worse* than the baseline mean, not better, and none
+is significant on its own. All four sit at z = +1.3 to +1.9 — consistently on the
+worse side, and the arm with the largest `E_gauge` gain (4 blocks) is the worst,
+which is the Outcome-C signature. At 1.9 sd that is suggestive and not
+established; distinguishing it needs replicates of the gauge arm too, not only of
+the baseline.
+
+For contrast, the extra-STE control sits at z = +17 and +35. That regression was
+never noise-limited and is unaffected by any of this.
 
 ## What kind of failure this is — and what it is not
 

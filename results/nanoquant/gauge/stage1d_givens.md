@@ -152,21 +152,38 @@ the exact-equivalence premise held throughout.
 Net sign change over the whole layer: **0.002% of U, 0.022% of V**. Step 3 flips
 0.98% and 2.55%. The discrete gauge search moves ~100x fewer signs than Step 3.
 
-## Result 3 — the three numbers
+## Result 3 — the three numbers, scored against the baseline *distribution*
 
     E_ADMM  0.143766  ->  E_gauge  0.143728  ->  E_final  0.115354
 
-| arm | E_final | Δ vs 0a | verdict |
-|---|---|---|---|
-| 0a baseline | 0.115388 | — | — |
-| **0a duplicate** (identical state, re-run) | **0.115165** | **−0.193%** | replay floor |
-| 4_cyclic | 0.115354 | −0.030% | **FAIL** |
-| 4_cyclic, fixed ADMM scales | 0.115342 | −0.041% | **FAIL** |
-| gate threshold | 0.115030 | −0.31% | |
+`E_final` is the only stochastic quantity in this pipeline (NOTES.md#6):
+everything through `Q_NQ` export is bit-identical across processes, while Step 3
+diverges from a last-bit difference because it flips ~1% of the signs. Re-running
+the **identical** `0a` state eight times gives
 
-The gauge's improvement is **0.15x** the difference between running the identical
-baseline twice. Re-running 0a moves `E_final` 6.5x further than exhaustively
-searching every reachable one-plane binary model does.
+    mean 0.115231804   sd 8.69e-05 (0.0754%)   spread 0.2329%
+
+so a single-run difference below **2 sd = 0.15%** carries no information. The
+single `0a` draw originally used as "the baseline" is the **worst of the eight**.
+
+| arm | E_final | vs baseline mean | z | verdict |
+|---|---|---|---|---|
+| baseline distribution (n = 8) | 0.115232 +- 0.000087 | — | — | — |
+| 4_cyclic | 0.115354 | **+0.106%** | +1.41 | within noise |
+| 4_cyclic, fixed ADMM scales | 0.115342 | **+0.096%** | +1.27 | within noise |
+| 4_greedy | 0.115356 | **+0.107%** | +1.43 | within noise |
+| gauge, 4 rank blocks | 0.115399 | **+0.145%** | +1.92 | within noise |
+| `0b_200` extra STE (for contrast) | 0.118267 | +2.634% | +34.9 | **significant** |
+
+Every discrete-gauge arm is *worse* than the baseline mean, not better, and none
+is significant on its own. All four sit at z = +1.3 to +1.9 — consistently on the
+worse side, and the arm with the largest `E_gauge` gain (4 blocks) is the worst,
+which is the Outcome-C signature. At 1.9 sd that is suggestive and not
+established; distinguishing it needs replicates of the gauge arm too, not only of
+the baseline.
+
+For contrast, the extra-STE control sits at z = +17 and +35. That regression was
+never noise-limited and is unaffected by any of this.
 
 ## What kind of failure this is — and what it is not
 
@@ -209,6 +226,12 @@ mechanisms and only the latter says anything about Step 3.
 # Generated tables
 
 ## The oracle
+
+| case | real bf16 forward | quadratic oracle | relative gap |
+|---|---|---|---|
+| identity | 0.12511274 | 0.12510566 | 5.66e-05 |
+| haar_a | 0.35037689 | 0.35019520 | 5.19e-04 |
+| haar_b | 0.35143047 | 0.35124217 | 5.36e-04 |
 
 The absolute gap is largely a common offset and is **not** the quantity that matters for ranking candidates; what matters is the accuracy of the *difference* `eps_Delta = |dE_oracle - dE_real|`, which is measured against the real forward at every checkpoint of every descent run below.
 
@@ -263,6 +286,62 @@ Log-log fit of cumulative real gain against accepted moves: **gain ∝ m^0.50** 
 | `E_gauge`, full `Q_NQ` export | 0.143728 |
 | planes visited / moves accepted | 1984 / 378 |
 
+## Coordinate descent — `cyclic_b0123`
+
+Rank blocks [0, 1, 2, 3], 1984 planes, strategy `cyclic`. Calibration data only.
+
+| sweep | accepted | E oracle | E real bf16 | cum vs start (oracle) | cum vs start (real) |
+|---|---|---|---|---|---|
+| 1 | 914 | 0.12494355 | 0.12494706 | -0.1290% | **-0.1324%** |
+
+| accepts | E oracle | E real bf16 | cum ΔE oracle | cum ΔE real | eps_Delta (cum) | sign Δ U | sign Δ V | reversals |
+|---|---|---|---|---|---|---|---|---|
+| 25 | 0.12509575 | 0.12509924 | -9.149e-06 | -1.350e-05 | 4.35e-06 | 0.000% | 0.005% | 376 |
+| 50 | 0.12509069 | 0.12509425 | -1.422e-05 | -1.849e-05 | 4.27e-06 | 0.000% | 0.006% | 643 |
+| 75 | 0.12508491 | 0.12508897 | -2.000e-05 | -2.377e-05 | 3.77e-06 | 0.001% | 0.010% | 936 |
+| 100 | 0.12508124 | 0.12508600 | -2.366e-05 | -2.673e-05 | 3.07e-06 | 0.001% | 0.012% | 1232 |
+| 125 | 0.12507811 | 0.12508275 | -2.679e-05 | -2.999e-05 | 3.20e-06 | 0.001% | 0.013% | 1336 |
+| 150 | 0.12507464 | 0.12507960 | -3.026e-05 | -3.314e-05 | 2.88e-06 | 0.001% | 0.015% | 1566 |
+| 175 | 0.12507193 | 0.12507884 | -3.298e-05 | -3.390e-05 | 9.22e-07 | 0.001% | 0.017% | 1676 |
+| 200 | 0.12506838 | 0.12507411 | -3.652e-05 | -3.863e-05 | 2.10e-06 | 0.002% | 0.021% | 1919 |
+| 225 | 0.12506236 | 0.12506791 | -4.254e-05 | -4.483e-05 | 2.29e-06 | 0.002% | 0.024% | 2174 |
+| 250 | 0.12505776 | 0.12506224 | -4.715e-05 | -5.050e-05 | 3.35e-06 | 0.002% | 0.027% | 2454 |
+| 275 | 0.12505299 | 0.12505658 | -5.192e-05 | -5.616e-05 | 4.24e-06 | 0.002% | 0.031% | 2782 |
+| 300 | 0.12504815 | 0.12505188 | -5.676e-05 | -6.086e-05 | 4.10e-06 | 0.003% | 0.035% | 3063 |
+| 325 | 0.12504178 | 0.12504569 | -6.312e-05 | -6.705e-05 | 3.93e-06 | 0.003% | 0.039% | 3579 |
+| 350 | 0.12503764 | 0.12504186 | -6.726e-05 | -7.087e-05 | 3.61e-06 | 0.003% | 0.041% | 3827 |
+| 375 | 0.12503381 | 0.12503784 | -7.109e-05 | -7.489e-05 | 3.80e-06 | 0.003% | 0.043% | 4102 |
+| 400 | 0.12503128 | 0.12503395 | -7.363e-05 | -7.879e-05 | 5.16e-06 | 0.003% | 0.043% | 4226 |
+| 425 | 0.12502733 | 0.12503055 | -7.758e-05 | -8.219e-05 | 4.62e-06 | 0.004% | 0.046% | 4475 |
+| 450 | 0.12502460 | 0.12502900 | -8.030e-05 | -8.374e-05 | 3.44e-06 | 0.004% | 0.047% | 4597 |
+| 475 | 0.12501553 | 0.12502263 | -8.938e-05 | -9.011e-05 | 7.34e-07 | 0.004% | 0.052% | 4952 |
+| 500 | 0.12501098 | 0.12501513 | -9.392e-05 | -9.761e-05 | 3.69e-06 | 0.004% | 0.056% | 5224 |
+| 525 | 0.12500720 | 0.12501127 | -9.771e-05 | -1.015e-04 | 3.76e-06 | 0.004% | 0.058% | 5454 |
+| 550 | 0.12500373 | 0.12500822 | -1.012e-04 | -1.045e-04 | 3.34e-06 | 0.005% | 0.059% | 5776 |
+| 575 | 0.12500077 | 0.12500515 | -1.041e-04 | -1.076e-04 | 3.46e-06 | 0.005% | 0.060% | 5964 |
+| 600 | 0.12499700 | 0.12500133 | -1.079e-04 | -1.114e-04 | 3.50e-06 | 0.005% | 0.062% | 6097 |
+| 625 | 0.12499340 | 0.12499822 | -1.115e-04 | -1.145e-04 | 3.02e-06 | 0.005% | 0.066% | 6408 |
+| 650 | 0.12498974 | 0.12499552 | -1.152e-04 | -1.172e-04 | 2.05e-06 | 0.005% | 0.067% | 6602 |
+| 675 | 0.12498756 | 0.12499313 | -1.173e-04 | -1.196e-04 | 2.26e-06 | 0.005% | 0.068% | 6776 |
+| 700 | 0.12498349 | 0.12498967 | -1.214e-04 | -1.231e-04 | 1.66e-06 | 0.005% | 0.071% | 6990 |
+| 725 | 0.12497487 | 0.12498178 | -1.300e-04 | -1.310e-04 | 9.26e-07 | 0.006% | 0.074% | 7281 |
+| 750 | 0.12496939 | 0.12497578 | -1.355e-04 | -1.370e-04 | 1.44e-06 | 0.006% | 0.077% | 7508 |
+| 775 | 0.12496649 | 0.12497303 | -1.384e-04 | -1.397e-04 | 1.30e-06 | 0.006% | 0.078% | 7610 |
+| 800 | 0.12496313 | 0.12496989 | -1.418e-04 | -1.428e-04 | 1.08e-06 | 0.006% | 0.081% | 7774 |
+| 825 | 0.12495942 | 0.12496623 | -1.455e-04 | -1.465e-04 | 1.03e-06 | 0.006% | 0.084% | 8002 |
+| 850 | 0.12495346 | 0.12495799 | -1.514e-04 | -1.548e-04 | 3.30e-06 | 0.006% | 0.086% | 8258 |
+| 875 | 0.12494897 | 0.12495357 | -1.559e-04 | -1.592e-04 | 3.24e-06 | 0.007% | 0.090% | 8602 |
+| 900 | 0.12494537 | 0.12495010 | -1.595e-04 | -1.626e-04 | 3.11e-06 | 0.007% | 0.092% | 8895 |
+
+Log-log fit of cumulative real gain against accepted moves: **gain ∝ m^0.76** (1.0 = independent/additive, 0.5 = random-walk/interfering).
+
+| | held-out block error |
+|---|---|
+| `E_ADMM` (start) | 0.143766 |
+| `E_gauge`, fixed ADMM scales | 0.143605 |
+| `E_gauge`, full `Q_NQ` export | 0.143606 |
+| planes visited / moves accepted | 1984 / 914 |
+
 ## Coordinate descent — `greedy`
 
 Rank blocks [0], 496 planes, strategy `greedy`. Calibration data only.
@@ -286,6 +365,55 @@ Log-log fit of cumulative real gain against accepted moves: **gain ∝ m^0.23** 
 | `E_gauge`, full `Q_NQ` export | 0.143730 |
 | planes visited / moves accepted | 1418 / 85 |
 
+## Coordinate descent — `screen_k16`
+
+Rank blocks 0, 496 planes, strategy `screen`. Calibration data only.
+
+| sweep | accepted | E oracle | E real bf16 | cum vs start (oracle) | cum vs start (real) |
+|---|---|---|---|---|---|
+| 1 | 13 | 0.12509359 | 0.12509589 | -0.0096% | **-0.0135%** |
+
+| | held-out block error |
+|---|---|
+| `E_ADMM` (start) | 0.143766 |
+| `E_gauge`, fixed ADMM scales | 0.143762 |
+| `E_gauge`, full `Q_NQ` export | 0.143762 |
+| planes visited / moves accepted | 541 / 13 |
+
+## Coordinate descent — `screen_k32`
+
+Rank blocks 0, 496 planes, strategy `screen`. Calibration data only.
+
+| sweep | accepted | E oracle | E real bf16 | cum vs start (oracle) | cum vs start (real) |
+|---|---|---|---|---|---|
+| 1 | 20 | 0.12508627 | 0.12509023 | -0.0155% | **-0.0180%** |
+
+| | held-out block error |
+|---|---|
+| `E_ADMM` (start) | 0.143766 |
+| `E_gauge`, fixed ADMM scales | 0.143754 |
+| `E_gauge`, full `Q_NQ` export | 0.143754 |
+| planes visited / moves accepted | 582 / 20 |
+
+## Coordinate descent — `screen_k64`
+
+Rank blocks 0, 496 planes, strategy `screen`. Calibration data only.
+
+| sweep | accepted | E oracle | E real bf16 | cum vs start (oracle) | cum vs start (real) |
+|---|---|---|---|---|---|
+| 1 | 33 | 0.12507720 | 0.12508226 | -0.0227% | **-0.0244%** |
+
+| accepts | E oracle | E real bf16 | cum ΔE oracle | cum ΔE real | eps_Delta (cum) | sign Δ U | sign Δ V | reversals |
+|---|---|---|---|---|---|---|---|---|
+| 25 | 0.12507845 | 0.12508357 | -2.721e-05 | -2.917e-05 | 1.96e-06 | 0.001% | 0.015% | 321 |
+
+| | held-out block error |
+|---|---|
+| `E_ADMM` (start) | 0.143766 |
+| `E_gauge`, fixed ADMM scales | 0.143746 |
+| `E_gauge`, full `Q_NQ` export | 0.143746 |
+| planes visited / moves accepted | 654 / 33 |
+
 ## Through the identical common Step 3
 
 | arm | E_ADMM | E_gauge pre-export | E_gauge | E_final | Δ vs 0a | Δ vs 0b_200 | sign Δ U | sign Δ V |
@@ -293,6 +421,7 @@ Log-log fit of cumulative real gain against accepted moves: **gain ∝ m^0.23** 
 | **0a baseline** | 0.143766 | — | 0.143766 | **0.115388** | — | — | 0.00% | 0.00% |
 | 0a duplicate (replay floor) | 0.143766 | — | 0.143766 | **0.115165** | -0.19% | — | 0.00% | 0.00% |
 | **4_cyclic** | 0.143766 | 0.143728 | 0.143728 | **0.115354** | -0.03% | -2.46% | 0.002% | 0.022% |
+| **4_cyclic_b0123** | 0.143766 | 0.143605 | 0.143606 | **0.115393** | +0.00% | -2.43% | 0.007% | 0.093% |
 | **4_cyclic_fixedscale** | 0.143766 | 0.143728 | 0.143728 | **0.115342** | -0.04% | -2.47% | 0.002% | 0.022% |
 | **4_greedy** | 0.143766 | 0.143730 | 0.143730 | **0.115356** | -0.03% | -2.46% | 0.002% | 0.022% |
 
