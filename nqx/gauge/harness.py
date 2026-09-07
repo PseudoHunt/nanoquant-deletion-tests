@@ -314,6 +314,53 @@ def sign_delta(a, b):
     return {k: (a[k] != b[k]).float().mean().item() for k in a}
 
 
+MASK_PATH = f"{GCACHE}/baseline_step3_mask.pt"
+
+
+@torch.no_grad()
+def save_step3_mask(init_signs, final_signs, layer="mlp.down_proj"):
+    """Which sign positions the BASELINE Step 3 moves, for one layer."""
+    m = {a: (init_signs[f"{layer}.{a}"] != final_signs[f"{layer}.{a}"])
+         for a in ["U_latent", "V_latent"]}
+    S.atomic_save(m, MASK_PATH)
+    return {a: int(v.sum()) for a, v in m.items()}
+
+
+@torch.no_grad()
+def gauge_step3_diagnostics(base, module_signs_gauged, init_signs, final_signs,
+                            layer="mlp.down_proj"):
+    """How the gauge's sign changes relate to the ones Step 3 would have made.
+
+    `overlap`  : of the positions the gauge changed, the fraction that the
+                 *baseline* Step 3 also changes -- i.e. how much of Step 3's own
+                 work the gauge has pre-spent.
+    `reversed` : of the positions the gauge changed, the fraction that Step 3
+                 subsequently puts back to the ADMM sign.
+    """
+    out = {}
+    admm = {"U_latent": C.pos_sign(base.U0).to(torch.int8).cpu(),
+            "V_latent": C.pos_sign(base.V0).to(torch.int8).cpu()}
+    bmask = torch.load(MASK_PATH, weights_only=False) if os.path.exists(MASK_PATH) else None
+    for a in ["U_latent", "V_latent"]:
+        g = module_signs_gauged[f"{layer}.{a}"]
+        gm = (g != admm[a])
+        ng = int(gm.sum())
+        fin = final_signs[f"{layer}.{a}"]
+        rev = int((gm & (fin == admm[a])).sum())
+        ent = {"n_gauge_changed": ng,
+               "frac_gauge_changed": ng / gm.numel(),
+               "step3_reversed_gauge_changes": rev,
+               "frac_gauge_changes_reversed": rev / max(ng, 1)}
+        if bmask is not None:
+            ov = int((gm & bmask[a]).sum())
+            ent["overlap_with_baseline_step3"] = ov
+            ent["frac_gauge_in_baseline_step3"] = ov / max(ng, 1)
+            ent["n_baseline_step3_changed"] = int(bmask[a].sum())
+            ent["frac_baseline_step3_pre_spent"] = ov / max(int(bmask[a].sum()), 1)
+        out[a] = ent
+    return out
+
+
 def save_run(rec, name):
     os.makedirs(f"{GCACHE}/runs", exist_ok=True)
     S.atomic_json(rec, f"{GCACHE}/runs/{name}.json")

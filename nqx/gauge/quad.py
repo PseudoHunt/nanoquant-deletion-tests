@@ -55,17 +55,28 @@ class Oracle:
             setattr(self, k, v)
 
     def to(self, dev):
-        for k in ["H", "G", "so0", "sp0"]:
-            setattr(self, k, getattr(self, k).to(dev))
+        for k in ["H", "G", "so0", "sp0", "out_weight"]:
+            if getattr(self, k, None) is not None:
+                setattr(self, k, getattr(self, k).to(dev))
         return self
+
+    def out_w(self, device=None):
+        """Per-output weight in the quadratic term.  Ones for the exact
+        block-output oracle (down_proj); `o_norm` for the layer surrogates."""
+        w = getattr(self, "out_weight", None)
+        if w is None:
+            w = torch.ones(self.out_features, dtype=torch.float64)
+            self.out_weight = w
+        return w.to(device) if device is not None else w
 
     def error(self, W):
         """E(W) for a deployed weight W [out, in].  fp64: E is a ~6x cancellation
         of terms of order ||T||^2, so fp32 here would put ~1e-5 of noise on a
         curve whose whole signal is ~5e-5."""
         Wd = W.double()
+        w = self.out_w(Wd.device)
         with C.no_tf32():
-            quad = (Wd * (Wd @ self.H)).sum()
+            quad = (w.unsqueeze(1) * Wd * (Wd @ self.H)).sum()
             lin = (self.G * Wd).sum()
         return float((self.T_sq - 2 * lin + quad) / self.Y_sq)
 

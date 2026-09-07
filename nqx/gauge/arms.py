@@ -51,6 +51,7 @@ class Runner:
         self.snapB = torch.load(f"{H.GCACHE}/snapshot_B.pt", weights_only=False)
         self.snapA = torch.load(f"{H.GCACHE}/snapshot_A.pt", weights_only=False)
         self.arm3_order = H.gauge_batch_order(ARM3_STEPS)
+        self._diag_base = None
 
     # -- state construction ------------------------------------------------
     def new_block(self):
@@ -77,6 +78,7 @@ class Runner:
         rec["E_gauge"] = self.block_err(blk)
         rec["J_pre"] = H.J_table(blk, self.W_refs, key="pre")
         init_signs = H.snapshot_signs(blk)
+        gauged_signs = {k: v.clone() for k, v in init_signs.items()}
         init_bin = H.binary_of(blk)
         rec["calib_func_loss_at_gauge"] = self.calib_func_loss(blk)
 
@@ -91,6 +93,11 @@ class Runner:
         rec["J"] = rec.pop("J_pre")
         final_signs = H.snapshot_signs(blk)
         rec["step3_sign_delta"] = H.sign_delta(init_signs, final_signs)
+        if tag.startswith("0a"):
+            rec["baseline_step3_mask"] = H.save_step3_mask(init_signs, final_signs)
+        if hasattr(self, "_diag_base") and self._diag_base is not None:
+            rec["gauge_step3_diag"] = H.gauge_step3_diagnostics(
+                self._diag_base, gauged_signs, init_signs, final_signs)
         tuned_bin = H.binary_of(blk)
         rec["layer_post_curve"] = H.layer_post_curve(blk, init_bin, tuned_bin,
                                                      self.ho_in, self.ho_out, self.kwargs)
@@ -368,7 +375,42 @@ class Runner:
         rec["materialize"] = d
         rec["gauge_sign_delta_U"] = d["sign_delta_U"]
         rec["gauge_sign_delta_V"] = d["sign_delta_V"]
+        self._diag_base = base
         self.finish(rec, blk, sub, imp, tag)
+        self._diag_base = None
+        rec["wall_s"] = time.time() - t0
+        H.save_run(rec, f"arm{tag}")
+        return rec
+
+
+    def arm5(self, tag="5", suffix="", fixed_scales=False):
+        """Whole-block discrete gauge (all seven projections) -> common Step 3."""
+        from .wholeblock import ORDER
+        t0 = time.time()
+        blob = torch.load(f"{H.GCACHE}/wholeblock_R{suffix}.pt", weights_only=False)
+        blk, sub, _, imp = self.new_block()
+        bases = {n: C.LayerBase(n, sub[n]).to("cuda") for n in ORDER}
+        rec = {"arm": tag, "desc": "whole-block discrete gauge, all 7 projections",
+               "layers_gauged": ORDER, "fixed_scales": fixed_scales,
+               "E_ADMM": self.block_err(blk), "per_layer_sign_delta": {}}
+        for n in ORDER:
+            R = blob[n].to("cuda").float()
+            with torch.no_grad(), C.no_tf32():
+                I_ = torch.eye(R.shape[0], device=R.device)
+                assert float((R.T @ R - I_).norm()) < 1e-4, f"{n}: R not orthogonal"
+            H.apply_gauge_signs_only(sub[n], bases[n], [R])
+        rec["E_gauge_pre_export"] = self.block_err(blk)
+        du = dv = 0.0
+        for n in ORDER:
+            R = blob[n].to("cuda").float()
+            d = H.materialize_gauge(sub[n], bases[n], [R])
+            rec["per_layer_sign_delta"][n] = d
+            du += d["sign_delta_U"]; dv += d["sign_delta_V"]
+        rec["gauge_sign_delta_U"] = du / len(ORDER)
+        rec["gauge_sign_delta_V"] = dv / len(ORDER)
+        self._diag_base = bases["mlp.down_proj"]
+        self.finish(rec, blk, sub, imp, tag)
+        self._diag_base = None
         rec["wall_s"] = time.time() - t0
         H.save_run(rec, f"arm{tag}")
         return rec
@@ -403,6 +445,18 @@ def main():
             out = r.arm2(arm.split("_", 1)[1])
         elif arm == "3":
             out = r.arm3()
+        elif arm.startswith("rep5"):
+            _, sx_, n_ = arm.split(":")
+            sx_ = "" if sx_ == "-" else "_" + sx_
+            for k in range(int(n_)):
+                out = r.arm5(tag=f"5_wb{sx_}_rep{k+1}", suffix=sx_)
+        elif arm.startswith("rep4"):
+            # dose-response: N common-Step-3 replicates from the identical gauged
+            # state.  E_final has sd 0.075% (NOTES.md#6), so one draw cannot
+            # resolve a 1-2 sigma effect on either side of the comparison.
+            _, sx_, n_ = arm.split(":")
+            for k in range(int(n_)):
+                out = r.arm4(tag=f"4_{sx_}_rep{k+1}", strategy="cyclic", suffix="_" + sx_)
         elif arm.startswith("4"):
             st_ = "greedy" if "greedy" in arm else "cyclic"
             fs_ = arm.endswith("fs")

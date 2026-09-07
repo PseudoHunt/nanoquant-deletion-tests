@@ -106,7 +106,10 @@ class PlaneSearcher:
         with C.no_tf32():
             self.Ht = sp.unsqueeze(1) * o.H.to(dtype) * sp.unsqueeze(0)   # [in, in]
             self.Gt = so.unsqueeze(1) * o.G.to(dtype) * sp.unsqueeze(0)   # [out, in]
-        self.so2 = (so * so)
+        # Per-output weight of the quadratic term: ones for the exact
+        # block-output oracle, o_norm for a layer surrogate.  Folding it in here
+        # is what lets the same Givens algebra serve both objectives.
+        self.so2 = o.out_w(device).to(dtype) * (so * so)
         self.so2_sum = float(self.so2.sum())
         self.T_sq, self.Y_sq = o.T_sq, o.Y_sq
         self.base = base
