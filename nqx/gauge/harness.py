@@ -102,9 +102,14 @@ def materialize_gauge(module, base, Rs, check_identity=False):
     module.scale_pre.data.copy_(sp.view(1, -1).to(dev, dt))
     module.scale_post.data.copy_(so.view(1, -1).to(dev, dt))
 
-    # the module's own forward must now reproduce Q_NQ's deployed weight
+    # The module's own forward must now reproduce Q_NQ's deployed weight.  The
+    # comparison uses the bf16-rounded scales, because those are what the module
+    # actually stores -- NanoQuant keeps scale_pre/scale_post in bf16, and a
+    # fp32-vs-bf16 comparison would fail at the 2e-3 level for that reason alone.
     W_mod = I.effective_weight(module)
-    W_qnq = C.effective_W(B_U.to(dev), B_V.to(dev), sp.to(dev), so.to(dev))
+    W_qnq = C.effective_W(B_U.to(dev), B_V.to(dev),
+                          sp.to(torch.bfloat16).float().to(dev),
+                          so.to(torch.bfloat16).float().to(dev))
     rel = (W_mod - W_qnq).norm().item() / max(W_qnq.norm().item(), 1e-30)
     assert rel < 1e-6, f"materialised module disagrees with Q_NQ, rel = {rel:.3e}"
     del U_R, V_R, U_Rb, V_Rb, B_U, B_V, B_U32, B_V32, W_mod, W_qnq

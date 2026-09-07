@@ -96,11 +96,11 @@ class Runner:
         return rec
 
     # -- arms --------------------------------------------------------------
-    def arm0a(self):
+    def arm0a(self, tag="0a"):
         t0 = time.time()
         blk, sub, bases, imp = self.new_block()
         base = bases[LAYER]
-        rec = {"arm": "0a", "desc": "baseline: R = I through the identical materialise/export path",
+        rec = {"arm": tag, "desc": "baseline: R = I through the identical materialise/export path",
                "layer": LAYER, "E_ADMM": self.block_err(blk)}
         Is = C.identity_Rs(base.rank, self.b, "cuda")
         rec["materialize"] = H.materialize_gauge(sub[LAYER], base, Is, check_identity=True)
@@ -109,9 +109,9 @@ class Runner:
         H.materialize_gauge(sub[LAYER], base, Is, check_identity=False)
         rec["gauge_sign_delta_U"] = rec["materialize"]["sign_delta_U"]
         rec["gauge_sign_delta_V"] = rec["materialize"]["sign_delta_V"]
-        self.finish(rec, blk, sub, imp, "0a")
+        self.finish(rec, blk, sub, imp, tag)
         rec["wall_s"] = time.time() - t0
-        H.save_run(rec, "arm0a")
+        H.save_run(rec, f"arm{tag}")
         return rec
 
     def arm0b(self, n_steps):
@@ -248,18 +248,19 @@ class Runner:
         H.save_run(rec, f"arm2_{variant}")
         return rec
 
-    def arm3(self):
+    def arm3(self, lr=ARM3_LR, tag="3", probe_every=25):
         """Functional latent gauge -- the proposed method (section 12)."""
         t0 = time.time()
         blk, sub, bases, imp = self.new_block()
         base = bases[LAYER]
         m = sub[LAYER]
-        rec = {"arm": "3", "layer": LAYER, "steps": ARM3_STEPS, "lr": ARM3_LR,
+        rec = {"arm": tag, "layer": LAYER, "steps": ARM3_STEPS, "lr": lr,
                "block_size": self.b, "optimizer": "Adam",
-               "E_ADMM": self.block_err(blk), "trace": [], "checkpoints": {}}
+               "E_ADMM": self.block_err(blk), "trace": [], "checkpoints": {},
+               "calib_probe": []}
         cay = C.BlockCayley(base.rank, b=self.b, device="cuda")
         gf = H.GaugedForward(m, base, cay)
-        opt = torch.optim.Adam(cay.parameters(), lr=ARM3_LR)
+        opt = torch.optim.Adam(cay.parameters(), lr=lr)
         C.GUARD.assert_not_heldout(self.cal_in_d, self.cal_out_d, where="arm3_gauge_search")
         saved = {}
         for s in range(ARM3_STEPS):
@@ -271,9 +272,12 @@ class Runner:
             orth = cay.orthogonality_error()
             assert orth < 1e-5, f"Cayley lost orthogonality at step {s+1}: {orth:.2e}"
             rec["trace"].append({"step": s + 1, "loss": float(loss.detach()), "orth_err": orth})
-            if (s + 1) % 25 == 0:
-                print(f"[arm3] step {s+1:03d}  L_func = {float(loss.detach()):.6e}  orth = {orth:.2e}",
-                      flush=True)
+            if probe_every and (s + 1) % probe_every == 0:
+                with torch.no_grad():
+                    cl = self.calib_func_loss(blk)
+                rec["calib_probe"].append({"step": s + 1, "calib_L_func": cl})
+                print(f"[{tag}] step {s+1:03d}  batch L = {float(loss.detach()):.6e}  "
+                      f"calib L_func = {cl:.6e}  orth = {orth:.2e}", flush=True)
             if (s + 1) in ARM3_CKPTS:
                 saved[s + 1] = [R.detach().clone() for R in cay.Rs()]
                 # section 4.2 logging: functional loss before / after export re-extraction
@@ -285,20 +289,20 @@ class Runner:
                     "calib_func_loss_pre_export_stats": pre_ex,
                     "calib_func_loss_post_export_stats": post_ex,
                 }
-                print(f"[arm3] ckpt {s+1}: calib L_func pre-export {pre_ex:.6e} -> "
+                print(f"[{tag}] ckpt {s+1}: calib L_func pre-export {pre_ex:.6e} -> "
                       f"post-export {post_ex:.6e}", flush=True)
         gf.remove()
         del opt, cay
         cleanup_memory()
         rec["gauge_search_s"] = time.time() - t0
-        H.save_run(rec, "arm3_search")
+        H.save_run(rec, f"arm{tag}_search")
 
         out = {"search": rec, "checkpoints": {}}
         for k, Rs in saved.items():
             t1 = time.time()
             blk, sub, bases, imp = self.new_block()
             base = bases[LAYER]
-            r = {"arm": f"3_{k}", "layer": LAYER, "gauge_steps": k, "lr": ARM3_LR,
+            r = {"arm": f"{tag}_{k}", "layer": LAYER, "gauge_steps": k, "lr": lr,
                  "block_size": self.b, "E_ADMM": self.block_err(blk)}
             r.update(rec["checkpoints"][str(k)])
             H.apply_gauge_signs_only(sub[LAYER], base, Rs)
@@ -309,10 +313,10 @@ class Runner:
             r["gauge_sign_delta_V"] = d["sign_delta_V"]
             self.finish(r, blk, sub, imp, f"3_{k}")
             r["wall_s"] = time.time() - t1
-            H.save_run(r, f"arm3_{k}")
+            H.save_run(r, f"arm{tag}_{k}")
             out["checkpoints"][str(k)] = r
         torch.save({str(k): [R.cpu() for R in v] for k, v in saved.items()},
-                   f"{H.GCACHE}/arm3_R.pt")
+                   f"{H.GCACHE}/arm{tag}_R.pt")
         return out
 
 
@@ -333,6 +337,8 @@ def main():
         print(f"\n===== ARM {arm} =====", flush=True)
         if arm == "0a":
             out = r.arm0a()
+        elif arm == "0a_dup":
+            out = r.arm0a(tag="0a_dup")
         elif arm.startswith("0b_"):
             out = r.arm0b(int(arm.split("_")[1]))
         elif arm == "1":
@@ -341,6 +347,9 @@ def main():
             out = r.arm2(arm.split("_", 1)[1])
         elif arm == "3":
             out = r.arm3()
+        elif arm.startswith("3lr"):
+            lr = float(arm[3:])
+            out = r.arm3(lr=lr, tag=f"3lr{arm[3:]}")
         else:
             raise SystemExit(f"unknown arm {arm}")
         keys = ["arm", "E_ADMM", "E_gauge_pre_export", "E_gauge", "E_final", "wall_s"]
