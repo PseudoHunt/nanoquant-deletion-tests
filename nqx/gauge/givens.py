@@ -512,9 +512,9 @@ def descent(args):
             print(f"[descent] SWEEP {p+1}: accepted {acc}  oracle {E_after:.8f} "
                   f"({100*(E_after-E0)/E0:+.4f}%)  real {rl:.8f} "
                   f"({100*(rl-real0)/real0:+.4f}%)", flush=True)
-            S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}.json")
+            S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}{args.tag}.json")
             S.atomic_save({"R": ps.R.cpu(), "blocks": blocks, "strategy": args.mode,
-                           "sweeps_done": p + 1}, f"{H.GCACHE}/givens_R_{args.mode}.pt")
+                           "sweeps_done": p + 1}, f"{H.GCACHE}/givens_R_{args.mode}{args.tag}.pt")
             if acc == 0 or abs(E_after - E_before) / E_before < args.tol:
                 print("[descent] converged", flush=True); break
     else:
@@ -545,7 +545,7 @@ def descent(args):
                               "factor_consistency": ps.factor_consistency(),
                               "resweeps": resweeps, "seconds": time.time() - t0[0]})
         S.atomic_save({"R": ps.R.cpu(), "blocks": blocks, "strategy": args.mode,
-                       "sweeps_done": 1}, f"{H.GCACHE}/givens_R_{args.mode}.pt")
+                       "sweeps_done": 1}, f"{H.GCACHE}/givens_R_{args.mode}{args.tag}.pt")
 
     # the same materialise / export path every other arm uses
     d = H.materialize_gauge(m, base, [ps.R.float()])
@@ -559,7 +559,7 @@ def descent(args):
     rec["planes_visited"] = state["visited"]
     rec["accepted_total"] = state["accepted"]
     rec["wall_s"] = time.time() - t0[0]
-    S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}.json")
+    S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}{args.tag}.json")
     print(f"[descent] FINAL held-out: E_ADMM {rec['E_ADMM_heldout']:.6f} -> "
           f"E_gauge {rec['E_gauge_heldout_qnq']:.6f} (Q_NQ) / "
           f"{rec['E_gauge_heldout_pre_export']:.6f} (fixed scales)", flush=True)
@@ -577,6 +577,7 @@ if __name__ == "__main__":
     ap.add_argument("--real_every", type=int, default=25)
     ap.add_argument("--max_moves", type=int, default=100000)
     ap.add_argument("--noise_k", type=float, default=10.0)
+    ap.add_argument("--tag", default="")
     ap.add_argument("--block", type=int, default=0)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max_planes", type=int, default=0)

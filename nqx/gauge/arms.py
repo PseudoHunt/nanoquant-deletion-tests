@@ -331,7 +331,7 @@ class Runner:
         return out
 
 
-    def arm4(self, tag="4", fixed_scales=False, strategy="cyclic"):
+    def arm4(self, tag="4", fixed_scales=False, strategy="cyclic", suffix=""):
         """Discrete Givens coordinate-descent gauge -> the identical common Step 3.
 
         The rotation comes from `nqx/gauge/givens.py descent`, which searched the
@@ -342,7 +342,7 @@ class Runner:
         are run and reported.
         """
         t0 = time.time()
-        blob = torch.load(f"{H.GCACHE}/givens_R_{strategy}.pt", weights_only=False)
+        blob = torch.load(f"{H.GCACHE}/givens_R_{strategy}{suffix}.pt", weights_only=False)
         R = blob["R"].to("cuda").float()
         blk, sub, bases, imp = self.new_block()
         base = bases[LAYER]
@@ -404,8 +404,9 @@ def main():
         elif arm.startswith("4"):
             st_ = "greedy" if "greedy" in arm else "cyclic"
             fs_ = arm.endswith("fs")
-            out = r.arm4(tag=f"4_{st_}" + ("_fixedscale" if fs_ else ""),
-                         fixed_scales=fs_, strategy=st_)
+            sx_ = "_b0123" if "b0123" in arm else ""
+            out = r.arm4(tag=f"4_{st_}{sx_}" + ("_fixedscale" if fs_ else ""),
+                         fixed_scales=fs_, strategy=st_, suffix=sx_)
         elif arm.startswith("3lr"):
             lr = float(arm[3:])
             out = r.arm3(lr=lr, tag=f"3lr{arm[3:]}")
