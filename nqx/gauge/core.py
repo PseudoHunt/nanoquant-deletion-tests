@@ -52,6 +52,20 @@ import contextlib
 import torch
 import torch.nn as nn
 
+
+def rank_absmean(x, dim):
+    """NanoQuant's mean-magnitude export statistic, accumulated in fp64.
+
+    fp32 `mean(dim=...)` on CUDA is *not* bit-reproducible across two tensors
+    that hold identical values at different addresses: the reduction is split
+    differently and a handful of coordinates come out ~1e-7 apart.  That is
+    enough to break the section 4.3 identity gate, because the export ratio
+    `m(R)/m(I)` then misses 1.0 by an ulp.  Accumulating in fp64 puts the
+    layout-dependent discrepancy at ~1e-16, so the ratio rounds to exactly 1.0
+    in fp32 while a genuine rotation's ratio is unaffected.
+    """
+    return x.abs().sum(dim=dim, dtype=torch.float64) / x.shape[dim]
+
 # ---------------------------------------------------------------------------
 # TF32.  `nanoquant.core.admm_nq` switches TF32 *on* at import time, and the
 # reproduced baseline ran with it on, so the ambient setting is never changed
@@ -111,8 +125,8 @@ class LayerBase:
         assert self.V0.shape[0] == self.rank
         self.inn = self.V0.shape[1]
         # base export statistics (NanoQuant's mean-magnitude rule, over rank)
-        self.mU0 = self.U0.abs().mean(dim=1)                          # [out]
-        self.mV0 = self.V0.abs().mean(dim=0)                          # [in]
+        self.mU0 = rank_absmean(self.U0, 1)                           # [out], fp64
+        self.mV0 = rank_absmean(self.V0, 0)                           # [in],  fp64
         assert (self.mU0 > 0).all(), f"{name}: zero row in U0, export ratio undefined"
         assert (self.mV0 > 0).all(), f"{name}: zero column in V0, export ratio undefined"
         self.U0.requires_grad_(False)
@@ -180,10 +194,10 @@ def q_nq(U_R, V_R, base, ste=False):
             B_V = (sV - V_R).detach() + V_R
         else:
             B_U, B_V = sU, sV
-        mU = U_R.detach().abs().mean(dim=1)
-        mV = V_R.detach().abs().mean(dim=0)
-        scale_post = (base.so0 * (mU / base.mU0)).detach()
-        scale_pre = (base.sp0 * (mV / base.mV0)).detach()
+        mU = rank_absmean(U_R.detach(), 1)
+        mV = rank_absmean(V_R.detach(), 0)
+        scale_post = (base.so0 * (mU / base.mU0).float()).detach()
+        scale_pre = (base.sp0 * (mV / base.mV0).float()).detach()
     return B_U, B_V, scale_pre, scale_post
 
 
@@ -265,21 +279,35 @@ def haar_so(n, generator, device="cuda", dtype=torch.float32):
 # 5. Held-out guard (section 8)
 # ---------------------------------------------------------------------------
 class HeldoutGuard:
-    """Records the storages of the held-out split and refuses to let them be
-    referenced by an optimiser loop."""
+    """Records the exact byte range of the held-out split and refuses to let any
+    tensor overlapping it be referenced by an optimiser loop.
+
+    Byte ranges rather than storages: the calibration and held-out splits are
+    disjoint slices `x[:128]` / `x[128:]` of one cached tensor and therefore
+    share a storage, so a storage-level check would reject the calibration data
+    as well.
+    """
 
     def __init__(self):
-        self.ptrs = set()
+        self.ranges = []
+
+    @staticmethod
+    def _span(t):
+        assert t.is_contiguous(), "held-out guard needs contiguous tensors"
+        start = t.data_ptr()
+        return start, start + t.numel() * t.element_size()
 
     def register(self, *tensors):
         for t in tensors:
-            self.ptrs.add(t.untyped_storage().data_ptr())
+            self.ranges.append(self._span(t))
         return self
 
     def assert_not_heldout(self, *tensors, where=""):
         for t in tensors:
-            assert t.untyped_storage().data_ptr() not in self.ptrs, \
-                f"held-out tensor reached an optimiser path at {where}"
+            lo, hi = self._span(t)
+            for a, b in self.ranges:
+                assert hi <= a or lo >= b, \
+                    f"held-out tensor reached an optimiser path at {where}"
 
 
 GUARD = HeldoutGuard()
