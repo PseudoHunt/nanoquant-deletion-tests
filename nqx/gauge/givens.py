@@ -388,6 +388,47 @@ def _write_fixed_scales(m, ps):
     m.scale_post.data.copy_(ps.base.so0.view(1, -1).to(torch.bfloat16))
 
 
+def greedy_pool(ps, o, E0, planes, K, args, do_accept, state):
+    """Greedy-lite: score every plane once, keep the best K, then run
+    best-improvement among those K with lazy re-scoring until none improves.
+
+    Screening tool, not a fixed-point finder.  Block 0 showed that most of the
+    aggregate gain comes from relatively few moves, so a top-K pool should
+    recover most of it at a fraction of the re-scoring cost; K is calibrated
+    against block 0's known exact result before being used anywhere else.
+    """
+    import heapq
+    scored = []
+    for (i, j) in planes:
+        r = ps.sweep(i, j)
+        state["visited"] += 1
+        if r["improves"]:
+            scored.append((r["delta_f"], i, j))
+    scored.sort()
+    pool = scored[:K] if K else scored
+    heap = [(df, i, j, 0) for df, i, j in pool]
+    heapq.heapify(heap)
+    version, resweeps, accepted = 0, 0, 0
+    while heap:
+        df, i, j, v = heapq.heappop(heap)
+        r = ps.sweep(i, j)
+        state["visited"] += 1
+        if not _accept_ok(r, o, E0, args):
+            continue
+        if v < version and r["delta_f"] > df * 0.9:
+            heapq.heappush(heap, (r["delta_f"], i, j, version))
+            resweeps += 1
+            if resweeps > 50 * max(len(pool), 1):
+                break
+            continue
+        do_accept(r)
+        version += 1
+        accepted += 1
+        heapq.heappush(heap, (r["delta_f"], i, j, version))
+    return {"n_scored": len(scored), "pool": len(pool),
+            "accepted": accepted, "resweeps": resweeps}
+
+
 def _accept_ok(r, o, E0, args):
     """Accept a move only if its predicted gain clears both a relative floor and
     `noise_k` times the plane's own measured arithmetic noise."""
@@ -520,7 +561,51 @@ def descent(args):
                   f"({time.time()-t0[0]:.0f}s)", flush=True)
         return ent
 
-    if args.mode == "cyclic":
+    if args.mode == "screen":
+        # Sequential greedy-lite over the selected coordinate groups, on ONE
+        # shared state, with a real bf16 evaluation after each completed group.
+        # This measures cross-group accumulation directly rather than inferring
+        # it from independent per-block runs.
+        small = 0
+        prev_real = real0
+        for gi, gp in enumerate(groups):
+            pl = [(gp[a], gp[b_]) for a in range(len(gp)) for b_ in range(a + 1, len(gp))]
+            info = greedy_pool(ps, o, E0, pl, args.topk, args, do_accept, state)
+            Eg = o.error(ps.deployed_W())
+            rg = real_calib()
+            inc = 100 * (prev_real - rg) / real0
+            rec["group_checks"].append(
+                {"group": gi, "coords": [gp[0], gp[-1]], "topk": args.topk,
+                 "accepted_in_group": info["accepted"], "planes_scored": info["n_scored"],
+                 "pool": info["pool"], "resweeps": info["resweeps"],
+                 "accepted_total": state["accepted"], "E_oracle": Eg, "E_real": rg,
+                 "incremental_gain_pct": inc,
+                 "cum_gain_oracle_pct": 100 * (Eg - E0) / E0,
+                 "cum_gain_real_pct": 100 * (rg - real0) / real0,
+                 "seconds": time.time() - t0[0]})
+            print(f"[screen] group {gi+1}/{len(groups)} coords {gp[0]}..{gp[-1]}: "
+                  f"+{info['accepted']} accepts (pool {info['pool']}, "
+                  f"resweeps {info['resweeps']})  real {rg:.8f}  "
+                  f"cum {100*(rg-real0)/real0:+.4f}%  incr -{inc:.4f}%  "
+                  f"({time.time()-t0[0]:.0f}s)", flush=True)
+            S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}{args.tag}.json")
+            S.atomic_save({"R": ps.R.cpu(), "blocks": blocks, "strategy": args.mode,
+                           "groups_done": gi + 1},
+                          f"{H.GCACHE}/givens_R_{args.mode}{args.tag}.pt")
+            small = small + 1 if inc < args.min_gain else 0
+            if small >= 2:
+                print(f"[screen] EARLY STOP: two consecutive groups added "
+                      f"< {args.min_gain}%", flush=True)
+                break
+            prev_real = rg
+        rec["sweeps"].append({"sweep": 1, "accepted": state["accepted"],
+                              "E_oracle": o.error(ps.deployed_W()), "E_real": real_calib(),
+                              "cum_gain_oracle_pct": 100 * (o.error(ps.deployed_W()) - E0) / E0,
+                              "cum_gain_real_pct": 100 * (real_calib() - real0) / real0,
+                              "orth_err": ps.orthogonality_error(),
+                              "factor_consistency": ps.factor_consistency(),
+                              "seconds": time.time() - t0[0]})
+    elif args.mode == "cyclic":
         for p in range(args.passes):
             acc, E_before = 0, o.error(ps.deployed_W())
             for gi, gp in enumerate(groups):
@@ -620,7 +705,9 @@ if __name__ == "__main__":
     ap.add_argument("--passes", type=int, default=3)
     ap.add_argument("--tol", type=float, default=1e-7)
     ap.add_argument("--mode_desc", dest="mode", default="cyclic",
-                    choices=["cyclic", "greedy"])
+                    choices=["cyclic", "greedy", "screen"])
+    ap.add_argument("--topk", type=int, default=32)
+    ap.add_argument("--min_gain", type=float, default=0.01)
     ap.add_argument("--real_every", type=int, default=25)
     ap.add_argument("--max_moves", type=int, default=100000)
     ap.add_argument("--noise_k", type=float, default=10.0)
