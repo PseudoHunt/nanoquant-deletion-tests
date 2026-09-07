@@ -30,13 +30,43 @@ repository uses. Detail and every table: `stage1_down.md`.
 | 2 ITQ, `R0 = I` (refreshed / frozen) | 0.143791 *(+0.02%)* | 0.115075 / 0.115109 | −0.27% / −0.24% |
 | 2 ITQ, `R0` random | 0.341970 | 0.141594 | +22.7% |
 | 3 functional gauge, lr 3e-3 @100 / @200 | 0.230205 / 0.289858 | 0.130715 / 0.140818 | +13.3% / +22.0% |
-| 3 functional gauge, best swept lr (3e-5 @200) | 0.145652 | 0.115172 | −0.19% |
+| 3 functional gauge, lowest-`E_final` swept cell (3e-5 @200) † | 0.145652 | 0.115172 | −0.19% |
 | Arm 1, 16 Haar gauges (no Step 3) | 0.358 – 0.367, median 0.361 | — | — |
 
 Gate: δ = 0.0031. A gauge passes only if it beats **both** 0a and its matched 0b
 by more than δ. **Every cell fails the 0a leg.** The cells that are numerically
 below 0a (−0.19% to −0.27%) are inside the 0.19% same-state replay floor measured
 here and below the 0.31% floor this repository established.
+
+† **This row is noise, and naming it "best" would be a selection error.** Ranking
+every arm by `E_final` puts eight cells in one band, and `0a_dup` — the baseline
+re-run from a bit-identical state — sits *inside* it, tied with this cell to 7e-6:
+
+| arm | E_final | Δ vs 0a | E_gauge | sign Δ U | sign Δ V |
+|---|---|---|---|---|---|
+| `2_refreshed` | 0.115075 | −0.27% | 0.143791 | 0.00% | 0.06% |
+| `2_frozen` | 0.115109 | −0.24% | 0.143791 | 0.00% | 0.06% |
+| **`0a_dup`** (baseline re-run) | **0.115165** | **−0.19%** | 0.143766 | 0.00% | 0.00% |
+| `3lr3e-5_200` | 0.115172 | −0.19% | 0.145652 | 0.00% | 0.31% |
+| `3lr1e-5_100` | 0.115286 | −0.09% | 0.143783 | 0.00% | 0.03% |
+| `3lr3e-5_100` | 0.115293 | −0.08% | 0.144126 | 0.00% | 0.12% |
+| `3lr1e-5_200` | 0.115323 | −0.06% | 0.143978 | 0.00% | 0.07% |
+| **`0a`** (baseline) | **0.115388** | — | 0.143766 | 0.00% | 0.00% |
+| `3lr1e-4_200` | 0.115596 | +0.18% | 0.148725 | 0.06% | 0.91% |
+
+Every cell in that band has `sign Δ U = 0.00%` — they are gauges that did not
+move. The first cell that moves any U sign drops below the baseline and every
+cell after it is worse, monotonically in how far the gauge travelled. The
+ordering *inside* the band is kernel non-determinism; the ordering *outside* it
+is the result.
+
+The `3lr3e-5_200` cell is also worse on both quantities that are legitimate to
+select on: `E_gauge` 0.145652 against the identity's 0.143766 (+1.3%), and a
+calibration objective that rose to 0.12708 from 0.125113. It wins only on
+held-out `E_final`, by less than the replay floor. The pre-registered selection
+rule is the calibration objective (section 8 forbids using held-out data for
+hyperparameter or arm selection), and under that rule no swept learning rate is
+selected at all, because every one of them ascends.
 
 ## The eight questions
 

@@ -102,6 +102,26 @@ def main():
           f"**{'PASS' if ok else 'FAIL'}** |")
     A("")
 
+    # ranked by E_final -- the noise band
+    ranked = sorted([(R[k]["E_final"], k) for k in ORDER if k in R and "E_final" in R[k]])
+    A("## Every arm ranked by `E_final` — where the noise band ends")
+    A("")
+    A("`0a_dup` is the baseline re-run from a bit-identical state, so its distance "
+      "from `0a` is pure kernel non-determinism. Any cell that lands between them "
+      "is indistinguishable from doing nothing — and every such cell turns out to "
+      "be a gauge that did not move (`sign Δ U = 0.00%`). The first cell that moves "
+      "a U sign falls below the baseline, and everything after it is worse, "
+      "monotonically in how far the gauge travelled.")
+    A("")
+    A("| arm | E_final | Δ vs 0a | E_gauge | sign Δ U | sign Δ V |")
+    A("|---|---|---|---|---|---|")
+    for e, k in ranked:
+        r = R[k]
+        mark = " **<- baseline**" if k == "0a" else (" **<- baseline re-run**" if k == "0a_dup" else "")
+        A(f"| `{k}`{mark} | {e:.6f} | {pct(e, base['E_final'])} | {fmt(r.get('E_gauge'))} | "
+          f"{r.get('gauge_sign_delta_U', 0)*100:.2f}% | {r.get('gauge_sign_delta_V', 0)*100:.2f}% |")
+    A("")
+
     # Arm 1
     if "1" in R:
         r = R["1"]

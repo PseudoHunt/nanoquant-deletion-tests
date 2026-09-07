@@ -1,0 +1,109 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+Rank calculation: Bits = (1.00), Scales: 2
+  (1/2) self_attn.q_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 0.0000e+00
+		(Epoch 02/08) Block Loss: 0.0000e+00
+		(Epoch 03/08) Block Loss: 0.0000e+00
+		(Epoch 04/08) Block Loss: 0.0000e+00
+		(Epoch 05/08) Block Loss: 0.0000e+00
+		(Epoch 06/08) Block Loss: 0.0000e+00
+		(Epoch 07/08) Block Loss: 0.0000e+00
+		(Epoch 08/08) Block Loss: 0.0000e+00
+  (2/2) self_attn.q_proj ADMM  rank=992 ...
+		ADMM weight recon error: raw=1075.1757, norm=0.1888, per_el=2.5634e-04, ADMM time=2.59s
+  (1/2) self_attn.v_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 2.7535e-06
+		(Epoch 02/08) Block Loss: 1.5641e-06
+		(Epoch 03/08) Block Loss: 8.5831e-07
+		(Epoch 04/08) Block Loss: 5.4415e-07
+		(Epoch 05/08) Block Loss: 2.7831e-07
+		(Epoch 06/08) Block Loss: 1.6398e-07
+		(Epoch 07/08) Block Loss: 1.3548e-07
+		(Epoch 08/08) Block Loss: 1.3023e-07
+  (2/2) self_attn.v_proj ADMM  rank=384 ...
+		ADMM weight recon error: raw=27.7210, norm=0.3150, per_el=2.6437e-05, ADMM time=1.18s
+  (1/2) self_attn.o_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 2.9618e-06
+		(Epoch 02/08) Block Loss: 2.0644e-06
+		(Epoch 03/08) Block Loss: 1.6281e-06
+		(Epoch 04/08) Block Loss: 1.3319e-06
+		(Epoch 05/08) Block Loss: 1.1086e-06
+		(Epoch 06/08) Block Loss: 1.0082e-06
+		(Epoch 07/08) Block Loss: 9.6650e-07
+		(Epoch 08/08) Block Loss: 9.5363e-07
+  (2/2) self_attn.o_proj ADMM  rank=992 ...
+		ADMM weight recon error: raw=144.6301, norm=0.2528, per_el=3.4482e-05, ADMM time=2.37s
+  (1/2) self_attn.k_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 2.7724e-06
+		(Epoch 02/08) Block Loss: 2.1056e-06
+		(Epoch 03/08) Block Loss: 1.9570e-06
+		(Epoch 04/08) Block Loss: 1.7188e-06
+		(Epoch 05/08) Block Loss: 1.6001e-06
+		(Epoch 06/08) Block Loss: 1.5324e-06
+		(Epoch 07/08) Block Loss: 1.4962e-06
+		(Epoch 08/08) Block Loss: 1.4819e-06
+  (2/2) self_attn.k_proj ADMM  rank=384 ...
+		ADMM weight recon error: raw=484.2427, norm=0.2018, per_el=4.6181e-04, ADMM time=1.16s
+  (1/2) mlp.gate_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 2.1576e-06
+		(Epoch 02/08) Block Loss: 1.9579e-06
+		(Epoch 03/08) Block Loss: 1.9167e-06
+		(Epoch 04/08) Block Loss: 1.8232e-06
+		(Epoch 05/08) Block Loss: 1.7216e-06
+		(Epoch 06/08) Block Loss: 1.6706e-06
+		(Epoch 07/08) Block Loss: 1.6446e-06
+		(Epoch 08/08) Block Loss: 1.6332e-06
+  (2/2) mlp.gate_proj ADMM  rank=1600 ...
+		ADMM weight recon error: raw=2165.6104, norm=0.3301, per_el=1.2908e-04, ADMM time=8.08s
+  (1/2) mlp.up_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 1.0018e-05
+		(Epoch 02/08) Block Loss: 6.8505e-06
+		(Epoch 03/08) Block Loss: 5.8964e-06
+		(Epoch 04/08) Block Loss: 5.4203e-06
+		(Epoch 05/08) Block Loss: 5.1422e-06
+		(Epoch 06/08) Block Loss: 4.9822e-06
+		(Epoch 07/08) Block Loss: 4.9006e-06
+		(Epoch 08/08) Block Loss: 4.8696e-06
+  (2/2) mlp.up_proj ADMM  rank=1600 ...
+		ADMM weight recon error: raw=1870.0387, norm=0.3438, per_el=1.1146e-04, ADMM time=8.06s
+  (1/2) mlp.down_proj Step 1 ...
+		(Epoch 01/08) Block Loss: 1.4561e-05
+		(Epoch 02/08) Block Loss: 1.2072e-05
+		(Epoch 03/08) Block Loss: 1.1045e-05
+		(Epoch 04/08) Block Loss: 1.0484e-05
+		(Epoch 05/08) Block Loss: 1.0134e-05
+		(Epoch 06/08) Block Loss: 9.9422e-06
+		(Epoch 07/08) Block Loss: 9.8466e-06
+		(Epoch 08/08) Block Loss: 9.8152e-06
+  (2/2) mlp.down_proj ADMM  rank=1600 ...
+		ADMM weight recon error: raw=2097.2351, norm=0.3486, per_el=1.2500e-04, ADMM time=8.05s
+[setup] post-ADMM block pre error = 0.143766   (154s)
+[setup] cache round-trip: in-memory 0.143765771  reloaded 0.143765771  IDENTICAL

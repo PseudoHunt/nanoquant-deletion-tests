@@ -1,0 +1,62 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+
+===== ARM 0a_dup =====
+		(Epoch 01/08) Block Loss: 1.9840e-05
+		(Epoch 02/08) Block Loss: 1.8875e-05
+		(Epoch 03/08) Block Loss: 1.9021e-05
+		(Epoch 04/08) Block Loss: 1.8428e-05
+		(Epoch 05/08) Block Loss: 1.8423e-05
+		(Epoch 06/08) Block Loss: 1.7840e-05
+		(Epoch 07/08) Block Loss: 1.7361e-05
+		(Epoch 08/08) Block Loss: 1.6610e-05
+[arm] FINAL {"arm": "0a_dup", "E_ADMM": 0.1437657711403401, "E_gauge_pre_export": 0.1437657711403401, "E_gauge": 0.1437657711403401, "E_final": 0.11516532040844688, "wall_s": 29.975952625274658}
+
+===== ARM 0b_100 =====
+		(Epoch 01/08) Block Loss: 1.9594e-05
+		(Epoch 02/08) Block Loss: 1.9132e-05
+		(Epoch 03/08) Block Loss: 1.9410e-05
+		(Epoch 04/08) Block Loss: 1.8669e-05
+		(Epoch 05/08) Block Loss: 1.8642e-05
+		(Epoch 06/08) Block Loss: 1.8316e-05
+		(Epoch 07/08) Block Loss: 1.7814e-05
+		(Epoch 08/08) Block Loss: 1.6943e-05
+[arm] FINAL {"arm": "0b_100", "E_ADMM": 0.1437657711403401, "E_gauge_pre_export": null, "E_gauge": 0.1336872911495257, "E_final": 0.11667304138188843, "wall_s": 30.808905839920044}
+
+===== ARM 0b_200 =====
+		(Epoch 01/08) Block Loss: 1.9941e-05
+		(Epoch 02/08) Block Loss: 1.9714e-05
+		(Epoch 03/08) Block Loss: 1.9574e-05
+		(Epoch 04/08) Block Loss: 1.9173e-05
+		(Epoch 05/08) Block Loss: 1.9163e-05
+		(Epoch 06/08) Block Loss: 1.8574e-05
+		(Epoch 07/08) Block Loss: 1.8242e-05
+		(Epoch 08/08) Block Loss: 1.7401e-05
+[arm] FINAL {"arm": "0b_200", "E_ADMM": 0.1437657711403401, "E_gauge_pre_export": null, "E_gauge": 0.13242498832943916, "E_final": 0.11826716994896826, "wall_s": 32.64622712135315}

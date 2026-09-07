@@ -1,0 +1,91 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+
+===== ARM 2_refreshed_rand =====
+[arm2/refreshed_rand] round 01  E_gauge = 3.613838e-01
+[arm2/refreshed_rand] round 02  E_gauge = 3.615734e-01
+[arm2/refreshed_rand] round 03  E_gauge = 3.606299e-01
+[arm2/refreshed_rand] round 04  E_gauge = 3.603626e-01
+[arm2/refreshed_rand] round 05  E_gauge = 3.600395e-01
+[arm2/refreshed_rand] round 06  E_gauge = 3.587124e-01
+[arm2/refreshed_rand] round 07  E_gauge = 3.584834e-01
+[arm2/refreshed_rand] round 08  E_gauge = 3.572623e-01
+[arm2/refreshed_rand] round 09  E_gauge = 3.564107e-01
+[arm2/refreshed_rand] round 10  E_gauge = 3.562199e-01
+[arm2/refreshed_rand] round 11  E_gauge = 3.549973e-01
+[arm2/refreshed_rand] round 12  E_gauge = 3.540784e-01
+[arm2/refreshed_rand] round 13  E_gauge = 3.542485e-01
+[arm2/refreshed_rand] round 14  E_gauge = 3.524826e-01
+[arm2/refreshed_rand] round 15  E_gauge = 3.517233e-01
+[arm2/refreshed_rand] round 16  E_gauge = 3.500954e-01
+[arm2/refreshed_rand] round 17  E_gauge = 3.487204e-01
+[arm2/refreshed_rand] round 18  E_gauge = 3.472717e-01
+[arm2/refreshed_rand] round 19  E_gauge = 3.445958e-01
+[arm2/refreshed_rand] round 20  E_gauge = 3.419705e-01
+		(Epoch 01/08) Block Loss: 3.3410e-05
+		(Epoch 02/08) Block Loss: 2.6902e-05
+		(Epoch 03/08) Block Loss: 2.5530e-05
+		(Epoch 04/08) Block Loss: 2.4570e-05
+		(Epoch 05/08) Block Loss: 2.4027e-05
+		(Epoch 06/08) Block Loss: 2.3261e-05
+		(Epoch 07/08) Block Loss: 2.2699e-05
+		(Epoch 08/08) Block Loss: 2.1730e-05
+[arm] FINAL {"arm": "2_refreshed_rand", "E_ADMM": 0.1437657711403401, "E_gauge_pre_export": 0.2983489549628229, "E_gauge": 0.34197049364693494, "E_final": 0.1416239434424325, "wall_s": 37.59257197380066}
+
+===== ARM 2_frozen_rand =====
+[arm2/frozen_rand] round 01  E_gauge = 3.612645e-01
+[arm2/frozen_rand] round 02  E_gauge = 3.611883e-01
+[arm2/frozen_rand] round 03  E_gauge = 3.603273e-01
+[arm2/frozen_rand] round 04  E_gauge = 3.604251e-01
+[arm2/frozen_rand] round 05  E_gauge = 3.595201e-01
+[arm2/frozen_rand] round 06  E_gauge = 3.586481e-01
+[arm2/frozen_rand] round 07  E_gauge = 3.584968e-01
+[arm2/frozen_rand] round 08  E_gauge = 3.570990e-01
+[arm2/frozen_rand] round 09  E_gauge = 3.564758e-01
+[arm2/frozen_rand] round 10  E_gauge = 3.559481e-01
+[arm2/frozen_rand] round 11  E_gauge = 3.548447e-01
+[arm2/frozen_rand] round 12  E_gauge = 3.535999e-01
+[arm2/frozen_rand] round 13  E_gauge = 3.528346e-01
+[arm2/frozen_rand] round 14  E_gauge = 3.512547e-01
+[arm2/frozen_rand] round 15  E_gauge = 3.505619e-01
+[arm2/frozen_rand] round 16  E_gauge = 3.496760e-01
+[arm2/frozen_rand] round 17  E_gauge = 3.481970e-01
+[arm2/frozen_rand] round 18  E_gauge = 3.469227e-01
+[arm2/frozen_rand] round 19  E_gauge = 3.442721e-01
+[arm2/frozen_rand] round 20  E_gauge = 3.417779e-01
+		(Epoch 01/08) Block Loss: 3.3467e-05
+		(Epoch 02/08) Block Loss: 2.6882e-05
+		(Epoch 03/08) Block Loss: 2.5703e-05
+		(Epoch 04/08) Block Loss: 2.4572e-05
+		(Epoch 05/08) Block Loss: 2.4039e-05
+		(Epoch 06/08) Block Loss: 2.3332e-05
+		(Epoch 07/08) Block Loss: 2.2736e-05
+		(Epoch 08/08) Block Loss: 2.1783e-05
+[arm] FINAL {"arm": "2_frozen_rand", "E_ADMM": 0.1437657711403401, "E_gauge_pre_export": 0.2986103204723148, "E_gauge": 0.34177790027331273, "E_final": 0.1417546022694445, "wall_s": 36.691147565841675}

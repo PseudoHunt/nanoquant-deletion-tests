@@ -1,0 +1,45 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[ls] full-calibration gradient accumulated in 5s, ||g||_F = 4.186412e-05
+[ls] descent t = 0         L(post-export) = 0.125113  L(pre-export) = 0.125113
+[ls] descent t = 0.001     L(post-export) = 0.125111  L(pre-export) = 0.125111
+[ls] descent t = 0.01      L(post-export) = 0.125111  L(pre-export) = 0.125111
+[ls] descent t = 0.03      L(post-export) = 0.125110  L(pre-export) = 0.125110
+[ls] descent t = 0.1       L(post-export) = 0.125099  L(pre-export) = 0.125118
+[ls] descent t = 0.3       L(post-export) = 0.125331  L(pre-export) = 0.125161
+[ls] descent t = 1         L(post-export) = 0.131299  L(pre-export) = 0.126109
+[ls] descent t = 3         L(post-export) = 0.175430  L(pre-export) = 0.144304
+[ls] descent t = 10        L(post-export) = 0.294384  L(pre-export) = 0.226865
+[ls] descent t = 30        L(post-export) = 0.287309  L(pre-export) = 0.276912
+[ls] descent t = 100       L(post-export) = 0.294374  L(pre-export) = 0.286812
+[ls] random dir 0: 0:0.1251  0.001:0.1251  0.01:0.1251  0.03:0.1251  0.1:0.1251  0.3:0.1251  1:0.1255  3:0.1326  10:0.2713  30:0.3488  100:0.3417
+[ls] random dir 1: 0:0.1251  0.001:0.1251  0.01:0.1251  0.03:0.1251  0.1:0.1251  0.3:0.1251  1:0.1256  3:0.1329  10:0.2746  30:0.3481  100:0.3396
+[ls] random dir 2: 0:0.1251  0.001:0.1251  0.01:0.1251  0.03:0.1251  0.1:0.1251  0.3:0.1251  1:0.1255  3:0.1326  10:0.2728  30:0.3532  100:0.3416
+[ls] done

@@ -145,6 +145,33 @@ A gauge checkpoint passes iff `E_final(gauge) < E_final(0a)·(1−δ)` **and** `
 | 3  functional gauge lr=1e-5 @100 | 0.115286 | 0.115030 | 0b_100 = 0.116673 | 0.116311 | **FAIL** |
 | 3  functional gauge lr=1e-5 @200 | 0.115323 | 0.115030 | 0b_200 = 0.118267 | 0.117901 | **FAIL** |
 
+## Every arm ranked by `E_final` — where the noise band ends
+
+`0a_dup` is the baseline re-run from a bit-identical state, so its distance from `0a` is pure kernel non-determinism. Any cell that lands between them is indistinguishable from doing nothing — and every such cell turns out to be a gauge that did not move (`sign Δ U = 0.00%`). The first cell that moves a U sign falls below the baseline, and everything after it is worse, monotonically in how far the gauge travelled.
+
+| arm | E_final | Δ vs 0a | E_gauge | sign Δ U | sign Δ V |
+|---|---|---|---|---|---|
+| `2_refreshed` | 0.115075 | -0.27% | 0.143791 | 0.00% | 0.06% |
+| `2_frozen` | 0.115109 | -0.24% | 0.143791 | 0.00% | 0.06% |
+| `0a_dup` **<- baseline re-run** | 0.115165 | -0.19% | 0.143766 | 0.00% | 0.00% |
+| `3lr3e-5_200` | 0.115172 | -0.19% | 0.145652 | 0.00% | 0.31% |
+| `3lr1e-5_100` | 0.115286 | -0.09% | 0.143783 | 0.00% | 0.03% |
+| `3lr3e-5_100` | 0.115293 | -0.08% | 0.144126 | 0.00% | 0.12% |
+| `3lr1e-5_200` | 0.115323 | -0.06% | 0.143978 | 0.00% | 0.07% |
+| `0a` **<- baseline** | 0.115388 | +0.00% | 0.143766 | 0.00% | 0.00% |
+| `3lr1e-4_200` | 0.115596 | +0.18% | 0.148725 | 0.06% | 0.91% |
+| `3lr1e-4_100` | 0.115612 | +0.19% | 0.147720 | 0.02% | 0.55% |
+| `3lr3e-4_100` | 0.116059 | +0.58% | 0.150818 | 0.12% | 1.30% |
+| `0b_100` | 0.116673 | +1.11% | 0.133687 | 0.04% | 1.26% |
+| `3lr3e-4_200` | 0.117031 | +1.42% | 0.158784 | 0.38% | 2.31% |
+| `0b_200` | 0.118267 | +2.50% | 0.132425 | 0.26% | 2.19% |
+| `3lr1e-3_100` | 0.118820 | +2.97% | 0.169900 | 1.04% | 3.60% |
+| `3lr1e-3_200` | 0.123620 | +7.13% | 0.196208 | 3.39% | 6.80% |
+| `3_100` | 0.130715 | +13.28% | 0.230205 | 7.62% | 11.16% |
+| `3_200` | 0.140818 | +22.04% | 0.289858 | 21.44% | 23.74% |
+| `2_refreshed_rand` | 0.141624 | +22.74% | 0.341970 | 50.04% | 50.00% |
+| `2_frozen_rand` | 0.141755 | +22.85% | 0.341778 | 50.04% | 50.00% |
+
 ## Arm 1 — random gauge sensitivity (16 Haar block-rotations, no Step 3)
 
 Seed 777, block size 32, 16 samples on `mlp.down_proj`.

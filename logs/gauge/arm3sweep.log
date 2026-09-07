@@ -1,0 +1,174 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+
+===== ARM 3lr1e-3 =====
+[3lr1e-3] step 025  batch L = 1.524963e-01  calib L_func = 1.316785e-01  orth = 2.24e-06
+[3lr1e-3] step 050  batch L = 1.429792e-01  calib L_func = 1.362944e-01  orth = 2.06e-06
+[3lr1e-3] step 075  batch L = 1.373852e-01  calib L_func = 1.422429e-01  orth = 2.13e-06
+[3lr1e-3] step 100  batch L = 1.452954e-01  calib L_func = 1.515348e-01  orth = 2.38e-06
+[3lr1e-3] ckpt 100: calib L_func pre-export 1.415517e-01 -> post-export 1.515348e-01
+[3lr1e-3] step 125  batch L = 1.677846e-01  calib L_func = 1.639006e-01  orth = 2.15e-06
+[3lr1e-3] step 150  batch L = 1.552057e-01  calib L_func = 1.668769e-01  orth = 2.20e-06
+[3lr1e-3] step 175  batch L = 1.563240e-01  calib L_func = 1.727375e-01  orth = 2.38e-06
+[3lr1e-3] step 200  batch L = 1.914767e-01  calib L_func = 1.778934e-01  orth = 2.04e-06
+[3lr1e-3] ckpt 200: calib L_func pre-export 1.655631e-01 -> post-export 1.778934e-01
+		(Epoch 01/08) Block Loss: 2.1224e-05
+		(Epoch 02/08) Block Loss: 2.0038e-05
+		(Epoch 03/08) Block Loss: 1.9830e-05
+		(Epoch 04/08) Block Loss: 1.9321e-05
+		(Epoch 05/08) Block Loss: 1.9267e-05
+		(Epoch 06/08) Block Loss: 1.8650e-05
+		(Epoch 07/08) Block Loss: 1.8394e-05
+		(Epoch 08/08) Block Loss: 1.7407e-05
+		(Epoch 01/08) Block Loss: 2.3645e-05
+		(Epoch 02/08) Block Loss: 2.1586e-05
+		(Epoch 03/08) Block Loss: 2.1226e-05
+		(Epoch 04/08) Block Loss: 2.0611e-05
+		(Epoch 05/08) Block Loss: 2.0198e-05
+		(Epoch 06/08) Block Loss: 1.9878e-05
+		(Epoch 07/08) Block Loss: 1.9417e-05
+		(Epoch 08/08) Block Loss: 1.8417e-05
+[arm] FINAL {}
+
+===== ARM 3lr3e-4 =====
+[3lr3e-4] step 025  batch L = 1.496954e-01  calib L_func = 1.297903e-01  orth = 2.10e-06
+[3lr3e-4] step 050  batch L = 1.360924e-01  calib L_func = 1.296994e-01  orth = 2.08e-06
+[3lr3e-4] step 075  batch L = 1.262184e-01  calib L_func = 1.306710e-01  orth = 2.19e-06
+[3lr3e-4] step 100  batch L = 1.269910e-01  calib L_func = 1.324010e-01  orth = 2.22e-06
+[3lr3e-4] ckpt 100: calib L_func pre-export 1.277282e-01 -> post-export 1.324010e-01
+[3lr3e-4] step 125  batch L = 1.373791e-01  calib L_func = 1.331116e-01  orth = 2.08e-06
+[3lr3e-4] step 150  batch L = 1.224064e-01  calib L_func = 1.345825e-01  orth = 2.16e-06
+[3lr3e-4] step 175  batch L = 1.226452e-01  calib L_func = 1.369067e-01  orth = 2.10e-06
+[3lr3e-4] step 200  batch L = 1.528839e-01  calib L_func = 1.404117e-01  orth = 2.25e-06
+[3lr3e-4] ckpt 200: calib L_func pre-export 1.328647e-01 -> post-export 1.404117e-01
+		(Epoch 01/08) Block Loss: 2.0031e-05
+		(Epoch 02/08) Block Loss: 1.9169e-05
+		(Epoch 03/08) Block Loss: 1.9094e-05
+		(Epoch 04/08) Block Loss: 1.8571e-05
+		(Epoch 05/08) Block Loss: 1.8559e-05
+		(Epoch 06/08) Block Loss: 1.8062e-05
+		(Epoch 07/08) Block Loss: 1.7684e-05
+		(Epoch 08/08) Block Loss: 1.6812e-05
+		(Epoch 01/08) Block Loss: 2.0416e-05
+		(Epoch 02/08) Block Loss: 1.9421e-05
+		(Epoch 03/08) Block Loss: 1.9397e-05
+		(Epoch 04/08) Block Loss: 1.8837e-05
+		(Epoch 05/08) Block Loss: 1.8706e-05
+		(Epoch 06/08) Block Loss: 1.8340e-05
+		(Epoch 07/08) Block Loss: 1.7908e-05
+		(Epoch 08/08) Block Loss: 1.7084e-05
+[arm] FINAL {}
+
+===== ARM 3lr1e-4 =====
+[3lr1e-4] step 025  batch L = 1.474805e-01  calib L_func = 1.253557e-01  orth = 2.10e-06
+[3lr1e-4] step 050  batch L = 1.325243e-01  calib L_func = 1.264972e-01  orth = 2.30e-06
+[3lr1e-4] step 075  batch L = 1.245594e-01  calib L_func = 1.286405e-01  orth = 2.18e-06
+[3lr1e-4] step 100  batch L = 1.240616e-01  calib L_func = 1.292804e-01  orth = 2.19e-06
+[3lr1e-4] ckpt 100: calib L_func pre-export 1.258026e-01 -> post-export 1.292804e-01
+[3lr1e-4] step 125  batch L = 1.331028e-01  calib L_func = 1.292068e-01  orth = 2.01e-06
+[3lr1e-4] step 150  batch L = 1.170483e-01  calib L_func = 1.291921e-01  orth = 2.39e-06
+[3lr1e-4] step 175  batch L = 1.164861e-01  calib L_func = 1.298498e-01  orth = 2.29e-06
+[3lr1e-4] step 200  batch L = 1.424713e-01  calib L_func = 1.302435e-01  orth = 1.96e-06
+[3lr1e-4] ckpt 200: calib L_func pre-export 1.265423e-01 -> post-export 1.302435e-01
+		(Epoch 01/08) Block Loss: 1.9847e-05
+		(Epoch 02/08) Block Loss: 1.8907e-05
+		(Epoch 03/08) Block Loss: 1.9075e-05
+		(Epoch 04/08) Block Loss: 1.8621e-05
+		(Epoch 05/08) Block Loss: 1.8430e-05
+		(Epoch 06/08) Block Loss: 1.7734e-05
+		(Epoch 07/08) Block Loss: 1.7551e-05
+		(Epoch 08/08) Block Loss: 1.6696e-05
+		(Epoch 01/08) Block Loss: 1.9948e-05
+		(Epoch 02/08) Block Loss: 1.9042e-05
+		(Epoch 03/08) Block Loss: 1.8931e-05
+		(Epoch 04/08) Block Loss: 1.8450e-05
+		(Epoch 05/08) Block Loss: 1.8461e-05
+		(Epoch 06/08) Block Loss: 1.7987e-05
+		(Epoch 07/08) Block Loss: 1.7597e-05
+		(Epoch 08/08) Block Loss: 1.6723e-05
+[arm] FINAL {}
+
+===== ARM 3lr3e-5 =====
+[3lr3e-5] step 025  batch L = 1.474559e-01  calib L_func = 1.251008e-01  orth = 2.24e-06
+[3lr3e-5] step 050  batch L = 1.308476e-01  calib L_func = 1.252303e-01  orth = 2.05e-06
+[3lr3e-5] step 075  batch L = 1.203073e-01  calib L_func = 1.253134e-01  orth = 2.04e-06
+[3lr3e-5] step 100  batch L = 1.207900e-01  calib L_func = 1.254818e-01  orth = 1.94e-06
+[3lr3e-5] ckpt 100: calib L_func pre-export 1.251714e-01 -> post-export 1.254818e-01
+[3lr3e-5] step 125  batch L = 1.302123e-01  calib L_func = 1.256512e-01  orth = 2.43e-06
+[3lr3e-5] step 150  batch L = 1.136055e-01  calib L_func = 1.260323e-01  orth = 2.23e-06
+[3lr3e-5] step 175  batch L = 1.120178e-01  calib L_func = 1.265126e-01  orth = 2.01e-06
+[3lr3e-5] step 200  batch L = 1.396546e-01  calib L_func = 1.270817e-01  orth = 1.95e-06
+[3lr3e-5] ckpt 200: calib L_func pre-export 1.254425e-01 -> post-export 1.270817e-01
+		(Epoch 01/08) Block Loss: 1.9826e-05
+		(Epoch 02/08) Block Loss: 1.8947e-05
+		(Epoch 03/08) Block Loss: 1.8996e-05
+		(Epoch 04/08) Block Loss: 1.8408e-05
+		(Epoch 05/08) Block Loss: 1.8462e-05
+		(Epoch 06/08) Block Loss: 1.7778e-05
+		(Epoch 07/08) Block Loss: 1.7377e-05
+		(Epoch 08/08) Block Loss: 1.6631e-05
+		(Epoch 01/08) Block Loss: 1.9806e-05
+		(Epoch 02/08) Block Loss: 1.8990e-05
+		(Epoch 03/08) Block Loss: 1.8926e-05
+		(Epoch 04/08) Block Loss: 1.8542e-05
+		(Epoch 05/08) Block Loss: 1.8265e-05
+		(Epoch 06/08) Block Loss: 1.7834e-05
+		(Epoch 07/08) Block Loss: 1.7407e-05
+		(Epoch 08/08) Block Loss: 1.6636e-05
+[arm] FINAL {}
+
+===== ARM 3lr1e-5 =====
+[3lr1e-5] step 025  batch L = 1.474358e-01  calib L_func = 1.251096e-01  orth = 2.26e-06
+[3lr1e-5] step 050  batch L = 1.309568e-01  calib L_func = 1.251132e-01  orth = 2.28e-06
+[3lr1e-5] step 075  batch L = 1.199702e-01  calib L_func = 1.251043e-01  orth = 2.07e-06
+[3lr1e-5] step 100  batch L = 1.205133e-01  calib L_func = 1.251051e-01  orth = 2.09e-06
+[3lr1e-5] ckpt 100: calib L_func pre-export 1.251239e-01 -> post-export 1.251051e-01
+[3lr1e-5] step 125  batch L = 1.298508e-01  calib L_func = 1.251243e-01  orth = 2.31e-06
+[3lr1e-5] step 150  batch L = 1.129370e-01  calib L_func = 1.251317e-01  orth = 2.09e-06
+[3lr1e-5] step 175  batch L = 1.100323e-01  calib L_func = 1.252319e-01  orth = 2.33e-06
+[3lr1e-5] step 200  batch L = 1.385009e-01  calib L_func = 1.253122e-01  orth = 2.11e-06
+[3lr1e-5] ckpt 200: calib L_func pre-export 1.251343e-01 -> post-export 1.253122e-01
+		(Epoch 01/08) Block Loss: 1.9849e-05
+		(Epoch 02/08) Block Loss: 1.8956e-05
+		(Epoch 03/08) Block Loss: 1.9036e-05
+		(Epoch 04/08) Block Loss: 1.8292e-05
+		(Epoch 05/08) Block Loss: 1.8577e-05
+		(Epoch 06/08) Block Loss: 1.7623e-05
+		(Epoch 07/08) Block Loss: 1.7478e-05
+		(Epoch 08/08) Block Loss: 1.6596e-05
+		(Epoch 01/08) Block Loss: 1.9840e-05
+		(Epoch 02/08) Block Loss: 1.8963e-05
+		(Epoch 03/08) Block Loss: 1.9061e-05
+		(Epoch 04/08) Block Loss: 1.8407e-05
+		(Epoch 05/08) Block Loss: 1.8364e-05
+		(Epoch 06/08) Block Loss: 1.7750e-05
+		(Epoch 07/08) Block Loss: 1.7282e-05
+		(Epoch 08/08) Block Loss: 1.6698e-05
+[arm] FINAL {}
