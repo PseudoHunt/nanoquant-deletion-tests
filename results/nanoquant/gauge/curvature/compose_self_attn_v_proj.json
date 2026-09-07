@@ -73,6 +73,24 @@
    "sign_changes_U": 360.0,
    "sign_changes_V": 1972.0,
    "theta": 0.45747337759823237
+  },
+  {
+   "E_after": 0.12494046660869224,
+   "S3": -0.00014938300926382989,
+   "cum_gain": -0.00017227235934783036,
+   "cum_gain_pct": -0.13769369991319363,
+   "gain": -6.282529065659848e-05,
+   "iter": 30,
+   "k": 5,
+   "n_true_evals": 248,
+   "plane": [
+    1,
+    162
+   ],
+   "seconds": 376.2958924770355,
+   "sign_changes_U": 391.0,
+   "sign_changes_V": 2140.0,
+   "theta": 0.3497943361070014
   }
  ],
  "iters": [
@@ -243,6 +261,46 @@
    "iter": 23,
    "n_cands": 24,
    "n_eval": 192
+  },
+  {
+   "E_cur": 0.12500329189934883,
+   "accepted": false,
+   "best_seen": 0.12509969893059217,
+   "iter": 25,
+   "n_cands": 24,
+   "n_eval": 208
+  },
+  {
+   "E_cur": 0.12500329189934883,
+   "accepted": false,
+   "best_seen": 0.12511508378951336,
+   "iter": 26,
+   "n_cands": 24,
+   "n_eval": 216
+  },
+  {
+   "E_cur": 0.12500329189934883,
+   "accepted": false,
+   "best_seen": 0.1251364174705374,
+   "iter": 27,
+   "n_cands": 24,
+   "n_eval": 224
+  },
+  {
+   "E_cur": 0.12500329189934883,
+   "accepted": false,
+   "best_seen": 0.1251417001462479,
+   "iter": 28,
+   "n_cands": 24,
+   "n_eval": 232
+  },
+  {
+   "E_cur": 0.12500329189934883,
+   "accepted": false,
+   "best_seen": 0.12504686116899294,
+   "iter": 29,
+   "n_cands": 24,
+   "n_eval": 240
   }
  ],
  "layer": "self_attn.v_proj",
