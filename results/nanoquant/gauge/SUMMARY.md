@@ -140,6 +140,19 @@ either cannot move or moves uphill.
   definition the ordinary NanoQuant update) while Arm 3 uses the unweighted
   relative functional loss the brief specifies. The controls are step- and
   data-matched, not loss-matched, and not compute matched.
+* The one real design judgement was how `Q_NQ` re-derives the export scales for a
+  rotated factor. NanoQuant's rule is mean magnitude over the rank axis, and the
+  brief (section 4.2) asks for it to be recomputed from the current rotated
+  factors; the ratio form used here is that rule, calibrated so the identity gate
+  of section 4.3 holds bit-for-bit. It happens to *cost* the gauge arms something,
+  because rotating a heavy-tailed row lowers its mean magnitude while the binary
+  entries stay at +-1, so the honest scale under-scales the reconstruction. The
+  conclusion does not depend on it: `E_gauge_pre_export`, which keeps the ADMM
+  scales instead, is reported for every arm and is *also* worse than identity
+  everywhere (e.g. 0.144033 vs 0.143766 at the best swept lr; 0.312-0.318 vs
+  0.143766 for the random gauges), and the line search's pre-export curve is
+  flat-then-rising in the same way, bottoming 0.002% below the identity. Neither
+  scale convention finds a better gauge.
 
 ## Files
 
