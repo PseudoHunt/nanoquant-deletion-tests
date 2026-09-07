@@ -249,6 +249,27 @@ is the next experiment, ahead of Stage 2's Transformer function gauges.
   flat-then-rising in the same way, bottoming 0.002% below the identity. Neither
   scale convention finds a better gauge.
 
+
+## Discrete gauge (`curvature/`, `stage1d_givens.md`) — the later arc
+
+Stage 1 killed the *continuous* gauge. The discrete follow-up is written up in
+`stage1d_givens.md` and `curvature/SUMMARY.md`, and `HANDOFF.md` has the rebuild
+order. Three results worth carrying forward:
+
+1. **Layer-wise reconstruction is anti-correlated with block error.** Under an
+   exactly function-preserving gauge change, all six non-`down_proj` projections
+   improve their own objective by 0.7–19% and worsen the block by 0.26–2.10%. At
+   single-move granularity Spearman(layer objective, true ΔE) = **−0.232**.
+2. **A cheap block-aware ranker exists.** The block-residual linear term ranks at
+   **ρ = +0.618** while being useless as a classifier (2.4e-04 absolute error
+   floor). Enumerate → rank → verify top-K against the true block error → accept:
+   5 verified moves gave −0.138% on calibration versus −0.041% from 378
+   unverified ones.
+3. **It does not generalise.** That gain attenuates **24×** onto held-out data and
+   `E_final` is unchanged (+0.076%, p = 0.077). The accept rule selects on an
+   objective whose noise exceeds the effect size. Next test: a validation split
+   inside the accept rule.
+
 ## Files
 
 | file | contents |

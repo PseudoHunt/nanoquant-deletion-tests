@@ -351,7 +351,9 @@ def gauge_step3_diagnostics(base, module_signs_gauged, init_signs, final_signs,
                "frac_gauge_changed": ng / gm.numel(),
                "step3_reversed_gauge_changes": rev,
                "frac_gauge_changes_reversed": rev / max(ng, 1)}
-        if bmask is not None:
+        # the saved baseline Step-3 mask belongs to one layer; skip the overlap
+        # diagnostics when scoring a different one
+        if bmask is not None and bmask[a].shape == gm.shape:
             b = bmask[a]
             ov = int((gm & b).sum())
             ent["overlap_with_baseline_step3"] = ov

@@ -52,6 +52,7 @@ class Runner:
         self.snapA = torch.load(f"{H.GCACHE}/snapshot_A.pt", weights_only=False)
         self.arm3_order = H.gauge_batch_order(ARM3_STEPS)
         self._diag_base = None
+        self._diag_layer = LAYER
 
     # -- state construction ------------------------------------------------
     def new_block(self):
@@ -97,7 +98,8 @@ class Runner:
             rec["baseline_step3_mask"] = H.save_step3_mask(init_signs, final_signs)
         if hasattr(self, "_diag_base") and self._diag_base is not None:
             rec["gauge_step3_diag"] = H.gauge_step3_diagnostics(
-                self._diag_base, gauged_signs, init_signs, final_signs)
+                self._diag_base, gauged_signs, init_signs, final_signs,
+                layer=getattr(self, "_diag_layer", LAYER))
         tuned_bin = H.binary_of(blk)
         rec["layer_post_curve"] = H.layer_post_curve(blk, init_bin, tuned_bin,
                                                      self.ho_in, self.ho_out, self.kwargs)
@@ -424,6 +426,46 @@ class Runner:
         return rec
 
 
+    def arm6(self, tag="6", layer="self_attn.v_proj", suffix=""):
+        """S3-ranked, true-block-verified gauge on one layer -> common Step 3.
+
+        Unlike every earlier gauge arm, each accepted move here was individually
+        verified against the true calibration block error, so the starting state
+        is only a handful of moves away from NanoQuant rather than hundreds or
+        thousands.
+        """
+        t0 = time.time()
+        blob = torch.load(f"{H.GCACHE}/compose_R_{layer.replace('.','_')}{suffix}.pt",
+                          weights_only=False)
+        R = blob["R"].to("cuda").float()
+        blk, sub, _, imp = self.new_block()
+        base = C.LayerBase(layer, sub[layer]).to("cuda")
+        with torch.no_grad(), C.no_tf32():
+            I_ = torch.eye(R.shape[0], device=R.device)
+            orth = float((R.T @ R - I_).norm())
+        assert orth < 1e-4, f"rotation not orthogonal: {orth:.2e}"
+        rec = {"arm": tag, "layer": layer, "R_orth_err": orth,
+               "desc": "S3-ranked + true-block-verified gauge, fixed ADMM scales",
+               "n_accepted_moves": blob.get("n_accepts"),
+               "E_ADMM": self.block_err(blk)}
+        H.apply_gauge_signs_only(sub[layer], base, [R])
+        rec["E_gauge_pre_export"] = self.block_err(blk)
+        rec["E_gauge"] = rec["E_gauge_pre_export"]
+        with torch.no_grad(), C.no_tf32():
+            rec["gauge_sign_delta_U"] = float((C.pos_sign(base.U0 @ R)
+                                               != C.pos_sign(base.U0)).float().mean())
+            rec["gauge_sign_delta_V"] = float((C.pos_sign(R.T @ base.V0)
+                                               != C.pos_sign(base.V0)).float().mean())
+        self._diag_base = base
+        self._diag_layer = layer
+        self.finish(rec, blk, sub, imp, tag)
+        self._diag_base = None
+        self._diag_layer = LAYER
+        rec["wall_s"] = time.time() - t0
+        H.save_run(rec, f"arm{tag}")
+        return rec
+
+
 def rec_pre_export(runner, blk, sub, base, Rs):
     H.apply_gauge_signs_only(sub[LAYER], base, Rs)
     return runner.block_err(blk)
@@ -453,6 +495,11 @@ def main():
             out = r.arm2(arm.split("_", 1)[1])
         elif arm == "3":
             out = r.arm3()
+        elif arm.startswith("rep6"):
+            _, sx_, n_ = arm.split(":")
+            sx_ = "" if sx_ == "-" else "_" + sx_
+            for k in range(int(n_)):
+                out = r.arm6(tag=f"6_v{sx_}_rep{k+1}", suffix=sx_)
         elif arm.startswith("rep5"):
             _, sx_, n_ = arm.split(":")
             sx_ = "" if sx_ == "-" else "_" + sx_

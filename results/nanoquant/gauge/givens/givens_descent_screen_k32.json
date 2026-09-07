@@ -1,0 +1,427 @@
+{
+ "E0_oracle": 0.12510565894541198,
+ "E0_real_calib": 0.12511273896804007,
+ "E_ADMM_heldout": 0.1437657711403401,
+ "E_gauge_heldout_pre_export": 0.14375404367936628,
+ "E_gauge_heldout_qnq": 0.14375404367936628,
+ "E_gauge_real_calib_qnq": 0.1250902335676612,
+ "accepted_total": 20,
+ "accepts": [
+  {
+   "E_oracle": 0.1250987845928522,
+   "dE_pred": -6.874352858635714e-06,
+   "flip_events": 210,
+   "k": 1,
+   "n_flip": 210,
+   "net_changed_U": 2,
+   "net_changed_V": 208,
+   "plane": [
+    1,
+    30
+   ],
+   "planes_visited": 497,
+   "reversals": 0,
+   "sign_delta_U": 6.103515625e-07,
+   "sign_delta_V": 1.5869140625e-05,
+   "theta": 0.16484690779166228
+  },
+  {
+   "E_oracle": 0.12509615419353154,
+   "dE_pred": -2.6303993124792905e-06,
+   "flip_events": 387,
+   "k": 2,
+   "n_flip": 177,
+   "net_changed_U": 6,
+   "net_changed_V": 381,
+   "plane": [
+    19,
+    23
+   ],
+   "planes_visited": 521,
+   "reversals": 0,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.90679931640625e-05,
+   "theta": -0.1313252883206264
+  },
+  {
+   "E_oracle": 0.12509388256922757,
+   "dE_pred": -2.271624003763316e-06,
+   "flip_events": 1185,
+   "k": 3,
+   "n_flip": 798,
+   "net_changed_U": 32,
+   "net_changed_V": 1153,
+   "plane": [
+    14,
+    18
+   ],
+   "planes_visited": 523,
+   "reversals": 0,
+   "sign_delta_U": 9.765625e-06,
+   "sign_delta_V": 8.79669189453125e-05,
+   "theta": -0.3137836830397762
+  },
+  {
+   "E_oracle": 0.12509190959342573,
+   "dE_pred": -1.9729758064380326e-06,
+   "flip_events": 1244,
+   "k": 4,
+   "n_flip": 59,
+   "net_changed_U": 32,
+   "net_changed_V": 1212,
+   "plane": [
+    12,
+    29
+   ],
+   "planes_visited": 530,
+   "reversals": 0,
+   "sign_delta_U": 9.765625e-06,
+   "sign_delta_V": 9.246826171875e-05,
+   "theta": -0.07764320532770563
+  },
+  {
+   "E_oracle": 0.12508999942145357,
+   "dE_pred": -1.9101719662138145e-06,
+   "flip_events": 1421,
+   "k": 5,
+   "n_flip": 177,
+   "net_changed_U": 33,
+   "net_changed_V": 1388,
+   "plane": [
+    13,
+    16
+   ],
+   "planes_visited": 532,
+   "reversals": 0,
+   "sign_delta_U": 1.007080078125e-05,
+   "sign_delta_V": 0.00010589599609375,
+   "theta": 0.13870526716256482
+  },
+  {
+   "E_oracle": 0.12508922924009058,
+   "dE_pred": -7.701814046296891e-07,
+   "flip_events": 1585,
+   "k": 6,
+   "n_flip": 164,
+   "net_changed_U": 37,
+   "net_changed_V": 1474,
+   "plane": [
+    1,
+    22
+   ],
+   "planes_visited": 534,
+   "reversals": 37,
+   "sign_delta_U": 1.129150390625e-05,
+   "sign_delta_V": 0.000112457275390625,
+   "theta": 0.11008002995837574
+  },
+  {
+   "E_oracle": 0.12508859138792502,
+   "dE_pred": -6.378521635613749e-07,
+   "flip_events": 1608,
+   "k": 7,
+   "n_flip": 23,
+   "net_changed_U": 37,
+   "net_changed_V": 1481,
+   "plane": [
+    1,
+    10
+   ],
+   "planes_visited": 540,
+   "reversals": 45,
+   "sign_delta_U": 1.129150390625e-05,
+   "sign_delta_V": 0.0001129913330078125,
+   "theta": 0.01429341950662788
+  },
+  {
+   "E_oracle": 0.12508842504217615,
+   "dE_pred": -1.66345748235512e-07,
+   "flip_events": 1614,
+   "k": 8,
+   "n_flip": 6,
+   "net_changed_U": 37,
+   "net_changed_V": 1487,
+   "plane": [
+    1,
+    7
+   ],
+   "planes_visited": 547,
+   "reversals": 45,
+   "sign_delta_U": 1.129150390625e-05,
+   "sign_delta_V": 0.0001134490966796875,
+   "theta": -0.002611622842560113
+  },
+  {
+   "E_oracle": 0.12508825996000736,
+   "dE_pred": -1.6508216870249379e-07,
+   "flip_events": 1639,
+   "k": 9,
+   "n_flip": 25,
+   "net_changed_U": 36,
+   "net_changed_V": 1489,
+   "plane": [
+    12,
+    23
+   ],
+   "planes_visited": 549,
+   "reversals": 57,
+   "sign_delta_U": 1.0986328125e-05,
+   "sign_delta_V": 0.0001136016845703125,
+   "theta": -0.024271459590525124
+  },
+  {
+   "E_oracle": 0.12508788639082677,
+   "dE_pred": -3.7356917993796444e-07,
+   "flip_events": 1667,
+   "k": 10,
+   "n_flip": 28,
+   "net_changed_U": 35,
+   "net_changed_V": 1498,
+   "plane": [
+    1,
+    15
+   ],
+   "planes_visited": 551,
+   "reversals": 67,
+   "sign_delta_U": 1.068115234375e-05,
+   "sign_delta_V": 0.000114288330078125,
+   "theta": -0.026865197593014756
+  },
+  {
+   "E_oracle": 0.12508763428772732,
+   "dE_pred": -2.5210311190084976e-07,
+   "flip_events": 1871,
+   "k": 11,
+   "n_flip": 204,
+   "net_changed_U": 40,
+   "net_changed_V": 1531,
+   "plane": [
+    1,
+    14
+   ],
+   "planes_visited": 554,
+   "reversals": 150,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001168060302734375,
+   "theta": -0.07353742570266242
+  },
+  {
+   "E_oracle": 0.12508752237731913,
+   "dE_pred": -1.1191040641641192e-07,
+   "flip_events": 1873,
+   "k": 12,
+   "n_flip": 2,
+   "net_changed_U": 40,
+   "net_changed_V": 1529,
+   "plane": [
+    1,
+    13
+   ],
+   "planes_visited": 559,
+   "reversals": 152,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001166534423828125,
+   "theta": -0.0005062343641590861
+  },
+  {
+   "E_oracle": 0.12508742809807696,
+   "dE_pred": -9.427924257128546e-08,
+   "flip_events": 1875,
+   "k": 13,
+   "n_flip": 2,
+   "net_changed_U": 40,
+   "net_changed_V": 1529,
+   "plane": [
+    1,
+    3
+   ],
+   "planes_visited": 561,
+   "reversals": 153,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001166534423828125,
+   "theta": 0.0013701523797481352
+  },
+  {
+   "E_oracle": 0.12508730902548393,
+   "dE_pred": -1.1907259616189297e-07,
+   "flip_events": 1890,
+   "k": 14,
+   "n_flip": 15,
+   "net_changed_U": 39,
+   "net_changed_V": 1537,
+   "plane": [
+    1,
+    11
+   ],
+   "planes_visited": 563,
+   "reversals": 157,
+   "sign_delta_U": 1.190185546875e-05,
+   "sign_delta_V": 0.0001172637939453125,
+   "theta": -0.011403582589984751
+  },
+  {
+   "E_oracle": 0.12508650517134728,
+   "dE_pred": -8.038541406928124e-07,
+   "flip_events": 2012,
+   "k": 15,
+   "n_flip": 122,
+   "net_changed_U": 40,
+   "net_changed_V": 1592,
+   "plane": [
+    1,
+    17
+   ],
+   "planes_visited": 565,
+   "reversals": 190,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001214599609375,
+   "theta": -0.08185712617476826
+  },
+  {
+   "E_oracle": 0.1250864394989883,
+   "dE_pred": -6.567235927994042e-08,
+   "flip_events": 2014,
+   "k": 16,
+   "n_flip": 2,
+   "net_changed_U": 40,
+   "net_changed_V": 1594,
+   "plane": [
+    1,
+    25
+   ],
+   "planes_visited": 568,
+   "reversals": 190,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.000121612548828125,
+   "theta": -8.936280652749318e-05
+  },
+  {
+   "E_oracle": 0.1250863948235416,
+   "dE_pred": -4.467544669509567e-08,
+   "flip_events": 2017,
+   "k": 17,
+   "n_flip": 3,
+   "net_changed_U": 40,
+   "net_changed_V": 1593,
+   "plane": [
+    18,
+    31
+   ],
+   "planes_visited": 571,
+   "reversals": 192,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001215362548828125,
+   "theta": 0.001635365158693003
+  },
+  {
+   "E_oracle": 0.12508630244467264,
+   "dE_pred": -9.237886638352551e-08,
+   "flip_events": 2024,
+   "k": 18,
+   "n_flip": 7,
+   "net_changed_U": 40,
+   "net_changed_V": 1592,
+   "plane": [
+    1,
+    8
+   ],
+   "planes_visited": 575,
+   "reversals": 196,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001214599609375,
+   "theta": -0.003139006034547087
+  },
+  {
+   "E_oracle": 0.12508627990767932,
+   "dE_pred": -2.253699336927691e-08,
+   "flip_events": 2026,
+   "k": 19,
+   "n_flip": 2,
+   "net_changed_U": 40,
+   "net_changed_V": 1594,
+   "plane": [
+    1,
+    4
+   ],
+   "planes_visited": 579,
+   "reversals": 196,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.000121612548828125,
+   "theta": -0.0003238520838959591
+  },
+  {
+   "E_oracle": 0.12508626722249142,
+   "dE_pred": -1.2685186779103789e-08,
+   "flip_events": 2027,
+   "k": 20,
+   "n_flip": 1,
+   "net_changed_U": 40,
+   "net_changed_V": 1595,
+   "plane": [
+    1,
+    27
+   ],
+   "planes_visited": 581,
+   "reversals": 196,
+   "sign_delta_U": 1.220703125e-05,
+   "sign_delta_V": 0.0001216888427734375,
+   "theta": -0.0008150124789316759
+  }
+ ],
+ "group_checks": [
+  {
+   "E_oracle": 0.12508626722249142,
+   "E_real": 0.1250902335676612,
+   "accepted_in_group": 20,
+   "accepted_total": 20,
+   "coords": [
+    0,
+    31
+   ],
+   "cum_gain_oracle_pct": -0.015500276393592659,
+   "cum_gain_real_pct": -0.017988096627493642,
+   "group": 0,
+   "incremental_gain_pct": 0.017988096627493642,
+   "planes_scored": 483,
+   "pool": 32,
+   "resweeps": 34,
+   "seconds": 263.6787700653076,
+   "topk": 32
+  }
+ ],
+ "groups": null,
+ "layer": "mlp.down_proj",
+ "materialize": {
+  "fp32_vs_bf16_sign_delta_U": 0.0,
+  "fp32_vs_bf16_sign_delta_V": 0.0,
+  "module_vs_qnq_rel": 0.0,
+  "sign_delta_U": 1.2207030522404239e-05,
+  "sign_delta_V": 0.00012168884131824598
+ },
+ "max_passes": 3,
+ "mode": "descent",
+ "n_groups": 1,
+ "n_planes": 496,
+ "oracle_offset_at_E0": -7.080022628086491e-06,
+ "partition": "blocks",
+ "partition_seed": 0,
+ "planes_visited": 582,
+ "rank_blocks": "0",
+ "real_checks": [],
+ "strategy": "screen",
+ "sweeps": [
+  {
+   "E_oracle": 0.12508626722249142,
+   "E_real": 0.1250902335676612,
+   "accepted": 20,
+   "cum_gain_oracle_pct": -0.015500276393592659,
+   "cum_gain_real_pct": -0.017988096627493642,
+   "factor_consistency": 1.6225547834833683e-17,
+   "orth_err": 5.132759524716364e-16,
+   "seconds": 265.7314739227295,
+   "sweep": 1
+  }
+ ],
+ "tol_rel": 1e-07,
+ "wall_s": 267.3362617492676
+}

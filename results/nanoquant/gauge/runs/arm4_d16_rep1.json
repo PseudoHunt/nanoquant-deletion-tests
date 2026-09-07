@@ -1,0 +1,160 @@
+{
+ "E_ADMM": 0.1437657711403401,
+ "E_final": 0.11550565892535497,
+ "E_gauge": 0.14359080054278744,
+ "E_gauge_pre_export": 0.14317092958804292,
+ "J": {
+  "mlp.down_proj": {
+   "J_post": 0.17036864878482577,
+   "J_pre": 0.16734164383646855,
+   "fro_post": 0.38944254297199127,
+   "fro_pre": 0.3513828490569333
+  },
+  "mlp.gate_proj": {
+   "J_post": 0.22045140116506803,
+   "J_pre": 0.19170483295193538,
+   "fro_post": 0.3627600546830438,
+   "fro_pre": 0.33041791234654283
+  },
+  "mlp.up_proj": {
+   "J_post": 0.2753737068619493,
+   "J_pre": 0.2501021731674868,
+   "fro_post": 0.3793341191456875,
+   "fro_pre": 0.34373735340720185
+  },
+  "self_attn.k_proj": {
+   "J_post": 0.01896212756501374,
+   "J_pre": 0.019013993187209994,
+   "fro_post": 0.20439575742079646,
+   "fro_pre": 0.20329020279100185
+  },
+  "self_attn.o_proj": {
+   "J_post": 0.08661918607252642,
+   "J_pre": 0.08209481323298896,
+   "fro_post": 0.265321337597203,
+   "fro_pre": 0.25380711311739185
+  },
+  "self_attn.q_proj": {
+   "J_post": 0.009956237765769052,
+   "J_pre": 0.007852232316809073,
+   "fro_post": 0.19398881910748061,
+   "fro_pre": 0.18929933552985526
+  },
+  "self_attn.v_proj": {
+   "J_post": 0.25502874490704674,
+   "J_pre": 0.2629731879239427,
+   "fro_post": 0.3229574824871452,
+   "fro_pre": 0.3160408955402358
+  }
+ },
+ "R_orth_err": 1.535262526886072e-06,
+ "arm": "4_d16_rep1",
+ "calib_func_loss_at_gauge": 0.12497057962902733,
+ "desc": "discrete Givens coordinate descent",
+ "fixed_scales": false,
+ "gauge_sign_delta_U": 0.00021179199393372983,
+ "gauge_sign_delta_V": 0.003382797120139003,
+ "gauge_step3_diag": {
+  "U_latent": {
+   "baseline_step3_rate": 0.0098370361328125,
+   "enrichment_vs_chance": 28.563463963713474,
+   "frac_baseline_step3_pre_spent": 0.006049512936650741,
+   "frac_gauge_changed": 0.0002117919921875,
+   "frac_gauge_changes_reversed": 0.515850144092219,
+   "frac_gauge_in_baseline_step3": 0.28097982708933716,
+   "n_baseline_step3_changed": 32234,
+   "n_gauge_changed": 694,
+   "n_positions": 3276800,
+   "overlap_with_baseline_step3": 195,
+   "split": {
+    "n_nonoverlap": 499,
+    "n_overlap": 195,
+    "ratio": 0.27728824323251566,
+    "rev_rate_nonoverlap": 0.6472945891783567,
+    "rev_rate_overlap": 0.1794871794871795,
+    "reversed_nonoverlap": 323,
+    "reversed_overlap": 35
+   },
+   "step3_reversed_gauge_changes": 358
+  },
+  "V_latent": {
+   "baseline_step3_rate": 0.02551643371582031,
+   "enrichment_vs_chance": 11.995158224952425,
+   "frac_baseline_step3_pre_spent": 0.04057718815125774,
+   "frac_gauge_changed": 0.0033827972412109374,
+   "frac_gauge_changes_reversed": 0.5073862739349105,
+   "frac_gauge_in_baseline_step3": 0.30607365975777534,
+   "n_baseline_step3_changed": 334449,
+   "n_gauge_changed": 44339,
+   "n_positions": 13107200,
+   "overlap_with_baseline_step3": 13571,
+   "split": {
+    "n_nonoverlap": 30768,
+    "n_overlap": 13571,
+    "ratio": 0.1660210206930372,
+    "rev_rate_nonoverlap": 0.6812922516900676,
+    "rev_rate_overlap": 0.11310883501584261,
+    "reversed_nonoverlap": 20962,
+    "reversed_overlap": 1535
+   },
+   "step3_reversed_gauge_changes": 22497
+  }
+ },
+ "layer": "mlp.down_proj",
+ "layer_post_curve": {
+  "mlp.down_proj": 0.11550565892535497,
+  "mlp.gate_proj": 0.1390067932234123,
+  "mlp.up_proj": 0.12771715546531945,
+  "self_attn.k_proj": 0.1489252308906211,
+  "self_attn.o_proj": 0.1490835056725182,
+  "self_attn.q_proj": 0.14235456100692867,
+  "self_attn.v_proj": 0.14382915187919149
+ },
+ "materialize": {
+  "fp32_vs_bf16_sign_delta_U": 0.0,
+  "fp32_vs_bf16_sign_delta_V": 0.0,
+  "module_vs_qnq_rel": 0.0,
+  "sign_delta_U": 0.00021179199393372983,
+  "sign_delta_V": 0.003382797120139003
+ },
+ "rank_blocks": "5,15,25,35,45,12,22",
+ "step3": {
+  "flip_mean": 0.010326750168003076,
+  "seconds": 45.40325856208801
+ },
+ "step3_flips": {
+  "mlp.down_proj.U_latent": 0.010365600697696209,
+  "mlp.down_proj.V_latent": 0.026392746716737747,
+  "mlp.gate_proj.U_latent": 0.034618303179740906,
+  "mlp.gate_proj.V_latent": 0.00015808104944881052,
+  "mlp.up_proj.U_latent": 0.038632966578006744,
+  "mlp.up_proj.V_latent": 0.0003460693405941129,
+  "self_attn.k_proj.U_latent": 0.0009816488018259406,
+  "self_attn.k_proj.V_latent": 0.0015424092998728156,
+  "self_attn.o_proj.U_latent": 0.006618376821279526,
+  "self_attn.o_proj.V_latent": 0.005201770458370447,
+  "self_attn.q_proj.U_latent": 0.004575667902827263,
+  "self_attn.q_proj.V_latent": 0.0031487250234931707,
+  "self_attn.v_proj.U_latent": 0.004241943359375,
+  "self_attn.v_proj.V_latent": 0.0077501931227743626
+ },
+ "step3_sign_delta": {
+  "mlp.down_proj.U_latent": 0.010365600697696209,
+  "mlp.down_proj.V_latent": 0.026392746716737747,
+  "mlp.gate_proj.U_latent": 0.034618303179740906,
+  "mlp.gate_proj.V_latent": 0.00015808104944881052,
+  "mlp.up_proj.U_latent": 0.038632966578006744,
+  "mlp.up_proj.V_latent": 0.0003460693405941129,
+  "self_attn.k_proj.U_latent": 0.0009816488018259406,
+  "self_attn.k_proj.V_latent": 0.0015424092998728156,
+  "self_attn.o_proj.U_latent": 0.006618376821279526,
+  "self_attn.o_proj.V_latent": 0.005201770458370447,
+  "self_attn.q_proj.U_latent": 0.004575667902827263,
+  "self_attn.q_proj.V_latent": 0.0031487250234931707,
+  "self_attn.v_proj.U_latent": 0.004241943359375,
+  "self_attn.v_proj.V_latent": 0.0077501931227743626
+ },
+ "strategy": "cyclic",
+ "sweeps_done": 1,
+ "wall_s": 55.4040892124176
+}

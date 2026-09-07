@@ -1,0 +1,118 @@
+{
+ "E_ADMM": 0.1437657711403401,
+ "E_final": 0.11533357496962858,
+ "E_gauge": 0.14375735934546263,
+ "E_gauge_pre_export": 0.14375735934546263,
+ "J": {
+  "mlp.down_proj": {
+   "J_post": 0.16966010219220143,
+   "J_pre": 0.16653816082268622,
+   "fro_post": 0.3868985637215302,
+   "fro_pre": 0.34894962769995214
+  },
+  "mlp.gate_proj": {
+   "J_post": 0.2207649330631583,
+   "J_pre": 0.19170483295193538,
+   "fro_post": 0.36243113411899863,
+   "fro_pre": 0.33041791234654283
+  },
+  "mlp.up_proj": {
+   "J_post": 0.27466435804560335,
+   "J_pre": 0.2501021731674868,
+   "fro_post": 0.3788497013631894,
+   "fro_pre": 0.34373735340720185
+  },
+  "self_attn.k_proj": {
+   "J_post": 0.01893124265826554,
+   "J_pre": 0.019013993187209994,
+   "fro_post": 0.2044111989778247,
+   "fro_pre": 0.20329020279100185
+  },
+  "self_attn.o_proj": {
+   "J_post": 0.08653632394704018,
+   "J_pre": 0.08209481323298896,
+   "fro_post": 0.26540485930471414,
+   "fro_pre": 0.25380711311739185
+  },
+  "self_attn.q_proj": {
+   "J_post": 0.009892539320805227,
+   "J_pre": 0.007852232316809073,
+   "fro_post": 0.19404810704945188,
+   "fro_pre": 0.18929933552985526
+  },
+  "self_attn.v_proj": {
+   "J_post": 0.257686074153274,
+   "J_pre": 0.26742001532978144,
+   "fro_post": 0.3267678232752028,
+   "fro_pre": 0.3208936474708907
+  }
+ },
+ "R_orth_err": 1.2301858021146472e-07,
+ "arm": "6_v_rep5",
+ "calib_func_loss_at_gauge": 0.12494046660869224,
+ "desc": "S3-ranked + true-block-verified gauge, fixed ADMM scales",
+ "gauge_sign_delta_U": 0.0019887289963662624,
+ "gauge_sign_delta_V": 0.0027211508713662624,
+ "gauge_step3_diag": {
+  "U_latent": {
+   "frac_gauge_changed": 0.0019887288411458335,
+   "frac_gauge_changes_reversed": 0.30179028132992325,
+   "n_gauge_changed": 391,
+   "step3_reversed_gauge_changes": 118
+  },
+  "V_latent": {
+   "frac_gauge_changed": 0.0027211507161458335,
+   "frac_gauge_changes_reversed": 0.2607476635514019,
+   "n_gauge_changed": 2140,
+   "step3_reversed_gauge_changes": 558
+  }
+ },
+ "layer": "self_attn.v_proj",
+ "layer_post_curve": {
+  "mlp.down_proj": 0.11533357496962858,
+  "mlp.gate_proj": 0.13895957231897546,
+  "mlp.up_proj": 0.12758976373110387,
+  "self_attn.k_proj": 0.14895091970581223,
+  "self_attn.o_proj": 0.1490681981439877,
+  "self_attn.q_proj": 0.14330362011894637,
+  "self_attn.v_proj": 0.1446329871132518
+ },
+ "n_accepted_moves": null,
+ "step3": {
+  "flip_mean": 0.010316416379022744,
+  "seconds": 24.713688373565674
+ },
+ "step3_flips": {
+  "mlp.down_proj.U_latent": 0.009772948920726776,
+  "mlp.down_proj.V_latent": 0.025570906698703766,
+  "mlp.gate_proj.U_latent": 0.034316711127758026,
+  "mlp.gate_proj.V_latent": 0.00015441894356627017,
+  "mlp.up_proj.U_latent": 0.03836555406451225,
+  "mlp.up_proj.V_latent": 0.0003298950323369354,
+  "self_attn.k_proj.U_latent": 0.0009511311654932797,
+  "self_attn.k_proj.V_latent": 0.0015322366962209344,
+  "self_attn.o_proj.U_latent": 0.006527808494865894,
+  "self_attn.o_proj.V_latent": 0.005354358348995447,
+  "self_attn.q_proj.U_latent": 0.004514632746577263,
+  "self_attn.q_proj.V_latent": 0.003257997566834092,
+  "self_attn.v_proj.U_latent": 0.0049540200270712376,
+  "self_attn.v_proj.V_latent": 0.00882720947265625
+ },
+ "step3_sign_delta": {
+  "mlp.down_proj.U_latent": 0.009772948920726776,
+  "mlp.down_proj.V_latent": 0.025570906698703766,
+  "mlp.gate_proj.U_latent": 0.034316711127758026,
+  "mlp.gate_proj.V_latent": 0.00015441894356627017,
+  "mlp.up_proj.U_latent": 0.03836555406451225,
+  "mlp.up_proj.V_latent": 0.0003298950323369354,
+  "self_attn.k_proj.U_latent": 0.0009511311654932797,
+  "self_attn.k_proj.V_latent": 0.0015322366962209344,
+  "self_attn.o_proj.U_latent": 0.006527808494865894,
+  "self_attn.o_proj.V_latent": 0.005354358348995447,
+  "self_attn.q_proj.U_latent": 0.004514632746577263,
+  "self_attn.q_proj.V_latent": 0.003257997566834092,
+  "self_attn.v_proj.U_latent": 0.0049540200270712376,
+  "self_attn.v_proj.V_latent": 0.00882720947265625
+ },
+ "wall_s": 29.52313494682312
+}

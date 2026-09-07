@@ -1,0 +1,32 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[descent/screen] 496 planes, blocks 0; E0 oracle 0.12510566  real 0.12511274
+[screen] group 1/1 coords 0..31: +20 accepts (pool 32, resweeps 34)  real 0.12509023  cum -0.0180%  incr -0.0180%  (264s)
+[descent] FINAL held-out: E_ADMM 0.143766 -> E_gauge 0.143754 (Q_NQ) / 0.143754 (fixed scales)

@@ -1,0 +1,50 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[descent/cyclic] 496 planes, blocks [0]; E0 oracle 0.12510490  real 0.12511274
+[descent] accept    25  oracle 0.12509575 (-0.0073%)  real 0.12509924 (-0.0108%)  eps_D(cum) 4.35e-06  signdU 0.000%  rev 376  (20s)
+[descent] accept    50  oracle 0.12509069 (-0.0114%)  real 0.12509425 (-0.0148%)  eps_D(cum) 4.27e-06  signdU 0.000%  rev 643  (39s)
+[descent] accept    75  oracle 0.12508491 (-0.0160%)  real 0.12508897 (-0.0190%)  eps_D(cum) 3.77e-06  signdU 0.001%  rev 936  (58s)
+[descent] accept   100  oracle 0.12508124 (-0.0189%)  real 0.12508600 (-0.0214%)  eps_D(cum) 3.07e-06  signdU 0.001%  rev 1232  (88s)
+[descent] accept   125  oracle 0.12507811 (-0.0214%)  real 0.12508275 (-0.0240%)  eps_D(cum) 3.20e-06  signdU 0.001%  rev 1336  (117s)
+[descent] accept   150  oracle 0.12507464 (-0.0242%)  real 0.12507960 (-0.0265%)  eps_D(cum) 2.88e-06  signdU 0.001%  rev 1566  (159s)
+[descent] accept   175  oracle 0.12507193 (-0.0264%)  real 0.12507884 (-0.0271%)  eps_D(cum) 9.22e-07  signdU 0.001%  rev 1676  (205s)
+[descent] accept   200  oracle 0.12506838 (-0.0292%)  real 0.12507411 (-0.0309%)  eps_D(cum) 2.10e-06  signdU 0.002%  rev 1919  (243s)
+[descent] SWEEP 1: accepted 213  oracle 0.12506714 (-0.0302%)  real 0.12507264 (-0.0320%)
+[descent] accept   225  oracle 0.12506638 (-0.0308%)  real 0.12507209 (-0.0325%)  eps_D(cum) 2.12e-06  signdU 0.002%  rev 2062  (318s)
+[descent] accept   250  oracle 0.12506407 (-0.0326%)  real 0.12506981 (-0.0343%)  eps_D(cum) 2.10e-06  signdU 0.002%  rev 2216  (370s)
+[descent] accept   275  oracle 0.12506236 (-0.0340%)  real 0.12506800 (-0.0358%)  eps_D(cum) 2.20e-06  signdU 0.002%  rev 2319  (432s)
+[descent] accept   300  oracle 0.12505995 (-0.0359%)  real 0.12506532 (-0.0379%)  eps_D(cum) 2.46e-06  signdU 0.002%  rev 2493  (476s)
+[descent] SWEEP 2: accepted 103  oracle 0.12505901 (-0.0367%)  real 0.12506320 (-0.0396%)
+[descent] accept   325  oracle 0.12505865 (-0.0370%)  real 0.12506282 (-0.0399%)  eps_D(cum) 3.66e-06  signdU 0.002%  rev 2635  (581s)
+[descent] accept   350  oracle 0.12505729 (-0.0381%)  real 0.12506170 (-0.0408%)  eps_D(cum) 3.43e-06  signdU 0.002%  rev 2746  (740s)
+[descent] SWEEP 3: accepted 46  oracle 0.12505652 (-0.0387%)  real 0.12506087 (-0.0415%)
+[descent] accept   375  oracle 0.12505624 (-0.0389%)  real 0.12506206 (-0.0405%)  eps_D(cum) 2.02e-06  signdU 0.002%  rev 2816  (991s)
+[descent] SWEEP 4: accepted 16  oracle 0.12505600 (-0.0391%)  real 0.12506187 (-0.0407%)
+[descent] FINAL held-out: E_ADMM 0.143766 -> E_gauge 0.143728 (Q_NQ) / 0.143728 (fixed scales)
