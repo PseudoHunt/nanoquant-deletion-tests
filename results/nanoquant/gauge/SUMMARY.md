@@ -8,8 +8,13 @@ Does choosing `R` by geometry, or by downstream function error, expose a better
 binary solution at identical rank, bpw, ADMM, Step-3 optimiser, data and deployed
 representation?
 
-**Answer: no, and for a specific reason.** The gauge freedom is real and very
-large, and NanoQuant's ADMM already sits at the bottom of it.
+**Answer: not by any *continuous* search, and for a specific reason.** The gauge
+freedom is real and very large; every gradient- or Procrustes-based route into it
+either cannot move or moves uphill. But the binary objective is piecewise
+constant in the sign pattern, so a continuous surrogate is the wrong instrument,
+and the **discrete** question — does some small coordinated set of sign flips
+reachable by a rotation help? — remains open. See *The limitation that matters
+most*.
 
 Scope: block 0 of Llama-3.2-1B, `mlp.down_proj`, NanoQuant at bits = 1.0
 (0.9857 bpw), gamma = 0.2, 128 wikitext2 calibration sequences at seed 0, 32
@@ -146,13 +151,43 @@ flips have already been taken and Step 3 is left a worse-conditioned remainder.
 This is consistent with Test D2's decomposition, where four fifths of Step 3's
 gain came from flipping ~1% of the signs.
 
-Second, it **closes off the gauge direction specifically**. This was the strongest
-remaining "the initialisation is leaving something on the table" hypothesis,
-because the symmetry is exact and the effect on the binary solution is provably
-large. It is now measured: the effect is large (2.5x), and the ADMM point is at
-the bottom of it. Every route tested — geometric alignment, function-error
+Second, it **closes off the continuous route into the gauge**. The symmetry is
+exact and its effect on the binary solution is provably large (2.5x), so this was
+the strongest remaining "the initialisation is leaving something on the table"
+hypothesis. Every continuous route tested — geometric alignment, function-error
 descent at six step sizes, a full-batch line search, and 16 random probes —
-either cannot move or moves uphill.
+either cannot move or moves uphill. It does **not** close off the gauge idea; it
+closes off differentiating through the hard sign to search it.
+
+## The limitation that matters most
+
+The binary objective is **piecewise constant in the sign pattern**. Along any ray
+out of `R = I` nothing changes at all until the rotation carries some entry of
+`U R` or `V R` across zero; between those breakpoints `sign(U R)` and
+`sign(V R)` are literally constant and only the recomputed export scales move. So
+the line search's "flat basin out to t = 0.1" is **not** evidence that `R = I` is
+a good point — it is the signature of a region containing no sign flips at all,
+which is what a piecewise-constant objective must look like near *any* point.
+
+That narrows what Stage 1 established. Well supported:
+
+* the gauge class is enormous in effect (Arm 1: 2.5x, ~50% of signs), and
+* the **STE gradient is the wrong instrument for searching it** — uninformative
+  where the objective is constant, and anti-correlated with the true objective
+  precisely where signs begin to change (t = 0.3 to 10, where it rises *faster*
+  than random directions).
+
+**Not** established: that no small, coordinated set of sign flips reachable by a
+rotation improves the binary solution. Every gauge actually evaluated here either
+flipped ~0.0% of signs — and so *was* the baseline, which is why those cells sit
+inside the determinism band — or had its flips chosen by the discredited STE
+gradient. Nothing here samples "few sign flips, chosen well".
+
+The discrete question is therefore open, and Stage 1's own failure mode is what
+says how to ask it: search the gauge by **directly evaluating the true binary
+objective at the sign-pattern breakpoints** — Givens-plane coordinate descent,
+no surrogate gradient — rather than by differentiating through a hard sign. That
+is the next experiment, ahead of Stage 2's Transformer function gauges.
 
 ## Caveats
 
