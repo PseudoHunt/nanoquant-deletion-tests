@@ -73,6 +73,36 @@ rule is the calibration objective (section 8 forbids using held-out data for
 hyperparameter or arm selection), and under that rule no swept learning rate is
 selected at all, because every one of them ascends.
 
+## Correction: the baseline was a single draw, and it was the worst one
+
+Every `Δ vs 0a` in this file and in `stage1_down.md` is measured against **one**
+run of the baseline. Re-running the *identical* `0a` state eight times gives
+
+    mean 0.115231804   sd 8.69e-05 (0.0754%)   spread 0.2329%
+
+and the `0a` draw used throughout is **rank 8 of 8 — the worst**, 1.8 sd above the
+mean. `E_final` is the only stochastic quantity here: everything through `Q_NQ`
+export is bit-identical across processes (verified to 17 digits), and Step 3
+diverges because it flips ~1% of the signs, so a last-bit difference changes the
+trajectory. See NOTES.md#6.
+
+Consequences, in order of how much they matter:
+
+* **A single-run `E_final` difference below 2 sd = 0.15% carries no information.**
+  The 0.31% gate is ~4 sd and remains conservative — the error was in the point
+  estimates, not the gate.
+* **The Stage 1 verdicts are unchanged.** Every arm failed by a margin far larger
+  than this, and the two that "beat" 0a by −0.24%/−0.27% were already declared
+  noise. Re-scored against the mean they are −0.14%/−0.13%, z ~ −1.8: still noise,
+  still failing.
+* **The extra-STE control is untouched and is the most robust result in the
+  repository**: z = +16.6 and +34.9 against the baseline distribution.
+* **The discrete-gauge arms flip sign** (see `stage1d_givens.md`): not marginally
+  better than baseline, marginally worse, all at z = +1.3 to +1.9.
+
+Any future comparison needs replicates of **both** sides. Replicating only the
+baseline establishes the floor but leaves the treatment arm as a single draw.
+
 ## The eight questions
 
 **1. Does binary error vary materially across the latent gauge class?**

@@ -101,3 +101,58 @@ reproduce block 0's `pre`/`post` to 9.3e-6 / 6.8e-5.
 Guard for anyone reusing this: a fix that makes the numbers right is not
 necessarily a fix that leaves the pipeline runnable, and the difference is
 invisible until someone starts from nothing.
+
+## 6. Comparing single runs against a single baseline draw produced a sign error
+
+Every `Δ vs 0a` in the gauge work was measured against **one** run of the
+baseline. Two facts, discovered late, make that invalid.
+
+**Step 3 is the only stochastic stage, and it is not small.** Two runs of the
+identical `arm4_b0123` state agreed to all 17 digits on `E_gauge_pre_export` and
+`E_gauge` and differed on `E_final`:
+
+```
+                 run 1                run 2
+E_gauge_pre      0.14360547733625048  0.14360547733625048   IDENTICAL
+E_gauge          0.14360616334438345  0.14360616334438345   IDENTICAL
+E_final          0.11539898669453942  0.11539345723449609   differs by 5.5e-06
+```
+
+So everything through ADMM-state load, gauge materialisation and `Q_NQ` export is
+bit-reproducible across processes; the variance is entirely Step 3's. The
+mechanism is item 2 one stage later: Step 3 flips ~1% of the binary signs, so a
+last-bit difference can flip one sign the other way early and the trajectory
+diverges.
+
+**The distribution is wide and I sampled its tail.** Re-running the *identical*
+`0a` state eight times:
+
+```
+0a_r5 0.115119726   0a_dup 0.115165320   0a_r6 0.115187942   0a_r1 0.115197283
+0a_r3 0.115231123   0a_r2 0.115242372    0a_r4 0.115322623   0a    0.115388046
+
+mean 0.115231804   sd 8.69e-05 (0.0754%)   spread 0.2329%
+```
+
+`0a` — the value every published `Δ vs 0a` was measured against — is **rank 8 of
+8, the worst draw**, 1.8 sd above the mean. Differences of that size were being
+reported as if they were effects. Re-scored against the distribution:
+
+| arm | vs `0a` (as published) | vs baseline mean | z | |
+|---|---|---|---|---|
+| discrete gauge, 1 block | −0.030% | **+0.106%** | +1.41 | within noise |
+| discrete gauge, 4 blocks | +0.010% | **+0.145%** | +1.92 | within noise |
+| `0b_100` extra STE | +1.11% | +1.251% | +16.6 | **significant** |
+| `0b_200` extra STE | +2.50% | +2.634% | +34.9 | **significant** |
+
+The gauge arms flip sign: not marginally better than baseline, marginally worse.
+The extra-STE regression is untouched and in fact far outside noise — that result
+never depended on the floor.
+
+Two guards for anyone reusing this harness:
+
+* Any `E_final` claim smaller than **2 sd = 0.15%** carries no information from a
+  single run. The repo's stated 0.31% gate is ~4 sd and remains conservative; the
+  error was in the *point estimates*, not the gate.
+* A comparison needs replicates of **both** sides. Replicating only the baseline
+  tells you the floor but still leaves the treatment arm as one draw.

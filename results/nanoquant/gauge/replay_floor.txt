@@ -1,0 +1,22 @@
+=== E_final, IDENTICAL 0a state, n=8 independent runs ===
+   0a_r5    0.115119726
+   0a_dup   0.115165320
+   0a_r6    0.115187942
+   0a_r1    0.115197283
+   0a_r3    0.115231123
+   0a_r2    0.115242372
+   0a_r4    0.115322623
+   0a       0.115388046
+
+mean   0.115231804
+sd     8.691e-05  (0.0754%)      2sd = 0.1508%
+spread 2.683e-04  (0.2329%)
+0a rank: 8 of 8 (highest = worst)
+
+=== every arm re-scored against the baseline DISTRIBUTION ===
+  gauge 1 blk cyclic   0.115354006  vs mean +0.1060%  z +1.41  within noise
+  gauge 1 blk fixedsc  0.115341814  vs mean +0.0955%  z +1.27  within noise
+  gauge 1 blk greedy   0.115355709  vs mean +0.1075%  z +1.43  within noise
+  gauge 4 blk          0.115398987  vs mean +0.1451%  z +1.92  within noise
+  0b_100 extra STE     0.116673041  vs mean +1.2507%  z +16.58  SIGNIFICANT
+  0b_200 extra STE     0.118267330  vs mean +2.6343%  z +34.93  SIGNIFICANT

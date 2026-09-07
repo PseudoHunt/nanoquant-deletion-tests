@@ -1,0 +1,18 @@
+{
+ "runs": {
+  "0a": 0.11538804597745858,
+  "0a_dup": 0.11516532040844688,
+  "0a_r1": 0.11519728307548517,
+  "0a_r2": 0.11524237177954787,
+  "0a_r3": 0.11523112311253081,
+  "0a_r4": 0.11532262324579011,
+  "0a_r5": 0.11511972587208805,
+  "0a_r6": 0.11518794216669762
+ },
+ "n": 8,
+ "mean": 0.11523180445475563,
+ "sd": 8.690632218393979e-05,
+ "sd_pct": 0.07541869416621216,
+ "spread_pct": 0.23285247214529806,
+ "note": "E_final of the identical 0a state, re-run n times through the identical common Step 3. Everything through Q_NQ export is bit-identical across these runs; only Step 3 varies."
+}
