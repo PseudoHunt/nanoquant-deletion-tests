@@ -1,0 +1,39 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[ben] block error at original NanoQuant state = 0.12511274
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[ben] curvature ready in 6s
+[layer_oracle] input Grams for 7 layers over 128 sequences in 7s
+[ben] k_proj_rb6_KEEP    true -0.0070%  recon -6.772%  S0 -4.239e+05 S3 -3.086e-04 S2 +1.386e-09  S3 OK  inv 1.0e-16
+[ben] down_1blk          true -0.0407%  recon -0.039%  S0 -3.541e+01 S3 -1.751e-04 S2 +1.637e-13  S3 OK  inv 7.0e-17
+[ben] down_4blk          true -0.1324%  recon -0.129%  S0 -1.082e+02 S3 -6.885e-04 S2 +7.667e-13  S3 OK  inv 1.5e-16
+[ben] down_9blk          true -0.2746%  recon -0.272%  S0 -2.475e+02 S3 -1.433e-03 S2 +1.720e-12  S3 OK  inv 5.1e-16
+[ben] down_16blk         true -0.4632%  recon -0.467%  S0 -4.205e+02 S3 -2.496e-03 S2 +3.424e-12  S3 OK  inv 7.2e-16
+[ben] done in 25s

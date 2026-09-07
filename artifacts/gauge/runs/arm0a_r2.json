@@ -1,0 +1,109 @@
+{
+ "E_ADMM": 0.1437657711403401,
+ "E_final": 0.11524237177954787,
+ "E_gauge": 0.1437657711403401,
+ "E_gauge_pre_export": 0.1437657711403401,
+ "J": {
+  "mlp.down_proj": {
+   "J_post": 0.17040417704702004,
+   "J_pre": 0.16653816082268622,
+   "fro_post": 0.388013412793085,
+   "fro_pre": 0.34894962769995214
+  },
+  "mlp.gate_proj": {
+   "J_post": 0.22074296839100455,
+   "J_pre": 0.19170483295193538,
+   "fro_post": 0.3628462324666942,
+   "fro_pre": 0.33041791234654283
+  },
+  "mlp.up_proj": {
+   "J_post": 0.2754362102375671,
+   "J_pre": 0.2501021731674868,
+   "fro_post": 0.37950882719839174,
+   "fro_pre": 0.34373735340720185
+  },
+  "self_attn.k_proj": {
+   "J_post": 0.018908417539845776,
+   "J_pre": 0.019013993187209994,
+   "fro_post": 0.20443180039832626,
+   "fro_pre": 0.20329020279100185
+  },
+  "self_attn.o_proj": {
+   "J_post": 0.08673164220981498,
+   "J_pre": 0.08209481323298896,
+   "fro_post": 0.26542412119754183,
+   "fro_pre": 0.25380711311739185
+  },
+  "self_attn.q_proj": {
+   "J_post": 0.009850401969143918,
+   "J_pre": 0.007852232316809073,
+   "fro_post": 0.1940628755259718,
+   "fro_pre": 0.18929933552985526
+  },
+  "self_attn.v_proj": {
+   "J_post": 0.2553279764751154,
+   "J_pre": 0.2629731879239427,
+   "fro_post": 0.3230742377493444,
+   "fro_pre": 0.3160408955402358
+  }
+ },
+ "arm": "0a_r2",
+ "calib_func_loss_at_gauge": 0.12511273896804007,
+ "desc": "baseline: R = I through the identical materialise/export path",
+ "gauge_sign_delta_U": 0.0,
+ "gauge_sign_delta_V": 0.0,
+ "layer": "mlp.down_proj",
+ "layer_post_curve": {
+  "mlp.down_proj": 0.11524237177954787,
+  "mlp.gate_proj": 0.13919848978556526,
+  "mlp.up_proj": 0.12767005324244313,
+  "self_attn.k_proj": 0.1493679925513462,
+  "self_attn.o_proj": 0.1495147796281639,
+  "self_attn.q_proj": 0.1428662816791258,
+  "self_attn.v_proj": 0.14429733316810053
+ },
+ "materialize": {
+  "fp32_vs_bf16_sign_delta_U": 0.0,
+  "fp32_vs_bf16_sign_delta_V": 0.0,
+  "module_vs_qnq_rel": 0.0,
+  "sign_delta_U": 0.0,
+  "sign_delta_V": 0.0
+ },
+ "step3": {
+  "flip_mean": 0.010245916492879457,
+  "seconds": 24.671266555786133
+ },
+ "step3_flips": {
+  "mlp.down_proj.U_latent": 0.009877319447696209,
+  "mlp.down_proj.V_latent": 0.025504836812615395,
+  "mlp.gate_proj.U_latent": 0.03467414900660515,
+  "mlp.gate_proj.V_latent": 0.00016204833809752017,
+  "mlp.up_proj.U_latent": 0.03868881240487099,
+  "mlp.up_proj.V_latent": 0.00035339355235919356,
+  "self_attn.k_proj.U_latent": 0.0009918212890625,
+  "self_attn.k_proj.V_latent": 0.0015894571552053094,
+  "self_attn.o_proj.U_latent": 0.006629697512835264,
+  "self_attn.o_proj.V_latent": 0.005285939667373896,
+  "self_attn.q_proj.U_latent": 0.004610123112797737,
+  "self_attn.q_proj.V_latent": 0.003179734805598855,
+  "self_attn.v_proj.U_latent": 0.0040690102614462376,
+  "self_attn.v_proj.V_latent": 0.00782648753374815
+ },
+ "step3_sign_delta": {
+  "mlp.down_proj.U_latent": 0.009877319447696209,
+  "mlp.down_proj.V_latent": 0.025504836812615395,
+  "mlp.gate_proj.U_latent": 0.03467414900660515,
+  "mlp.gate_proj.V_latent": 0.00016204833809752017,
+  "mlp.up_proj.U_latent": 0.03868881240487099,
+  "mlp.up_proj.V_latent": 0.00035339355235919356,
+  "self_attn.k_proj.U_latent": 0.0009918212890625,
+  "self_attn.k_proj.V_latent": 0.0015894571552053094,
+  "self_attn.o_proj.U_latent": 0.006629697512835264,
+  "self_attn.o_proj.V_latent": 0.005285939667373896,
+  "self_attn.q_proj.U_latent": 0.004610123112797737,
+  "self_attn.q_proj.V_latent": 0.003179734805598855,
+  "self_attn.v_proj.U_latent": 0.0040690102614462376,
+  "self_attn.v_proj.V_latent": 0.00782648753374815
+ },
+ "wall_s": 29.470214128494263
+}

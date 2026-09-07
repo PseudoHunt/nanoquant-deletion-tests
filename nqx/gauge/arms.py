@@ -383,7 +383,7 @@ class Runner:
         return rec
 
 
-    def arm5(self, tag="5", suffix="", fixed_scales=False):
+    def arm5(self, tag="5", suffix="", fixed_scales=True):
         """Whole-block discrete gauge (all seven projections) -> common Step 3."""
         from .wholeblock import ORDER
         t0 = time.time()
@@ -403,7 +403,15 @@ class Runner:
         du = dv = 0.0
         for n in ORDER:
             R = blob[n].to("cuda").float()
-            d = H.materialize_gauge(sub[n], bases[n], [R])
+            if fixed_scales:
+                H.apply_gauge_signs_only(sub[n], bases[n], [R])
+                with torch.no_grad(), C.no_tf32():
+                    d = {"sign_delta_U": float((C.pos_sign(bases[n].U0 @ R)
+                                                != C.pos_sign(bases[n].U0)).float().mean()),
+                         "sign_delta_V": float((C.pos_sign(R.T @ bases[n].V0)
+                                                != C.pos_sign(bases[n].V0)).float().mean())}
+            else:
+                d = H.materialize_gauge(sub[n], bases[n], [R])
             rec["per_layer_sign_delta"][n] = d
             du += d["sign_delta_U"]; dv += d["sign_delta_V"]
         rec["gauge_sign_delta_U"] = du / len(ORDER)

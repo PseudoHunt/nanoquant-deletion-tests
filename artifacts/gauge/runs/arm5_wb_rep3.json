@@ -1,0 +1,187 @@
+{
+ "E_ADMM": 0.1437657711403401,
+ "E_final": 0.11530098061041345,
+ "E_gauge": 0.1437657711403401,
+ "E_gauge_pre_export": 0.1437657711403401,
+ "J": {
+  "mlp.down_proj": {
+   "J_post": 0.17037781495684812,
+   "J_pre": 0.16653816082268622,
+   "fro_post": 0.38794521972262197,
+   "fro_pre": 0.34894962769995214
+  },
+  "mlp.gate_proj": {
+   "J_post": 0.22113420445591012,
+   "J_pre": 0.19170483295193538,
+   "fro_post": 0.36277934599329914,
+   "fro_pre": 0.33041791234654283
+  },
+  "mlp.up_proj": {
+   "J_post": 0.2752504088601944,
+   "J_pre": 0.2501021731674868,
+   "fro_post": 0.37937562015974796,
+   "fro_pre": 0.34373735340720185
+  },
+  "self_attn.k_proj": {
+   "J_post": 0.018944469301494175,
+   "J_pre": 0.019013993187209994,
+   "fro_post": 0.2043813681209385,
+   "fro_pre": 0.20329020279100185
+  },
+  "self_attn.o_proj": {
+   "J_post": 0.08665409083607248,
+   "J_pre": 0.08209481323298896,
+   "fro_post": 0.2652382706843836,
+   "fro_pre": 0.25380711311739185
+  },
+  "self_attn.q_proj": {
+   "J_post": 0.009941230918816173,
+   "J_pre": 0.007852232316809073,
+   "fro_post": 0.1940574604179145,
+   "fro_pre": 0.18929933552985526
+  },
+  "self_attn.v_proj": {
+   "J_post": 0.2555042752291163,
+   "J_pre": 0.2629731879239427,
+   "fro_post": 0.3228526764981521,
+   "fro_pre": 0.3160408955402358
+  }
+ },
+ "arm": "5_wb_rep3",
+ "calib_func_loss_at_gauge": 0.12511273896804007,
+ "desc": "whole-block discrete gauge, all 7 projections",
+ "fixed_scales": true,
+ "gauge_sign_delta_U": 0.0,
+ "gauge_sign_delta_V": 0.0,
+ "gauge_step3_diag": {
+  "U_latent": {
+   "baseline_step3_rate": 0.0098370361328125,
+   "enrichment_vs_chance": 0.0,
+   "frac_baseline_step3_pre_spent": 0.0,
+   "frac_gauge_changed": 0.0,
+   "frac_gauge_changes_reversed": 0.0,
+   "frac_gauge_in_baseline_step3": 0.0,
+   "n_baseline_step3_changed": 32234,
+   "n_gauge_changed": 0,
+   "n_positions": 3276800,
+   "overlap_with_baseline_step3": 0,
+   "split": {
+    "n_nonoverlap": 0,
+    "n_overlap": 0,
+    "ratio": 0.0,
+    "rev_rate_nonoverlap": 0.0,
+    "rev_rate_overlap": 0.0,
+    "reversed_nonoverlap": 0,
+    "reversed_overlap": 0
+   },
+   "step3_reversed_gauge_changes": 0
+  },
+  "V_latent": {
+   "baseline_step3_rate": 0.02551643371582031,
+   "enrichment_vs_chance": 0.0,
+   "frac_baseline_step3_pre_spent": 0.0,
+   "frac_gauge_changed": 0.0,
+   "frac_gauge_changes_reversed": 0.0,
+   "frac_gauge_in_baseline_step3": 0.0,
+   "n_baseline_step3_changed": 334449,
+   "n_gauge_changed": 0,
+   "n_positions": 13107200,
+   "overlap_with_baseline_step3": 0,
+   "split": {
+    "n_nonoverlap": 0,
+    "n_overlap": 0,
+    "ratio": 0.0,
+    "rev_rate_nonoverlap": 0.0,
+    "rev_rate_overlap": 0.0,
+    "reversed_nonoverlap": 0,
+    "reversed_overlap": 0
+   },
+   "step3_reversed_gauge_changes": 0
+  }
+ },
+ "layer_post_curve": {
+  "mlp.down_proj": 0.11530098061041345,
+  "mlp.gate_proj": 0.139117700902418,
+  "mlp.up_proj": 0.1276089815299199,
+  "self_attn.k_proj": 0.14909480961260074,
+  "self_attn.o_proj": 0.14916723048862368,
+  "self_attn.q_proj": 0.14285451066967617,
+  "self_attn.v_proj": 0.14414072662781585
+ },
+ "layers_gauged": [
+  "self_attn.q_proj",
+  "self_attn.k_proj",
+  "self_attn.v_proj",
+  "self_attn.o_proj",
+  "mlp.gate_proj",
+  "mlp.up_proj",
+  "mlp.down_proj"
+ ],
+ "per_layer_sign_delta": {
+  "mlp.down_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "mlp.gate_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "mlp.up_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "self_attn.k_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "self_attn.o_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "self_attn.q_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  },
+  "self_attn.v_proj": {
+   "sign_delta_U": 0.0,
+   "sign_delta_V": 0.0
+  }
+ },
+ "step3": {
+  "flip_mean": 0.01021874325670069,
+  "seconds": 24.69549536705017
+ },
+ "step3_flips": {
+  "mlp.down_proj.U_latent": 0.009876709431409836,
+  "mlp.down_proj.V_latent": 0.025559768080711365,
+  "mlp.gate_proj.U_latent": 0.03461036831140518,
+  "mlp.gate_proj.V_latent": 0.0001516723568784073,
+  "mlp.up_proj.U_latent": 0.03862098604440689,
+  "mlp.up_proj.V_latent": 0.0003503417829051614,
+  "self_attn.k_proj.U_latent": 0.00103759765625,
+  "self_attn.k_proj.V_latent": 0.0015106201171875,
+  "self_attn.o_proj.U_latent": 0.006540114060044289,
+  "self_attn.o_proj.V_latent": 0.0052534532733261585,
+  "self_attn.q_proj.U_latent": 0.004576160106807947,
+  "self_attn.q_proj.V_latent": 0.003138880478218198,
+  "self_attn.v_proj.U_latent": 0.0041961669921875,
+  "self_attn.v_proj.V_latent": 0.0076395669020712376
+ },
+ "step3_sign_delta": {
+  "mlp.down_proj.U_latent": 0.009876709431409836,
+  "mlp.down_proj.V_latent": 0.025559768080711365,
+  "mlp.gate_proj.U_latent": 0.03461036831140518,
+  "mlp.gate_proj.V_latent": 0.0001516723568784073,
+  "mlp.up_proj.U_latent": 0.03862098604440689,
+  "mlp.up_proj.V_latent": 0.0003503417829051614,
+  "self_attn.k_proj.U_latent": 0.00103759765625,
+  "self_attn.k_proj.V_latent": 0.0015106201171875,
+  "self_attn.o_proj.U_latent": 0.006540114060044289,
+  "self_attn.o_proj.V_latent": 0.0052534532733261585,
+  "self_attn.q_proj.U_latent": 0.004576160106807947,
+  "self_attn.q_proj.V_latent": 0.003138880478218198,
+  "self_attn.v_proj.U_latent": 0.0041961669921875,
+  "self_attn.v_proj.V_latent": 0.0076395669020712376
+ },
+ "wall_s": 29.786978721618652
+}

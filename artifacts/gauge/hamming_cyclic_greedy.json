@@ -1,0 +1,26 @@
+{
+ "cyclic": {
+  "net_U_vs_ADMM": 61,
+  "net_V_vs_ADMM": 2947
+ },
+ "greedy": {
+  "net_U_vs_ADMM": 57,
+  "net_V_vs_ADMM": 2927
+ },
+ "hamming_cyclic_vs_greedy": {
+  "U": 90,
+  "V": 4290
+ },
+ "shared_changes": {
+  "U": 14,
+  "V": 792
+ },
+ "union_changes": {
+  "U": 104,
+  "V": 5082
+ },
+ "jaccard": {
+  "U": 0.1346153846153846,
+  "V": 0.15584415584415584
+ }
+}

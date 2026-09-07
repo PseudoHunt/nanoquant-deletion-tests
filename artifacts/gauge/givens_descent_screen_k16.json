@@ -1,0 +1,301 @@
+{
+ "E0_oracle": 0.12510565894541198,
+ "E0_real_calib": 0.12511273896804007,
+ "E_ADMM_heldout": 0.1437657711403401,
+ "E_gauge_heldout_pre_export": 0.1437619111182959,
+ "E_gauge_heldout_qnq": 0.1437619111182959,
+ "E_gauge_real_calib_qnq": 0.1250958853836533,
+ "accepted_total": 13,
+ "accepts": [
+  {
+   "E_oracle": 0.1250987845928522,
+   "dE_pred": -6.874352858635714e-06,
+   "flip_events": 210,
+   "k": 1,
+   "n_flip": 210,
+   "net_changed_U": 2,
+   "net_changed_V": 208,
+   "plane": [
+    1,
+    30
+   ],
+   "planes_visited": 497,
+   "reversals": 0,
+   "sign_delta_U": 6.103515625e-07,
+   "sign_delta_V": 1.5869140625e-05,
+   "theta": 0.16484690779166228
+  },
+  {
+   "E_oracle": 0.12509795932584672,
+   "dE_pred": -8.25267046927992e-07,
+   "flip_events": 374,
+   "k": 2,
+   "n_flip": 164,
+   "net_changed_U": 6,
+   "net_changed_V": 294,
+   "plane": [
+    1,
+    22
+   ],
+   "planes_visited": 514,
+   "reversals": 37,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.2430419921875e-05,
+   "theta": 0.11008002995837574
+  },
+  {
+   "E_oracle": 0.12509732838390025,
+   "dE_pred": -6.309419446448862e-07,
+   "flip_events": 397,
+   "k": 3,
+   "n_flip": 23,
+   "net_changed_U": 6,
+   "net_changed_V": 301,
+   "plane": [
+    1,
+    10
+   ],
+   "planes_visited": 516,
+   "reversals": 45,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.29644775390625e-05,
+   "theta": 0.01429341950662788
+  },
+  {
+   "E_oracle": 0.12509709128626956,
+   "dE_pred": -2.370976298863533e-07,
+   "flip_events": 418,
+   "k": 4,
+   "n_flip": 21,
+   "net_changed_U": 6,
+   "net_changed_V": 304,
+   "plane": [
+    1,
+    11
+   ],
+   "planes_visited": 520,
+   "reversals": 54,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.3193359375e-05,
+   "theta": -0.016984514614069468
+  },
+  {
+   "E_oracle": 0.12509700093236928,
+   "dE_pred": -9.035390091497994e-08,
+   "flip_events": 420,
+   "k": 5,
+   "n_flip": 2,
+   "net_changed_U": 6,
+   "net_changed_V": 306,
+   "plane": [
+    1,
+    19
+   ],
+   "planes_visited": 522,
+   "reversals": 54,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.3345947265625e-05,
+   "theta": 0.00014720850993166223
+  },
+  {
+   "E_oracle": 0.1250961790196616,
+   "dE_pred": -8.219127079886379e-07,
+   "flip_events": 563,
+   "k": 6,
+   "n_flip": 143,
+   "net_changed_U": 6,
+   "net_changed_V": 379,
+   "plane": [
+    1,
+    13
+   ],
+   "planes_visited": 525,
+   "reversals": 89,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.89154052734375e-05,
+   "theta": -0.08369214444675377
+  },
+  {
+   "E_oracle": 0.12509608989419085,
+   "dE_pred": -8.912547090995832e-08,
+   "flip_events": 564,
+   "k": 7,
+   "n_flip": 1,
+   "net_changed_U": 6,
+   "net_changed_V": 380,
+   "plane": [
+    1,
+    3
+   ],
+   "planes_visited": 527,
+   "reversals": 89,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.899169921875e-05,
+   "theta": 9.742692202741043e-05
+  },
+  {
+   "E_oracle": 0.12509600726614986,
+   "dE_pred": -8.26280412854826e-08,
+   "flip_events": 570,
+   "k": 8,
+   "n_flip": 6,
+   "net_changed_U": 6,
+   "net_changed_V": 380,
+   "plane": [
+    1,
+    12
+   ],
+   "planes_visited": 530,
+   "reversals": 92,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.899169921875e-05,
+   "theta": 0.0030200113944379714
+  },
+  {
+   "E_oracle": 0.12509571269951286,
+   "dE_pred": -2.945666366066607e-07,
+   "flip_events": 626,
+   "k": 9,
+   "n_flip": 56,
+   "net_changed_U": 6,
+   "net_changed_V": 390,
+   "plane": [
+    1,
+    23
+   ],
+   "planes_visited": 532,
+   "reversals": 115,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 2.9754638671875e-05,
+   "theta": 0.032117182795855306
+  },
+  {
+   "E_oracle": 0.12509531084159006,
+   "dE_pred": -4.018579265104423e-07,
+   "flip_events": 673,
+   "k": 10,
+   "n_flip": 47,
+   "net_changed_U": 6,
+   "net_changed_V": 395,
+   "plane": [
+    1,
+    17
+   ],
+   "planes_visited": 534,
+   "reversals": 136,
+   "sign_delta_U": 1.8310546875e-06,
+   "sign_delta_V": 3.01361083984375e-05,
+   "theta": -0.033994738423255955
+  },
+  {
+   "E_oracle": 0.12509403231607094,
+   "dE_pred": -1.2785255226567768e-06,
+   "flip_events": 792,
+   "k": 11,
+   "n_flip": 119,
+   "net_changed_U": 8,
+   "net_changed_V": 450,
+   "plane": [
+    1,
+    8
+   ],
+   "planes_visited": 536,
+   "reversals": 167,
+   "sign_delta_U": 2.44140625e-06,
+   "sign_delta_V": 3.4332275390625e-05,
+   "theta": -0.07226753729188395
+  },
+  {
+   "E_oracle": 0.12509368748407568,
+   "dE_pred": -3.448319896002447e-07,
+   "flip_events": 837,
+   "k": 12,
+   "n_flip": 45,
+   "net_changed_U": 9,
+   "net_changed_V": 450,
+   "plane": [
+    1,
+    31
+   ],
+   "planes_visited": 538,
+   "reversals": 189,
+   "sign_delta_U": 2.74658203125e-06,
+   "sign_delta_V": 3.4332275390625e-05,
+   "theta": 0.03009370028958913
+  },
+  {
+   "E_oracle": 0.1250935934953657,
+   "dE_pred": -9.398871225478789e-08,
+   "flip_events": 848,
+   "k": 13,
+   "n_flip": 11,
+   "net_changed_U": 9,
+   "net_changed_V": 453,
+   "plane": [
+    1,
+    4
+   ],
+   "planes_visited": 540,
+   "reversals": 193,
+   "sign_delta_U": 2.74658203125e-06,
+   "sign_delta_V": 3.45611572265625e-05,
+   "theta": -0.0038981893399470113
+  }
+ ],
+ "group_checks": [
+  {
+   "E_oracle": 0.1250935934953657,
+   "E_real": 0.1250958853836533,
+   "accepted_in_group": 13,
+   "accepted_total": 13,
+   "coords": [
+    0,
+    31
+   ],
+   "cum_gain_oracle_pct": -0.009644208062201365,
+   "cum_gain_real_pct": -0.013470718110549515,
+   "group": 0,
+   "incremental_gain_pct": 0.013470718110549515,
+   "planes_scored": 483,
+   "pool": 16,
+   "resweeps": 16,
+   "seconds": 242.9945912361145,
+   "topk": 16
+  }
+ ],
+ "groups": null,
+ "layer": "mlp.down_proj",
+ "materialize": {
+  "fp32_vs_bf16_sign_delta_U": 0.0,
+  "fp32_vs_bf16_sign_delta_V": 0.0,
+  "module_vs_qnq_rel": 0.0,
+  "sign_delta_U": 2.7465819130156888e-06,
+  "sign_delta_V": 3.456115518929437e-05
+ },
+ "max_passes": 3,
+ "mode": "descent",
+ "n_groups": 1,
+ "n_planes": 496,
+ "oracle_offset_at_E0": -7.080022628086491e-06,
+ "partition": "blocks",
+ "partition_seed": 0,
+ "planes_visited": 541,
+ "rank_blocks": "0",
+ "real_checks": [],
+ "strategy": "screen",
+ "sweeps": [
+  {
+   "E_oracle": 0.1250935934953657,
+   "E_real": 0.1250958853836533,
+   "accepted": 13,
+   "cum_gain_oracle_pct": -0.009644208062201365,
+   "cum_gain_real_pct": -0.013470718110549515,
+   "factor_consistency": 1.399623962710279e-17,
+   "orth_err": 3.98081910692545e-16,
+   "seconds": 245.0460774898529,
+   "sweep": 1
+  }
+ ],
+ "tol_rel": 1e-07,
+ "wall_s": 246.65593838691711
+}

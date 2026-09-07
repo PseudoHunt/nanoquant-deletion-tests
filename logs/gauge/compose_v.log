@@ -1,0 +1,152 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[layer_oracle] input Grams for 7 layers over 128 sequences in 7s
+[cmp] start block error 0.12511274
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] accept   1 (iter 0) plane (37,281) gain -3.330e-05  E 0.12507944  cum -0.02661%  evals 8  (12s)
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   1: no improvement among top-8 (24 cands)  E 0.12507944
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   2: no improvement among top-8 (24 cands)  E 0.12507944
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   3: no improvement among top-8 (24 cands)  E 0.12507944
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter   4: no improvement among top-8 (24 cands)  E 0.12507944
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] accept   2 (iter 5) plane (172,344) gain -2.892e-05  E 0.12505052  cum -0.04973%  evals 48  (73s)
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   6: no improvement among top-8 (24 cands)  E 0.12505052
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   7: no improvement among top-8 (24 cands)  E 0.12505052
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   8: no improvement among top-8 (24 cands)  E 0.12505052
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter   9: no improvement among top-8 (24 cands)  E 0.12505052
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  10: no improvement among top-8 (24 cands)  E 0.12505052
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] accept   3 (iter 11) plane (194,345) gain -1.378e-05  E 0.12503674  cum -0.06074%  evals 96  (146s)
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  12: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter  13: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  14: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  15: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  16: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  17: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  18: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  19: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  20: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  21: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  22: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  23: no improvement among top-8 (24 cands)  E 0.12503674
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] accept   4 (iter 24) plane (206,343) gain -3.345e-05  E 0.12500329  cum -0.08748%  evals 200  (303s)
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter  25: no improvement among top-8 (24 cands)  E 0.12500329
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  26: no improvement among top-8 (24 cands)  E 0.12500329
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  27: no improvement among top-8 (24 cands)  E 0.12500329
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  28: no improvement among top-8 (24 cands)  E 0.12500329
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter  29: no improvement among top-8 (24 cands)  E 0.12500329
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] accept   5 (iter 30) plane (1,162) gain -6.283e-05  E 0.12494047  cum -0.13769%  evals 248  (376s)
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  31: no improvement among top-8 (22 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  32: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  33: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter  34: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  35: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  36: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  37: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  38: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 5s
+[cmp] iter  39: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  40: no improvement among top-8 (23 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  41: no improvement among top-8 (23 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  42: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  43: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  44: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  45: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  46: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  47: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  48: no improvement among top-8 (23 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  49: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  50: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  51: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  52: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  53: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  54: no improvement among top-8 (23 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  55: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  56: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  57: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  58: no improvement among top-8 (24 cands)  E 0.12494047
+[curv] 1 layers, 128 sequences / 262144 tokens in 4s
+[cmp] iter  59: no improvement among top-8 (24 cands)  E 0.12494047
+[cmp] DONE 5 accepts, 480 true evals, E 0.12511274 -> 0.12494047 (-0.13769%)

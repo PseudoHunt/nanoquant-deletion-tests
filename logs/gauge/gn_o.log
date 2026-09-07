@@ -1,0 +1,38 @@
+Loading model '/home/work/hf_cache/hub/models--unsloth--Llama-3.2-1B/snapshots/9535bd9b1d1dea6acafbdc4813b728796aeb28da'...
+LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(128256, 2048, padding_idx=128004)
+    (layers): ModuleList(
+      (0-15): 16 x LlamaDecoderLayer(
+        (self_attn): LlamaAttention(
+          (q_proj): Linear(in_features=2048, out_features=2048, bias=False)
+          (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+          (o_proj): Linear(in_features=2048, out_features=2048, bias=False)
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (up_proj): Linear(in_features=2048, out_features=8192, bias=False)
+          (down_proj): Linear(in_features=8192, out_features=2048, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((2048,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((2048,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=2048, out_features=128256, bias=False)
+)
+Attaching statistics to 112 layers...
+Registered i_norm and o_norm buffers to 112 layers
+[layer_oracle] input Grams for 7 layers over 128 sequences in 7s
+[gn] snapshot at 1 rank block(s)  (27s)
+[gn] snapshot at 2 rank block(s)  (46s)
+[gn] snapshot at 4 rank block(s)  (85s)
+[gn] snapshot at 8 rank block(s)  (162s)
+[gn] dose  1 blk  a(linear) -1.0656e-04  b(GN curv) +3.6103e-04  a+b +2.5447e-04  true +3.6831e-04  GN OK  lin WRONG  relerr 0.31
+[gn] dose  2 blk  a(linear) +2.7358e-04  b(GN curv) +3.2384e-04  a+b +5.9742e-04  true +1.0511e-03  GN OK  lin OK  relerr 0.43
+[gn] dose  4 blk  a(linear) -1.1478e-04  b(GN curv) +1.3276e-03  a+b +1.2128e-03  true +1.5913e-03  GN OK  lin WRONG  relerr 0.24
+[gn] dose  8 blk  a(linear) -5.1076e-04  b(GN curv) +3.0576e-03  a+b +2.5468e-03  true +2.6496e-03  GN OK  lin WRONG  relerr 0.04

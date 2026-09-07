@@ -352,11 +352,30 @@ def gauge_step3_diagnostics(base, module_signs_gauged, init_signs, final_signs,
                "step3_reversed_gauge_changes": rev,
                "frac_gauge_changes_reversed": rev / max(ng, 1)}
         if bmask is not None:
-            ov = int((gm & bmask[a]).sum())
+            b = bmask[a]
+            ov = int((gm & b).sum())
             ent["overlap_with_baseline_step3"] = ov
             ent["frac_gauge_in_baseline_step3"] = ov / max(ng, 1)
-            ent["n_baseline_step3_changed"] = int(bmask[a].sum())
-            ent["frac_baseline_step3_pre_spent"] = ov / max(int(bmask[a].sum()), 1)
+            ent["n_baseline_step3_changed"] = int(b.sum())
+            ent["frac_baseline_step3_pre_spent"] = ov / max(int(b.sum()), 1)
+            ent["n_positions"] = int(gm.numel())
+            ent["baseline_step3_rate"] = int(b.sum()) / gm.numel()
+            ent["enrichment_vs_chance"] = (ov / max(ng, 1)) / max(int(b.sum()) / gm.numel(), 1e-30)
+            # Split the gauge's flips by whether Step 3 also wanted that position,
+            # and ask how often Step 3 undoes each group.  A generic
+            # perturbation-size effect predicts equal reversal rates; specific
+            # interference with Step 3's valuable coordinates predicts the overlap
+            # group is reversed differently.
+            back = (fin == admm[a])
+            ov_m, no_m = (gm & b), (gm & ~b)
+            n_ov, n_no = int(ov_m.sum()), int(no_m.sum())
+            r_ov, r_no = int((ov_m & back).sum()), int((no_m & back).sum())
+            ent["split"] = {
+                "n_overlap": n_ov, "n_nonoverlap": n_no,
+                "reversed_overlap": r_ov, "reversed_nonoverlap": r_no,
+                "rev_rate_overlap": r_ov / max(n_ov, 1),
+                "rev_rate_nonoverlap": r_no / max(n_no, 1),
+                "ratio": (r_ov / max(n_ov, 1)) / max(r_no / max(n_no, 1), 1e-30)}
         out[a] = ent
     return out
 
