@@ -331,6 +331,49 @@ class Runner:
         return out
 
 
+    def arm4(self, tag="4", fixed_scales=False, strategy="cyclic"):
+        """Discrete Givens coordinate-descent gauge -> the identical common Step 3.
+
+        The rotation comes from `nqx/gauge/givens.py descent`, which searched the
+        true binary objective at its sign-pattern breakpoints -- no STE anywhere.
+        With `fixed_scales` the ADMM export scales are kept instead of being
+        recomputed by Q_NQ; Stage 1 showed the recomputation costs the gauge arms,
+        and Step 3 re-learns both scale vectors regardless, so both conventions
+        are run and reported.
+        """
+        t0 = time.time()
+        blob = torch.load(f"{H.GCACHE}/givens_R_{strategy}.pt", weights_only=False)
+        R = blob["R"].to("cuda").float()
+        blk, sub, bases, imp = self.new_block()
+        base = bases[LAYER]
+        m = sub[LAYER]
+        with torch.no_grad(), C.no_tf32():
+            I_ = torch.eye(R.shape[0], device=R.device)
+            orth = float((R.T @ R - I_).norm())
+        assert orth < 1e-4, f"accumulated Givens rotation is not orthogonal: {orth:.2e}"
+        rec = {"arm": tag, "layer": LAYER, "desc": "discrete Givens coordinate descent",
+               "rank_blocks": blob.get("blocks"), "strategy": strategy,
+               "sweeps_done": blob.get("sweeps_done"),
+               "fixed_scales": fixed_scales, "R_orth_err": orth,
+               "E_ADMM": self.block_err(blk)}
+        H.apply_gauge_signs_only(m, base, [R])
+        rec["E_gauge_pre_export"] = self.block_err(blk)
+        if fixed_scales:
+            d = {"sign_delta_U": float((C.pos_sign(base.U0 @ R) != C.pos_sign(base.U0))
+                                       .float().mean()),
+                 "sign_delta_V": float((C.pos_sign(R.T @ base.V0) != C.pos_sign(base.V0))
+                                       .float().mean())}
+        else:
+            d = H.materialize_gauge(m, base, [R])
+        rec["materialize"] = d
+        rec["gauge_sign_delta_U"] = d["sign_delta_U"]
+        rec["gauge_sign_delta_V"] = d["sign_delta_V"]
+        self.finish(rec, blk, sub, imp, tag)
+        rec["wall_s"] = time.time() - t0
+        H.save_run(rec, f"arm{tag}")
+        return rec
+
+
 def rec_pre_export(runner, blk, sub, base, Rs):
     H.apply_gauge_signs_only(sub[LAYER], base, Rs)
     return runner.block_err(blk)
@@ -358,6 +401,11 @@ def main():
             out = r.arm2(arm.split("_", 1)[1])
         elif arm == "3":
             out = r.arm3()
+        elif arm.startswith("4"):
+            st_ = "greedy" if "greedy" in arm else "cyclic"
+            fs_ = arm.endswith("fs")
+            out = r.arm4(tag=f"4_{st_}" + ("_fixedscale" if fs_ else ""),
+                         fixed_scales=fs_, strategy=st_)
         elif arm.startswith("3lr"):
             lr = float(arm[3:])
             out = r.arm3(lr=lr, tag=f"3lr{arm[3:]}")
