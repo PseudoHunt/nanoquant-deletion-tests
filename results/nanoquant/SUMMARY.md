@@ -119,6 +119,29 @@ a median 81% of `q_proj`'s Frobenius energy), so the bulk edge is neither a
 budget-feasible nor a well-defined split. See `testC.md`, including the
 designed-but-not-run comparison at the RMT-implied ~2.7 bpw budget.
 
+## Gauge-NQ (`gauge/`)
+
+An isolated extension asking whether the latent gauge freedom of NanoQuant's
+factorisation hides a better binary solution: `(U R)(V R)^T = U V^T` for
+orthogonal `R`, but `sign(U R) sign(V R)^T` does not equal `sign(U) sign(V)^T`.
+
+**Fails, and pins down why.** The freedom is real and enormous — 16 Haar SO(32)
+block-rotations of `mlp.down_proj`'s rank space leave the continuous product
+unchanged to 8.5e-7 and move the held-out block error from 0.1438 to 0.358–0.367,
+flipping ~50% of the signs — but **the ADMM basis is already at the bottom of
+it**. Joint-ITQ alignment from `R = I` is a fixed point (+0.018%); from a random
+init it descends normally and stalls 2.4x above the identity. Functional gauge
+descent raises the calibration objective at every one of six step sizes, and a
+full-batch line search at `R = I` is flat to four decimals out to t = 0.1 (best
+point 0.011% below the identity, twenty times under the replay floor) and rising
+after — with the STE gradient direction rising *faster* than random.
+
+The step/data-matched extra-STE control is the sharper version of Tests A and B:
+100/200 extra NanoQuant STE steps improve the pre-Step-3 point by 7.0%/7.9% and
+finish 1.11%/2.50% **worse**, with Step 3 flipping *more* signs from those starts.
+Pushing the starting point down spends something Step 3 needs. See
+`gauge/SUMMARY.md` and `gauge/stage1_down.md`.
+
 ## Files
 
 | file | contents |
@@ -131,3 +154,4 @@ designed-but-not-run comparison at the RMT-implied ~2.7 bpw budget.
 | `testD2.md` | Mirror descent corrected: 16-cell sweep, the one-curve result, the 80% sign-flip decomposition |
 | `NOTES.md` | The `requires_grad` harness bug, ADMM chaos, config drift |
 | `nqx/` | All instrumentation and variants; nothing in the upstream repo was edited |
+| `gauge/` | Gauge-NQ: latent gauge freedom, Stage 0 exactness gates, arms 0a/0b/1/2/3, gauge-lr sweep, line search |

@@ -51,3 +51,53 @@ upstream against itself diverges to a relative difference of **0.15 by iteration
 See `repro.md`. Two knobs in the shipped defaults do not match the paper:
 `calib_shrinkage` (gamma) is 0.4 where Appendix C says 0.2 for Llama/Qwen, and
 `model_kd_lr` is 1e-5 where Appendix C says 1e-6.
+
+## 4. `mean(dim=...)` on CUDA is not bit-reproducible across two identical tensors
+
+Gauge-NQ needs `Q_NQ(U, V)` to reproduce the cached ADMM export **bit-for-bit**
+at `R = I`, because that is what makes Arm 0a the baseline rather than an
+approximation of it. The export statistic is NanoQuant's own mean magnitude over
+the rank axis, applied relatively:
+`scale_post(R) = scale_post_0 * rowmean|U R| / rowmean|U|`, whose ratio ought to
+be exactly 1.0 when `U R` is bit-identical to `U`.
+
+It was not. `torch.equal(U_R, U0)` passed on all seven layers and the ratio still
+missed 1.0 in 4 of 8192 coordinates on `down_proj` and 14 of 2048 on `o_proj`,
+by ~1e-7 relative. The two tensors hold identical values at different addresses,
+and the fp32 reduction splits differently for different alignments, so the
+partial sums are accumulated in a different order. Nothing about the input
+differs; only where it lives.
+
+Consequences worth generalising:
+
+* `torch.equal(a, b)` does **not** imply `f(a) == f(b)` for a reduction `f` on
+  CUDA. Bit-exactness of inputs is not bit-exactness of outputs.
+* It is shape-independent in the confusing way: `q_proj` (2048x2048) was clean
+  and `o_proj` (2048x2048) was not, so it looks data-dependent and sends you
+  hunting for a numerical bug in the values.
+
+Fix: accumulate the statistic in fp64 (`x.abs().sum(dim=..., dtype=torch.float64) / n`).
+The layout-dependent discrepancy drops to ~1e-16, so the ratio rounds to exactly
+1.0 in fp32, while a genuine rotation's ratio is unaffected. This is the same
+family as the TF32 trap in item 2: the arithmetic is "the same" right up until
+you need an identity to hold exactly.
+
+## 5. The `@torch.no_grad()` fix in item 1 was scoped too wide to re-run
+
+`nqx/sbh.py::do_cache` as committed carries `@torch.no_grad()` on the whole cache
+stage. That is item 1's fix, but the decorator covers more than the bug: NanoQuant's
+calibration pass collects `o_norm` from **backward** hooks and calls
+`loss.backward()` inside `_run_calibration_loop`, which raises
+`RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`
+under a global no-grad.
+
+So the committed caches must have been produced *before* the decorator was added,
+and the cache stage as committed could not be re-run — which only shows up on a
+fresh VM, when it is the first thing you need. The guard is now scoped to the
+activation-capture section (`_capture_fp_states`), which is the part item 1 is
+about; the calibration pass runs in grad mode exactly as upstream. Rebuilt caches
+reproduce block 0's `pre`/`post` to 9.3e-6 / 6.8e-5.
+
+Guard for anyone reusing this: a fix that makes the numbers right is not
+necessarily a fix that leaves the pipeline runnable, and the difference is
+invisible until someone starts from nothing.

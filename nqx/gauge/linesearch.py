@@ -19,7 +19,11 @@ from . import harness as H
 from . import state as S
 
 LAYER = "mlp.down_proj"
-TS = [0.0, 1e-5, 3e-5, 1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1, 3e-1]
+# t is the total Frobenius displacement of the Cayley parameters along a unit
+# direction.  For scale: Adam at lr = 1e-5 for 200 steps moves at most
+# 200 * 1e-5 * sqrt(50 * 32 * 32) ~ 0.45, and lr = 3e-3 moves ~135, so the grid
+# has to span four decades to cover what the sweep actually did.
+TS = [0.0, 1e-3, 1e-2, 3e-2, 1e-1, 3e-1, 1.0, 3.0, 10.0, 30.0, 100.0]
 
 
 def main():

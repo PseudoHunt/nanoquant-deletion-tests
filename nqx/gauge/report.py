@@ -171,6 +171,45 @@ def main():
                   f"{v['calib_func_loss_post_export_stats']:.6f} |")
         A("")
 
+    # line search
+    lsf = "/home/work/exp/artifacts/gauge/linesearch.json"
+    if os.path.exists(lsf):
+        ls = json.load(open(lsf))
+        ts = [d["t"] for d in ls["descent"]]
+        A("## Line search at `R = I` — is the ADMM basis a local optimum?")
+        A("")
+        A(f"Functional gradient accumulated over **all {ls['n_grad']}** calibration "
+          f"sequences at `R = I` (so this is not mini-batch noise), "
+          f"`||g||_F = {ls['grad_norm']:.3e}`, normalised to a unit direction. "
+          "`t` is the total Frobenius displacement of the Cayley parameters — on "
+          "the same scale the sweep uses (Adam at lr 1e-5 for 200 steps travels "
+          "about 0.45; at lr 3e-3, about 135). Calibration data only.")
+        A("")
+        A("| t | " + " | ".join(f"{t:g}" for t in ts) + " |")
+        A("|---" * (len(ts) + 1) + "|")
+        A("| **−grad**, post-export | " +
+          " | ".join(f"{d['calib_L_post_export']:.6f}" for d in ls["descent"]) + " |")
+        A("| **−grad**, pre-export | " +
+          " | ".join(f"{d['calib_L_pre_export']:.6f}" for d in ls["descent"]) + " |")
+        for i, row in enumerate(ls["random"]):
+            A(f"| random dir {i}, post-export | " +
+              " | ".join(f"{d['calib_L_post_export']:.6f}" for d in row) + " |")
+        A("")
+        best = min(d["calib_L_post_export"] for d in ls["descent"])
+        ident = ls["descent"][0]["calib_L_post_export"]
+        A(f"Best point anywhere on the steepest-descent ray: **{best:.6f}** against "
+          f"the identity's **{ident:.6f}** — an improvement of "
+          f"**{100*(ident-best)/ident:.3f}%**, twenty times below the 0.19% replay "
+          "floor. Across the whole range where the curve is actually moving "
+          "(t = 0.3 to t = 10) the gradient direction rises **faster than a random "
+          "one** — at t = 1, 0.1313 against 0.1255/0.1256/0.1255; at t = 3, 0.1754 "
+          "against 0.1326/0.1329/0.1326 — so the STE gradient through the hard sign "
+          "is not merely uninformative about the gauge, it is anti-correlated with "
+          "the true objective at any step size large enough to move anything. "
+          "(By t = 30 every direction has saturated near the random-gauge error "
+          "and the ordering stops meaning anything.)")
+        A("")
+
     # per-layer post table
     A("## Per-layer post-Step-3 diagnostic (cumulative curve)")
     A("")

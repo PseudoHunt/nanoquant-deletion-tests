@@ -1,0 +1,246 @@
+{
+ "block_size": 32,
+ "descent": [
+  {
+   "calib_L_post_export": 0.12511273896804007,
+   "calib_L_pre_export": 0.12511273896804007,
+   "orth_err": 0.0,
+   "t": 0.0
+  },
+  {
+   "calib_L_post_export": 0.12511077417611213,
+   "calib_L_pre_export": 0.12511077417611213,
+   "orth_err": 1.192093321833454e-07,
+   "t": 0.001
+  },
+  {
+   "calib_L_post_export": 0.1251112279530526,
+   "calib_L_pre_export": 0.1251112279530526,
+   "orth_err": 2.512603032300831e-06,
+   "t": 0.01
+  },
+  {
+   "calib_L_post_export": 0.1251104374155462,
+   "calib_L_pre_export": 0.1251104374155462,
+   "orth_err": 2.7033206606574822e-06,
+   "t": 0.03
+  },
+  {
+   "calib_L_post_export": 0.1250992929742282,
+   "calib_L_pre_export": 0.12511819085945322,
+   "orth_err": 2.360999587835977e-06,
+   "t": 0.1
+  },
+  {
+   "calib_L_post_export": 0.12533057160385425,
+   "calib_L_pre_export": 0.1251612169334403,
+   "orth_err": 2.1170812942727935e-06,
+   "t": 0.3
+  },
+  {
+   "calib_L_post_export": 0.1312992030636165,
+   "calib_L_pre_export": 0.12610887090287842,
+   "orth_err": 2.052187710432918e-06,
+   "t": 1.0
+  },
+  {
+   "calib_L_post_export": 0.17543023190924822,
+   "calib_L_pre_export": 0.144303731544076,
+   "orth_err": 2.164467559850891e-06,
+   "t": 3.0
+  },
+  {
+   "calib_L_post_export": 0.2943836337815423,
+   "calib_L_pre_export": 0.22686547545824137,
+   "orth_err": 1.8991873957929784e-06,
+   "t": 10.0
+  },
+  {
+   "calib_L_post_export": 0.28730868158077816,
+   "calib_L_pre_export": 0.27691178764701596,
+   "orth_err": 2.327121364942286e-06,
+   "t": 30.0
+  },
+  {
+   "calib_L_post_export": 0.2943737472518471,
+   "calib_L_pre_export": 0.28681245978796527,
+   "orth_err": 4.111683665541932e-06,
+   "t": 100.0
+  }
+ ],
+ "grad_norm": 4.186412115814164e-05,
+ "n_grad": 128,
+ "random": [
+  [
+   {
+    "calib_L_post_export": 0.12511273896804007,
+    "calib_L_pre_export": 0.12511273896804007,
+    "t": 0.0
+   },
+   {
+    "calib_L_post_export": 0.1251095242153803,
+    "calib_L_pre_export": 0.1251095242153803,
+    "t": 0.001
+   },
+   {
+    "calib_L_post_export": 0.1251095242153803,
+    "calib_L_pre_export": 0.1251095242153803,
+    "t": 0.01
+   },
+   {
+    "calib_L_post_export": 0.1251089354461377,
+    "calib_L_pre_export": 0.1251089354461377,
+    "t": 0.03
+   },
+   {
+    "calib_L_post_export": 0.12511087753769556,
+    "calib_L_pre_export": 0.12511087753769556,
+    "t": 0.1
+   },
+   {
+    "calib_L_post_export": 0.12512270650463952,
+    "calib_L_pre_export": 0.12512270650463952,
+    "t": 0.3
+   },
+   {
+    "calib_L_post_export": 0.12550089997034414,
+    "calib_L_pre_export": 0.125280444059025,
+    "t": 1.0
+   },
+   {
+    "calib_L_post_export": 0.13257624285945688,
+    "calib_L_pre_export": 0.12906448011352542,
+    "t": 3.0
+   },
+   {
+    "calib_L_post_export": 0.27127833855891087,
+    "calib_L_pre_export": 0.23173751126903985,
+    "t": 10.0
+   },
+   {
+    "calib_L_post_export": 0.3487625619907006,
+    "calib_L_pre_export": 0.29655162121581213,
+    "t": 30.0
+   },
+   {
+    "calib_L_post_export": 0.3416737763918397,
+    "calib_L_pre_export": 0.28983623550197424,
+    "t": 100.0
+   }
+  ],
+  [
+   {
+    "calib_L_post_export": 0.12511273896804007,
+    "calib_L_pre_export": 0.12511273896804007,
+    "t": 0.0
+   },
+   {
+    "calib_L_post_export": 0.12511196271909145,
+    "calib_L_pre_export": 0.12511196271909145,
+    "t": 0.001
+   },
+   {
+    "calib_L_post_export": 0.1251119562661944,
+    "calib_L_pre_export": 0.1251119562661944,
+    "t": 0.01
+   },
+   {
+    "calib_L_post_export": 0.1251121002464603,
+    "calib_L_pre_export": 0.1251121002464603,
+    "t": 0.03
+   },
+   {
+    "calib_L_post_export": 0.12511627446425333,
+    "calib_L_pre_export": 0.12511627446425333,
+    "t": 0.1
+   },
+   {
+    "calib_L_post_export": 0.12513238636878296,
+    "calib_L_pre_export": 0.12513238636878296,
+    "t": 0.3
+   },
+   {
+    "calib_L_post_export": 0.1256040442870512,
+    "calib_L_pre_export": 0.12530165357939554,
+    "t": 1.0
+   },
+   {
+    "calib_L_post_export": 0.13293483922244662,
+    "calib_L_pre_export": 0.12917686578545082,
+    "t": 3.0
+   },
+   {
+    "calib_L_post_export": 0.2745677879962394,
+    "calib_L_pre_export": 0.23355609230282232,
+    "t": 10.0
+   },
+   {
+    "calib_L_post_export": 0.3480757151655023,
+    "calib_L_pre_export": 0.2935392622899467,
+    "t": 30.0
+   },
+   {
+    "calib_L_post_export": 0.3395728216523473,
+    "calib_L_pre_export": 0.28971497404297264,
+    "t": 100.0
+   }
+  ],
+  [
+   {
+    "calib_L_post_export": 0.12511273896804007,
+    "calib_L_pre_export": 0.12511273896804007,
+    "t": 0.0
+   },
+   {
+    "calib_L_post_export": 0.12511284256008412,
+    "calib_L_pre_export": 0.12511284256008412,
+    "t": 0.001
+   },
+   {
+    "calib_L_post_export": 0.12511284256008412,
+    "calib_L_pre_export": 0.12511284256008412,
+    "t": 0.01
+   },
+   {
+    "calib_L_post_export": 0.12511364911460288,
+    "calib_L_pre_export": 0.12511364911460288,
+    "t": 0.03
+   },
+   {
+    "calib_L_post_export": 0.12511036873828452,
+    "calib_L_pre_export": 0.12511036873828452,
+    "t": 0.1
+   },
+   {
+    "calib_L_post_export": 0.12513003163750344,
+    "calib_L_pre_export": 0.12513003163750344,
+    "t": 0.3
+   },
+   {
+    "calib_L_post_export": 0.12551389604743074,
+    "calib_L_pre_export": 0.12528832241258245,
+    "t": 1.0
+   },
+   {
+    "calib_L_post_export": 0.1325790542484345,
+    "calib_L_pre_export": 0.12901635360055497,
+    "t": 3.0
+   },
+   {
+    "calib_L_post_export": 0.2727826768720328,
+    "calib_L_pre_export": 0.23474515243576427,
+    "t": 10.0
+   },
+   {
+    "calib_L_post_export": 0.35319050838797433,
+    "calib_L_pre_export": 0.29735617441464696,
+    "t": 30.0
+   },
+   {
+    "calib_L_post_export": 0.34162049113335163,
+    "calib_L_pre_export": 0.28811771378156237,
+    "t": 100.0
+   }
+  ]
+ ]
+}

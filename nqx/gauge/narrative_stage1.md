@@ -26,10 +26,14 @@ per output row, broadcast across the rank axis — so the target
 `M ⊙ sign(X0 R)` agrees with `X0 R` in sign *by construction*, and
 `tr(R^T X0^T T)` is already stationary at whatever R built it.
 
-Started from a random rotation instead, the alignment does what ITQ is supposed
-to do — it descends, hard — but it descends *back toward* the identity's
-neighbourhood without reaching it (see the random-init rows). That is the same
-message as Arm 1 from the other side.
+Started from a random rotation instead — which is how ITQ is classically
+initialised — the alignment does exactly what it is supposed to do. It descends
+steadily and monotonically, 0.3614 -> 0.3420 over twenty rounds, and it is still
+**2.4x above the identity** when it gets there, with 50.0% of U signs and 50.0%
+of V signs different from the ADMM ones. `E_final` 0.14159, **+22.7%** against
+Arm 0a. So the geometric criterion works as an algorithm and converges to a basin
+that has nothing to do with the one NanoQuant's ADMM already found. That is Arm 1's
+message from the other side: the ADMM basis is not somewhere ITQ can get to.
 
 The two `R0 = I` ITQ arms land at `E_final` 0.115075 / 0.115109 against Arm 0a's
 0.115388 and the 0a-duplicate's 0.115165. That is not a result — a gauge that
@@ -53,14 +57,27 @@ takes no part in it. The result is unambiguous:
 value from the very first probe**, and smaller learning rates simply move less.
 There is no step size at which the STE gradient buys a better gauge.
 
-The line search settles what that means. Accumulating the functional gradient
-over the whole calibration set at `R = I` and walking the *true* calibration loss
-along the unit steepest-descent ray gives a curve that rises monotonically out of
-`t = 0`; random tangent directions rise the same way. So this is not an
-over-stepping artefact and not a sign error in the STE path (Stage 0 already
-proved the gradient is finite, non-zero, and reaches only the Cayley parameters):
-**`R = I` sits at a local minimum of the binary functional error within the gauge
-class**, and the steepest-STE-descent direction points out of it, not along it.
+The line search settles what that means. The functional gradient was accumulated
+over the **whole** calibration set at `R = I` (so this is not mini-batch noise),
+normalised to a unit direction, and the *true* calibration loss evaluated along
+the ray. `t` is the total Frobenius displacement of the Cayley parameters, on the
+same scale the sweep uses: Adam at lr 1e-5 for 200 steps travels about 0.45, at
+lr 3e-3 about 135.
+
+| t | 0 | 0.001 | 0.01 | 0.03 | 0.1 | 0.3 | 1 | 3 | 10 | 30 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `L_func` post-export | 0.125113 | 0.125111 | 0.125111 | 0.125110 | **0.125099** | 0.125331 | 0.131299 | 0.175430 | 0.294384 | 0.287309 |
+| `L_func` pre-export | 0.125113 | 0.125111 | 0.125111 | 0.125110 | 0.125118 | 0.125161 | 0.126109 | 0.144304 | 0.226865 | 0.276912 |
+
+The curve is **flat to four decimal places out to t = 0.1** and then climbs
+monotonically. The best point anywhere on the full-batch steepest-descent ray is
+0.125099 against the identity's 0.125113 — an improvement of **0.011%**, twenty
+times smaller than the 0.19% replay floor and nearly thirty times smaller than
+the 0.31% gate. So this is not an over-stepping artefact and not a sign error in
+the STE path (Stage 0 already proved the gradient is finite, non-zero, reaches
+only the Cayley parameters, and moves R): **`R = I` sits at the bottom of a flat
+basin of the binary functional error within the gauge class**, and every step
+size large enough to matter walks out of it.
 
 ### 4. The extra-STE control reproduces this repository's central negative result
 
