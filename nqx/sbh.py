@@ -46,7 +46,12 @@ def _qc(seed=0, **kw):
 
 
 # ---------------------------------------------------------------------------
-@torch.no_grad()
+# NOTE (bring-up, Gauge-NQ): the committed version carried `@torch.no_grad()` on
+# the whole of `do_cache`. That is the NOTES.md#1 fix, but it is too wide: the
+# NanoQuant calibration pass collects `o_norm` from *backward* hooks and calls
+# `loss.backward()`, which raises under a global no-grad. The guard is therefore
+# scoped to the activation-capture section, which is the part NOTES.md#1 is
+# about; the calibration pass runs in grad mode exactly as upstream.
 def do_cache(args):
     os.makedirs(CACHE, exist_ok=True)
     qd = _qc(seed=args.calib_seed, model_id=args.model_id)
@@ -76,6 +81,11 @@ def do_cache(args):
     cleanup_memory()
 
     # FP hidden states: block-0 input, then walk the FP stack
+    _capture_fp_states(model, blocks, targets, allseq)
+
+
+@torch.no_grad()
+def _capture_fp_states(model, blocks, targets, allseq):
     model.cpu()
     model.eval()
     model.config.use_cache = False
@@ -95,6 +105,9 @@ def do_cache(args):
             for j in range(x.shape[0]):
                 y[j:j + 1] = blk(x[j:j + 1].to("cuda"), **kwargs)[0].cpu()
         if b in targets:
+            # NOTES.md#1: cached activations must never carry requires_grad.
+            assert x.requires_grad is False, f"in_b{b} requires_grad"
+            assert y.requires_grad is False, f"out_b{b} requires_grad"
             torch.save(x, f"{CACHE}/in_b{b}.pt")
             torch.save(y, f"{CACHE}/out_b{b}.pt")
             print(f"[cache] saved FP in/out for block {b}", flush=True)
