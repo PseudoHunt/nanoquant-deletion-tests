@@ -37,6 +37,24 @@
    "sign_changes_U": 248.0,
    "sign_changes_V": 1213.0,
    "theta": -0.6137543714131933
+  },
+  {
+   "E_after": 0.12503674031847287,
+   "S3": -0.00021843114525138,
+   "cum_gain": -7.599864956719937e-05,
+   "cum_gain_pct": -0.060744133806081214,
+   "gain": -1.3779182238327081e-05,
+   "iter": 11,
+   "k": 3,
+   "n_true_evals": 96,
+   "plane": [
+    194,
+    345
+   ],
+   "seconds": 145.82798504829407,
+   "sign_changes_U": 312.0,
+   "sign_changes_V": 1634.0,
+   "theta": -0.5175211885199371
   }
  ],
  "iters": [
@@ -71,6 +89,46 @@
    "iter": 4,
    "n_cands": 24,
    "n_eval": 40
+  },
+  {
+   "E_cur": 0.1250505195007112,
+   "accepted": false,
+   "best_seen": 0.12509238341945872,
+   "iter": 6,
+   "n_cands": 24,
+   "n_eval": 56
+  },
+  {
+   "E_cur": 0.1250505195007112,
+   "accepted": false,
+   "best_seen": 0.12508715092654596,
+   "iter": 7,
+   "n_cands": 24,
+   "n_eval": 64
+  },
+  {
+   "E_cur": 0.1250505195007112,
+   "accepted": false,
+   "best_seen": 0.12513428167683707,
+   "iter": 8,
+   "n_cands": 24,
+   "n_eval": 72
+  },
+  {
+   "E_cur": 0.1250505195007112,
+   "accepted": false,
+   "best_seen": 0.12510401378697228,
+   "iter": 9,
+   "n_cands": 24,
+   "n_eval": 80
+  },
+  {
+   "E_cur": 0.1250505195007112,
+   "accepted": false,
+   "best_seen": 0.1250792976355798,
+   "iter": 10,
+   "n_cands": 24,
+   "n_eval": 88
   }
  ],
  "layer": "self_attn.v_proj",
