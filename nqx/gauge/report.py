@@ -217,8 +217,12 @@ def main():
       "Mechanism analysis only — the joint Step 3 may redistribute compensation "
       "across layers, so the final gain is not required to stay localised to `down_proj`.")
     A("")
-    have = [k for k in ORDER if k in R and "layer_post_curve" in R[k]]
-    A("| layer | " + " | ".join(LABEL[k].split()[0] for k in have) + " |")
+    WIDE = ["0a", "0a_dup", "0b_100", "0b_200", "2_refreshed", "2_refreshed_rand",
+            "3_100", "3_200", "3lr3e-4_200", "3lr3e-5_200", "3lr1e-5_200"]
+    have = [k for k in WIDE if k in R and "layer_post_curve" in R[k]]
+    A("Columns are a readable subset; every arm is in `runs/*.json`.")
+    A("")
+    A("| layer | " + " | ".join(f"`{k}`" for k in have) + " |")
     A("|---" * (len(have) + 1) + "|")
     for n in NAMES:
         A(f"| `{n}` | " + " | ".join(f"{R[k]['layer_post_curve'][n]:.5f}" for k in have) + " |")
@@ -227,7 +231,7 @@ def main():
     # J table
     A("## J diagnostic (H-weighted layer reconstruction objective), pre / post Step 3")
     A("")
-    A("| layer | " + " | ".join(f"{LABEL[k].split()[0]} pre / post" for k in have) + " |")
+    A("| layer | " + " | ".join(f"`{k}` pre / post" for k in have) + " |")
     A("|---" * (len(have) + 1) + "|")
     for n in NAMES:
         cells = []
@@ -242,9 +246,9 @@ def main():
     A("")
     A("| arm | U flips | V flips | block mean |")
     A("|---|---|---|---|")
-    for k in have:
+    for k in [x for x in ORDER if x in R and "step3_flips" in R[x]]:
         f = R[k]["step3_flips"]
-        A(f"| {LABEL[k].split()[0]} | {f['mlp.down_proj.U_latent']*100:.2f}% | "
+        A(f"| `{k}` | {f['mlp.down_proj.U_latent']*100:.2f}% | "
           f"{f['mlp.down_proj.V_latent']*100:.2f}% | {R[k]['step3']['flip_mean']*100:.2f}% |")
     A("")
     return "\n".join(lines)
