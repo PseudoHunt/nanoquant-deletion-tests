@@ -19,7 +19,8 @@ def main():
     A = lines.append
 
     pilot = json.load(open(f"{GC}/givens_pilot_b0.json"))
-    ver = json.load(open(f"{GC}/quad_verify.json"))
+    vf = f"{GC}/quad_verify.json"
+    ver = json.load(open(vf)) if os.path.exists(vf) else None
     runs = {}
     for f in glob.glob(f"{GC}/givens_descent_*.json"):
         r = json.load(open(f))
@@ -33,11 +34,13 @@ def main():
 
     A("## The oracle")
     A("")
-    A("| case | real bf16 forward | quadratic oracle | relative gap |")
-    A("|---|---|---|---|")
-    for c in ver["cases"]:
-        A(f"| {c['case']} | {c['real_forward']:.8f} | {c['oracle']:.8f} | {c['rel_gap']:.2e} |")
-    A("")
+    if ver:
+        A("| case | real bf16 forward | quadratic oracle | relative gap |")
+        A("|---|---|---|---|")
+        for c in ver["cases"]:
+            A(f"| {c['case']} | {c['real_forward']:.8f} | {c['oracle']:.8f} | "
+              f"{c['rel_gap']:.2e} |")
+        A("")
     A("The absolute gap is largely a common offset and is **not** the quantity that "
       "matters for ranking candidates; what matters is the accuracy of the "
       "*difference* `eps_Delta = |dE_oracle - dE_real|`, which is measured against "
