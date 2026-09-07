@@ -1,0 +1,50 @@
+{
+ "files": {
+  "block0_postadmm.pt": {
+   "bytes": 240422802,
+   "path": "/home/work/exp/artifacts/testD/block0_postadmm.pt",
+   "sha256": "8751d59a38575bbb9bfa7adee996466f526860c0b0fdb2f540afa0d5a0050bc1"
+  },
+  "in_b0.pt": {
+   "bytes": 1342178779,
+   "path": "/home/work/exp/artifacts/sbh/in_b0.pt",
+   "sha256": "907a135d23dd01c34c0dbfb6d04ef2ae57d2cab7e629f7fb5d59ff84efa38bf1"
+  },
+  "kwargs.pt": {
+   "bytes": 4753806,
+   "path": "/home/work/exp/artifacts/sbh/kwargs.pt",
+   "sha256": "99f422b047793ee3d821607caec02b93974dab5ba463afedd57406131ffa1ed7"
+  },
+  "out_b0.pt": {
+   "bytes": 1342178786,
+   "path": "/home/work/exp/artifacts/sbh/out_b0.pt",
+   "sha256": "4530aa4cdc5cfb36b6e3ab742cd2fcd706cb5bf5ab5744871bc6f7cd5c607b0d"
+  },
+  "post_admm_meta.json": {
+   "bytes": 5502,
+   "path": "/home/work/exp/artifacts/gauge/post_admm_meta.json",
+   "sha256": "693208baab90e8bb90f5fda7ad169e186f38f9ae11f2bb3b7ee6337f17561e2f"
+  },
+  "sequences.pt": {
+   "bytes": 2623349,
+   "path": "/home/work/exp/artifacts/sbh/sequences.pt",
+   "sha256": "c02d9793e5d169783a30c10290fc3c0fcf17e48b19e062043ad383c8cc42efd7"
+  },
+  "snapshot_A.pt": {
+   "bytes": 7445,
+   "path": "/home/work/exp/artifacts/gauge/snapshot_A.pt",
+   "sha256": "1d9b69c6e1cc5da8c67ee1aa4d7147f82d3ccd2824b3e3675ef4aef8bcc7028b"
+  },
+  "snapshot_B.pt": {
+   "bytes": 15767,
+   "path": "/home/work/exp/artifacts/gauge/snapshot_B.pt",
+   "sha256": "6ebb1b149a2beb58c21fcd2d2e196ab278629da9dc7574753268adc3794afd3a"
+  },
+  "stats.pt": {
+   "bytes": 2867763,
+   "path": "/home/work/exp/artifacts/sbh/stats.pt",
+   "sha256": "476c018a3eb1942cf9755cae1b8cdf71b3bdbe1d85adc08043bd48ee0ec7f0a2"
+  }
+ },
+ "mirror": "/home/jl_fs/gauge_mirror"
+}
