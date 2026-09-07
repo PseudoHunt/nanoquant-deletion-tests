@@ -130,15 +130,58 @@ accept 5 is the largest of the five.
 Five verified moves beat 378 unverified ones by 3.4×, in the layer where the
 unverified search did its worst damage.
 
-## 6. Status and what is not yet established
+## 6. Step 3 on the five-move checkpoint — and the generalisation gap
+
+The 5-move `v_proj` checkpoint was run through the identical common Step 3, five
+replicates against the 9-run baseline distribution (`runs/arm6_v_rep*.json`).
+
+    calibration block error : 0.12511274 -> 0.12494047   (-0.1377%)
+    HELD-OUT block error    : 0.14376577 -> 0.14375736   (-0.0059%)   <- 24x smaller
+
+| | E_final | |
+|---|---|---|
+| baseline (n = 9) | 0.11523577 +- 8.2e-05 | |
+| gauge (n = 5) | 0.115373 / 0.115193 / 0.115381 / 0.115334 / 0.115334 | mean **0.11532299** |
+| delta | **+0.0757%** | Welch t = +2.00, df = 9, **p = 0.077** |
+
+**No significant change in `E_final`, trending slightly worse.**
+
+**The generalisation gap is the finding that matters, and it undercuts the method
+as built.** The accept rule is "does the true *calibration* block error improve?",
+and the moves available are worth ~3e-05 each -- inside the calibration set's own
+sampling noise as an estimator of the true objective. Taking the best of 8
+candidates by calibration loss therefore reliably improves calibration loss and
+transfers almost nothing: 24x attenuation onto the held-out split.
+
+This retrospectively qualifies section 4 as well. The "22/120 genuinely
+beneficial" single moves were beneficial **on calibration**; held-out was not
+measured for them, and on this evidence most of that is probably selection noise.
+That measurement should have been taken at the time.
+
+Consequences:
+
+* **This is a selection problem, not a surrogate problem.** A better ranker (GN)
+  would make it *worse* -- more efficient selection against a noisy objective
+  overfits harder.
+* The dose curve at 10/20/40 accepts will most likely show calibration improving
+  and held-out flat.
+* The fix to test first is a **validation split inside the accept rule**: accept
+  only moves that improve on a search slice *and* on a slice held out from the
+  search (both drawn from calibration; the 32-sequence held-out set stays
+  untouched for final reporting). That directly measures whether any of this
+  capacity is real, and costs nothing beyond splitting the 128 sequences.
+
+## 7. Status and what is not yet established
 
 * discrete gauge capacity outside `down_proj` — **demonstrated**
 * cheap ranking signal — **demonstrated** (ρ = +0.62)
 * safe acceptance rule — **demonstrated** (true objective is always the judge)
-* composition without interference — **demonstrated** (5 moves, no decay)
-* **post-Step-3 benefit — NOT established.** Every prior arm that improved the
-  pre-Step-3 point failed to convert, and `E_final` has sd 0.075% (NOTES.md#6),
-  so this needs replicates on both sides.
+* composition without interference — **demonstrated on calibration** (5 moves, no decay)
+* **generalisation — FAILS as built.** The calibration gain attenuates 24x onto
+  held-out data; the accept rule selects on an objective whose noise exceeds the
+  effect size.
+* **post-Step-3 benefit — not obtained.** `E_final` +0.076%, p = 0.077 against a
+  9-run baseline: no significant change, trending worse.
 
 Efficiency is the open engineering problem: **480 true evaluations for 5 accepts**,
 and the accept rate falls through the run — ranking by most-negative S3 surfaces
