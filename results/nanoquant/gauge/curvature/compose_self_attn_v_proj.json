@@ -55,6 +55,24 @@
    "sign_changes_U": 312.0,
    "sign_changes_V": 1634.0,
    "theta": -0.5175211885199371
+  },
+  {
+   "E_after": 0.12500329189934883,
+   "S3": -0.00031389574503436234,
+   "cum_gain": -0.00010944706869123189,
+   "cum_gain_pct": -0.08747875683481762,
+   "gain": -3.3448419124032513e-05,
+   "iter": 24,
+   "k": 4,
+   "n_true_evals": 200,
+   "plane": [
+    206,
+    343
+   ],
+   "seconds": 302.85114645957947,
+   "sign_changes_U": 360.0,
+   "sign_changes_V": 1972.0,
+   "theta": 0.45747337759823237
   }
  ],
  "iters": [
@@ -129,6 +147,102 @@
    "iter": 10,
    "n_cands": 24,
    "n_eval": 88
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.1251334762170062,
+   "iter": 12,
+   "n_cands": 24,
+   "n_eval": 104
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12521080946396412,
+   "iter": 13,
+   "n_cands": 24,
+   "n_eval": 112
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12517855892147414,
+   "iter": 14,
+   "n_cands": 24,
+   "n_eval": 120
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.1250697383599504,
+   "iter": 15,
+   "n_cands": 24,
+   "n_eval": 128
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12515129767833852,
+   "iter": 16,
+   "n_cands": 24,
+   "n_eval": 136
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12522781221398052,
+   "iter": 17,
+   "n_cands": 24,
+   "n_eval": 144
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12504094633983004,
+   "iter": 18,
+   "n_cands": 24,
+   "n_eval": 152
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.1252035319212161,
+   "iter": 19,
+   "n_cands": 24,
+   "n_eval": 160
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.1251274797471723,
+   "iter": 20,
+   "n_cands": 24,
+   "n_eval": 168
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.1250963586345153,
+   "iter": 21,
+   "n_cands": 24,
+   "n_eval": 176
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12515607351355318,
+   "iter": 22,
+   "n_cands": 24,
+   "n_eval": 184
+  },
+  {
+   "E_cur": 0.12503674031847287,
+   "accepted": false,
+   "best_seen": 0.12508558390963034,
+   "iter": 23,
+   "n_cands": 24,
+   "n_eval": 192
   }
  ],
  "layer": "self_attn.v_proj",
