@@ -434,12 +434,22 @@ def descent(args):
     makes best-improvement affordable at all.
     """
     import heapq
-    o = Q.Oracle(torch.load(f"{H.GCACHE}/quad_oracle.pt", weights_only=False))
+    o = Q.Oracle(torch.load(f"{H.GCACHE}/{args.oracle}", weights_only=False))
     st = H.load_post_admm(seed=args.seed)
     sub = H.nq_sub(st["blk"])
     m = sub[LAYER]
     base = C.LayerBase(LAYER, m).to("cuda")
     ps = PlaneSearcher(o, base)
+    if args.init_R:
+        blob = torch.load(args.init_R, weights_only=False)
+        R0 = blob["R"].to("cuda").to(ps.dtype)
+        with torch.no_grad(), C.no_tf32():
+            ps.R = R0.clone()
+            ps.U = base.U0.to(ps.dtype) @ R0
+            ps.Vm = base.V0.transpose(0, 1).contiguous().to(ps.dtype) @ R0
+        ps.refresh()
+        print(f"[descent] warm start from {args.init_R} "
+              f"(orth {ps.orthogonality_error():.1e})", flush=True)
     book = SignBook(ps)
     cal_in, cal_out = st["cal_in"].to("cuda"), st["cal_out"].to("cuda")
     C.GUARD.assert_not_heldout(cal_in, cal_out, where="givens.descent")
@@ -450,14 +460,32 @@ def descent(args):
 
     E0 = o.error(ps.deployed_W())
     real0 = real_calib()
-    blocks = [int(b) for b in args.blocks.split(",")]
-    planes = [(i, j) for b in blocks
-              for i in range(b * 32, b * 32 + 32) for j in range(i + 1, b * 32 + 32)]
+    # Coordinate groups.  The block-diagonal restriction is computational, not
+    # mathematical: a simultaneous latent permutation U -> UP, V -> VP changes
+    # neither the continuous product nor the deployed binary model, it only
+    # relabels rank coordinates.  So a *random* partition of the 1600 coordinates
+    # into groups of 32 reaches pairs that the consecutive partition calls
+    # "cross-block", without enumerating all 1.28M planes.
+    rank = base.rank
+    if args.partition == "random":
+        g = torch.Generator(device="cpu"); g.manual_seed(args.partition_seed)
+        perm = torch.randperm(rank, generator=g).tolist()
+        nb = len(args.blocks.split(","))
+        groups = [perm[k * 32:(k + 1) * 32] for k in range(rank // 32)][:nb]
+    else:
+        groups = [list(range(int(b) * 32, int(b) * 32 + 32))
+                  for b in args.blocks.split(",")]
+    blocks = args.blocks
+    planes = [(gp[a], gp[b_]) for gp in groups
+              for a in range(len(gp)) for b_ in range(a + 1, len(gp))]
     rec = {"mode": "descent", "strategy": args.mode, "layer": LAYER,
-           "rank_blocks": blocks, "max_passes": args.passes, "tol_rel": args.tol,
+           "rank_blocks": blocks, "partition": args.partition,
+           "partition_seed": args.partition_seed, "n_groups": len(groups),
+           "groups": groups if args.partition == "random" else None,
+           "max_passes": args.passes, "tol_rel": args.tol,
            "n_planes": len(planes), "E0_oracle": E0, "E0_real_calib": real0,
            "oracle_offset_at_E0": E0 - real0,
-           "accepts": [], "sweeps": [], "real_checks": []}
+           "accepts": [], "sweeps": [], "real_checks": [], "group_checks": []}
     print(f"[descent/{args.mode}] {len(planes)} planes, blocks {blocks}; "
           f"E0 oracle {E0:.8f}  real {real0:.8f}", flush=True)
 
@@ -495,10 +523,29 @@ def descent(args):
     if args.mode == "cyclic":
         for p in range(args.passes):
             acc, E_before = 0, o.error(ps.deployed_W())
-            for (i, j) in planes:
-                r = ps.sweep(i, j); state["visited"] += 1
-                if _accept_ok(r, o, E0, args):
-                    do_accept(r); acc += 1
+            for gi, gp in enumerate(groups):
+                gacc = 0
+                for a in range(len(gp)):
+                    for b_ in range(a + 1, len(gp)):
+                        i, j = gp[a], gp[b_]
+                        r = ps.sweep(i, j); state["visited"] += 1
+                        if _accept_ok(r, o, E0, args):
+                            do_accept(r); acc += 1; gacc += 1
+                # checkpoint the real bf16 objective after each completed group,
+                # so cross-group accumulation is measured rather than inferred
+                Eg = o.error(ps.deployed_W()); rg = real_calib()
+                rec["group_checks"].append(
+                    {"pass": p + 1, "group": gi, "coords": [gp[0], gp[-1]],
+                     "accepted_in_group": gacc, "accepted_total": state["accepted"],
+                     "E_oracle": Eg, "E_real": rg,
+                     "cum_gain_oracle_pct": 100 * (Eg - E0) / E0,
+                     "cum_gain_real_pct": 100 * (rg - real0) / real0,
+                     "seconds": time.time() - t0[0]})
+                print(f"[descent] group {gi+1}/{len(groups)} (pass {p+1}): "
+                      f"+{gacc} accepts  oracle {Eg:.8f} ({100*(Eg-E0)/E0:+.4f}%)  "
+                      f"real {rg:.8f} ({100*(rg-real0)/real0:+.4f}%)  "
+                      f"({time.time()-t0[0]:.0f}s)", flush=True)
+                S.atomic_json(rec, f"{H.GCACHE}/givens_descent_{args.mode}{args.tag}.json")
             E_after = o.error(ps.deployed_W())
             rl = real_calib()
             rec["sweeps"].append({"sweep": p + 1, "accepted": acc,
@@ -578,6 +625,10 @@ if __name__ == "__main__":
     ap.add_argument("--max_moves", type=int, default=100000)
     ap.add_argument("--noise_k", type=float, default=10.0)
     ap.add_argument("--tag", default="")
+    ap.add_argument("--partition", default="blocks", choices=["blocks", "random"])
+    ap.add_argument("--partition_seed", type=int, default=0)
+    ap.add_argument("--init_R", default="", help="start from a saved rotation")
+    ap.add_argument("--oracle", default="quad_oracle.pt")
     ap.add_argument("--block", type=int, default=0)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max_planes", type=int, default=0)

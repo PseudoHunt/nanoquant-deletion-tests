@@ -1,4 +1,21 @@
-# Stage 1D — exact discrete gauge search on `mlp.down_proj`, block 0
+# Stage 1D — discrete gauge search on `mlp.down_proj`, **rank block 0 only**
+
+> **Scope, stated up front.** `down_proj` has rank 1600. At b = 32 that is 50 rank
+> blocks x C(32,2) = 496 planes = **24,800** within-block Givens planes, and
+> C(1600,2) = **1,279,200** planes without the block restriction. This experiment
+> searched **496** of them — rank block 0. That is **2% of the block-diagonal
+> gauge** and **0.04% of all pairwise planes**. Latent coordinates are
+> permutation-symmetric, so there is no reason coordinates 0-31 are special or
+> representative. Every conclusion below is therefore about **rank block 0**, and
+> the whole-layer question is open and being run separately.
+>
+> **What this is, precisely:** exact discrete enumeration of every sign pattern a
+> plane can reach, + *approximate* quadratic ranking of those patterns, + exact
+> bf16 validation of the accumulated result. It is not "exact optimisation of the
+> true binary objective": the oracle scores a dense equivalent weight `W` in fp64
+> while deployment computes `((x s_pre) B_V^T) B_U^T s_post` in bf16, and the
+> per-move disagreement is 38% (see `eps_Delta`). Aggregate conclusions rest on
+> the repeated bf16 evaluations, not on the oracle.
 
 Stage 1 searched the latent gauge with a straight-through gradient and concluded
 that `R = I` was a local optimum. **That conclusion was too strong**, and this
@@ -34,8 +51,9 @@ so the model is bit-identical — verified to the last bit:
 
 Two consequences. The two crossings of a coordinate are exactly pi/2 apart, so
 mod pi/2 each coordinate contributes **one** breakpoint and `[0, pi/2)` is
-exhaustive — 10240 breakpoints, 9489 distinct binary models per plane, half the
-naive search. And a naive column-wise flip count reports ~10240 "flips" for a
+exhaustive — 10240 raw breakpoints per plane, which after de-duplication leave
+**median 9136 (min 9051, max 9237)** distinct binary models, half the naive
+search. And a naive column-wise flip count reports ~10240 "flips" for a
 model that has not changed at all, so flip counts must be measured modulo the
 relabelling and accepted angles canonicalised to `[-pi/4, pi/4)`.
 
@@ -67,7 +85,7 @@ additionally requires a move to clear 10x its own plane's measured residual.
 | | |
 |---|---|
 | planes in rank block 0 | 496 |
-| distinct binary models per plane | 9489 |
+| distinct binary models per plane | min 9051, median 9136, max 9237 |
 | **planes containing a strictly better binary model** | **482 (97.2%)** |
 | sign flips at the best angle (relabel-aware) | median **44** of 20480 touched (0.21%) |
 | gain per plane | median −0.00035%, best −0.0055% |
@@ -110,9 +128,24 @@ badly ordered descent.
 | cyclic | 378 | 1984 | −0.0407% | 0.143728 | 61 | 2947 | 8642 | 2817 |
 | greedy | **85** | 1418 | −0.0418% | 0.143730 | 57 | 2927 | 4774 | 895 |
 
-Two strategies 4.4x apart in move count converge to the same binary solution to
-five decimals *and to nearly the same sign pattern* (61 vs 57 net U flips, 2947 vs
-2927 net V flips). After 378 accumulated rotations the tracked `R` has
+Two strategies 4.4x apart in move count converge to the same *error* to five
+decimals. They do **not** converge to the same *solution*. Similar counts of
+changed signs do not mean the same signs changed, and they do not:
+
+| | cyclic | greedy | Hamming(cyc, greedy) | shared | union | Jaccard |
+|---|---|---|---|---|---|---|
+| U signs changed vs ADMM | 61 | 57 | **90** | 14 | 104 | **0.13** |
+| V signs changed vs ADMM | 2947 | 2927 | **4290** | 792 | 5082 | **0.16** |
+
+The two searches agree on only ~14% of the sign changes they make, and the
+Hamming distance between their solutions (90 / 4290) is *larger* than either
+one's distance from the ADMM point (61 / 2947). So they reach nearly identical
+error through **largely disjoint** sets of sign flips.
+
+That is a sharper statement of the redundancy than the sweep counts give. The
+landscape is not one improving basin found by two routes; it is massively
+degenerate -- many different small sign-change sets buy the same ~0.04%, and none
+of them buys more. After 378 accumulated rotations the tracked `R` has
 orthogonality error **3e-15** and reproduces the scored factors to **6e-17**, so
 the exact-equivalence premise held throughout.
 
@@ -135,14 +168,22 @@ The gauge's improvement is **0.15x** the difference between running the identica
 baseline twice. Re-running 0a moves `E_final` 6.5x further than exhaustively
 searching every reachable one-plane binary model does.
 
-## What kind of failure this is
+## What kind of failure this is — and what it is not
 
 This is **not** the interesting failure. A "large pre-Step-3 gain destroyed by
 Step 3" result would have implicated Step 3's path dependence and pointed
 straight at compensation-aware rounding. That is not what happened: the
 pre-Step-3 gain was itself microscopic (−0.026% held-out) and Step 3 neither
-destroyed nor amplified it. The gauge does not contain the capacity in the first
-place.
+destroyed nor amplified it.
+
+**The supported claim is narrow:** *rank block 0 contains dense but almost
+entirely redundant discrete gauge capacity, saturating near −0.04%.* The
+tempting generalisation — "the latent gauge does not contain the capacity" — is
+**not supported by this experiment** and should not be made. 496 of 24,800
+within-block planes were searched. One block yielding −0.042% would be −2.09% if
+the 50 blocks were additive and −0.30% under sqrt composition, which straddles
+the 0.31% gate; the observed magnitude is precisely in the range where a
+single-block result cannot decide the layer.
 
 That distinguishes it sharply from the extra-STE control, where a **real** 7.9%
 pre-Step-3 gain was converted into a 2.5% final regression. Those are different

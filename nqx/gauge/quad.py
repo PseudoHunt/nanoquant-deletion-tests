@@ -60,10 +60,13 @@ class Oracle:
         return self
 
     def error(self, W):
-        """E(W) for a deployed weight W [out, in], fp32."""
+        """E(W) for a deployed weight W [out, in].  fp64: E is a ~6x cancellation
+        of terms of order ||T||^2, so fp32 here would put ~1e-5 of noise on a
+        curve whose whole signal is ~5e-5."""
+        Wd = W.double()
         with C.no_tf32():
-            quad = (W * (W @ self.H)).sum()
-            lin = (self.G * W).sum()
+            quad = (Wd * (Wd @ self.H)).sum()
+            lin = (self.G * Wd).sum()
         return float((self.T_sq - 2 * lin + quad) / self.Y_sq)
 
 
@@ -81,8 +84,14 @@ def build(seed=0, device="cuda"):
     h2 = m.register_forward_hook(lambda mod, i, o: cap.__setitem__("d", o.detach()))
 
     in_f, out_f = m.in_features, m.out_features
-    Hm = torch.zeros(in_f, in_f, device=device, dtype=torch.float32)
-    Gm = torch.zeros(out_f, in_f, device=device, dtype=torch.float32)
+    # fp64 accumulation.  H and G are the objective itself, not just intermediate
+    # algebra: an fp32 H carries ~1e-6 relative error, and since the quadratic
+    # term is O(1e4) that is ~1e-2 absolute -- larger than a median improving
+    # move (delta_f ~ 0.3).  It would not show up in any self-consistency check,
+    # because the same wrong H is used on both sides; it would simply mean the
+    # search is optimising a slightly wrong objective.
+    Hm = torch.zeros(in_f, in_f, device=device, dtype=torch.float64)
+    Gm = torch.zeros(out_f, in_f, device=device, dtype=torch.float64)
     T_sq = torch.zeros((), device=device, dtype=torch.float64)
     Y_sq = torch.zeros((), device=device, dtype=torch.float64)
 
@@ -91,13 +100,13 @@ def build(seed=0, device="cuda"):
         x = cal_in[j:j + 1].to(device)
         yfp = cal_out[j:j + 1].to(device).float()
         y = blk(x, **kwargs)[0].float()
-        z = cap["z"].float().flatten(0, -2)          # [T, in]
-        d = cap["d"].float().flatten(0, -2)          # [T, out]
-        t = (yfp.flatten(0, -2) - y.flatten(0, -2)) + d      # target for down_proj
+        z = cap["z"].double().flatten(0, -2)         # [T, in]
+        d = cap["d"].double().flatten(0, -2)         # [T, out]
+        t = (yfp.double().flatten(0, -2) - y.double().flatten(0, -2)) + d
         with C.no_tf32():
             Hm.add_(z.T @ z)
             Gm.add_(t.T @ z)
-        T_sq += t.double().square().sum()
+        T_sq += t.square().sum()
         Y_sq += yfp.double().square().sum()
         del x, yfp, y, z, d, t
     h1.remove(); h2.remove()
@@ -109,7 +118,7 @@ def build(seed=0, device="cuda"):
     blob = {"H": Hm.cpu(), "G": Gm.cpu(), "T_sq": float(T_sq), "Y_sq": float(Y_sq),
             "so0": base.so0.cpu(), "sp0": base.sp0.cpu(),
             "in_features": in_f, "out_features": out_f, "layer": LAYER, "seed": seed}
-    S.atomic_save(blob, f"{H.GCACHE}/quad_oracle.pt")
+    S.atomic_save(blob, f"{H.GCACHE}/quad_oracle_fp64.pt")
     return Oracle(blob), st, base
 
 

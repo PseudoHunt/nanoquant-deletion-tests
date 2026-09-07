@@ -404,7 +404,10 @@ def main():
         elif arm.startswith("4"):
             st_ = "greedy" if "greedy" in arm else "cyclic"
             fs_ = arm.endswith("fs")
-            sx_ = "_b0123" if "b0123" in arm else ""
+            sx_ = ""
+            for k in ["b0123", "all50", "rand1", "fp64"]:
+                if k in arm:
+                    sx_ = "_" + k
             out = r.arm4(tag=f"4_{st_}{sx_}" + ("_fixedscale" if fs_ else ""),
                          fixed_scales=fs_, strategy=st_, suffix=sx_)
         elif arm.startswith("3lr"):
