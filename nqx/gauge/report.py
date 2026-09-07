@@ -9,18 +9,19 @@ DELTA = 0.0031
 NAMES = ['self_attn.q_proj', 'self_attn.v_proj', 'self_attn.o_proj', 'self_attn.k_proj',
          'mlp.gate_proj', 'mlp.up_proj', 'mlp.down_proj']
 
-MATCH = {"3_100": "0b_100", "3_200": "0b_200",
-         "2_refreshed": "0b_200", "2_frozen": "0b_200"}
-ORDER = ["0a", "0a_dup", "0b_100", "0b_200", "2_refreshed", "2_frozen", "3_100", "3_200"]
-LABEL = {
+BASE_ORDER = ["0a", "0a_dup", "0b_100", "0b_200", "2_refreshed", "2_frozen",
+              "2_refreshed_rand", "2_frozen_rand", "3_100", "3_200"]
+BASE_LABEL = {
     "0a": "0a  baseline (R = I)",
     "0a_dup": "0a-dup  determinism replay",
     "0b_100": "0b_100  extra STE x100",
     "0b_200": "0b_200  extra STE x200",
-    "2_refreshed": "2  ITQ, refreshed magnitudes",
-    "2_frozen": "2  ITQ, frozen magnitudes",
-    "3_100": "3  functional gauge @100",
-    "3_200": "3  functional gauge @200",
+    "2_refreshed": "2  ITQ, refreshed magnitudes, R0 = I",
+    "2_frozen": "2  ITQ, frozen magnitudes, R0 = I",
+    "2_refreshed_rand": "2  ITQ, refreshed magnitudes, R0 random",
+    "2_frozen_rand": "2  ITQ, frozen magnitudes, R0 random",
+    "3_100": "3  functional gauge lr=3e-3 @100",
+    "3_200": "3  functional gauge lr=3e-3 @200",
 }
 
 
@@ -30,6 +31,22 @@ def load():
         r = json.load(open(f))
         recs[r["arm"]] = r
     return recs
+
+
+def build_index(R):
+    """ORDER / LABEL / MATCH, extended with whatever gauge-lr cells exist."""
+    order = [k for k in BASE_ORDER if k in R]
+    label = dict(BASE_LABEL)
+    match = {"3_100": "0b_100", "3_200": "0b_200",
+             "2_refreshed": "0b_200", "2_frozen": "0b_200",
+             "2_refreshed_rand": "0b_200", "2_frozen_rand": "0b_200"}
+    extra = sorted([k for k in R if k.startswith("3lr") and k.endswith(("_100", "_200"))],
+                   key=lambda k: (-float(k[3:].rsplit("_", 1)[0]), k))
+    for k in extra:
+        lr, ck = k[3:].rsplit("_", 1)
+        label[k] = f"3  functional gauge lr={lr} @{ck}"
+        match[k] = f"0b_{ck}"
+    return order + extra, label, match
 
 
 def fmt(x, n=6):
@@ -44,6 +61,7 @@ def pct(a, b):
 
 def main():
     R = load()
+    ORDER, LABEL, MATCH = build_index(R)
     base = R.get("0a")
     lines = []
     A = lines.append
@@ -72,7 +90,7 @@ def main():
     A("")
     A("| checkpoint | E_final | 0a threshold | matched 0b | 0b threshold | verdict |")
     A("|---|---|---|---|---|---|")
-    for k in ["2_refreshed", "2_frozen", "3_100", "3_200"]:
+    for k in [x for x in ORDER if x.startswith(("2_", "3_", "3lr"))]:
         if k not in R:
             continue
         e = R[k]["E_final"]
@@ -110,7 +128,7 @@ def main():
         A("")
 
     # Arm 2 traces
-    for k in ["2_refreshed", "2_frozen"]:
+    for k in [x for x in ORDER if x.startswith("2_")]:
         if k not in R:
             continue
         r = R[k]
@@ -122,27 +140,35 @@ def main():
         A("")
 
     # Arm 3
-    if "3" in R or os.path.exists(f"{GC}/arm3_search.json"):
-        sr = json.load(open(f"{GC}/arm3_search.json"))
-        A("## Arm 3 — functional latent gauge, 200-step trace")
+    searches = sorted(glob.glob(f"{GC}/arm3*_search.json"),
+                      key=lambda f: -json.load(open(f))["lr"])
+    if searches:
+        ident = R["0a"]["calib_func_loss_at_gauge"] if "0a" in R else None
+        A("## Arm 3 — functional latent gauge: calibration objective vs gauge step size")
         A("")
-        A(f"Adam, lr {sr['lr']}, block size {sr['block_size']}, calibration split only, "
-          f"{sr['steps']} steps.")
+        A("Adam on the block-Cayley parameters, 200 steps, calibration split only. "
+          "`L_func` here is the **full-calibration** functional loss (all 128 sequences), "
+          "probed every 25 steps. The identity gauge sits at "
+          f"**{ident:.6f}**; a cell that never goes below that never descended.")
         A("")
-        tr = sr["trace"]
-        idx = [0] + list(range(9, len(tr), 10))
-        A("| step | " + " | ".join(str(tr[i]["step"]) for i in idx) + " |")
-        A("|---" * (len(idx) + 1) + "|")
-        A("| L_func | " + " | ".join(f"{tr[i]['loss']:.5f}" for i in idx) + " |")
+        probes = [25, 50, 75, 100, 125, 150, 175, 200]
+        A("| gauge lr | " + " | ".join(f"step {p}" for p in probes) + " |")
+        A("|---" * (len(probes) + 1) + "|")
+        for f in searches:
+            sr = json.load(open(f))
+            d = {p["step"]: p["calib_L_func"] for p in sr.get("calib_probe", [])}
+            A(f"| {sr['lr']:g} | " + " | ".join(f"{d[p]:.5f}" if p in d else "—" for p in probes) + " |")
         A("")
         A("Section 4.2 logging — calibration functional loss at each checkpoint, "
           "before and after the export statistics are re-extracted:")
         A("")
-        A("| checkpoint | L_func pre-export stats | L_func post-export stats |")
-        A("|---|---|---|")
-        for k, v in sorted(sr["checkpoints"].items(), key=lambda kv: int(kv[0])):
-            A(f"| {k} | {v['calib_func_loss_pre_export_stats']:.6f} | "
-              f"{v['calib_func_loss_post_export_stats']:.6f} |")
+        A("| gauge lr | checkpoint | L_func pre-export stats | L_func post-export stats |")
+        A("|---|---|---|---|")
+        for f in searches:
+            sr = json.load(open(f))
+            for k, v in sorted(sr["checkpoints"].items(), key=lambda kv: int(kv[0])):
+                A(f"| {sr['lr']:g} | {k} | {v['calib_func_loss_pre_export_stats']:.6f} | "
+                  f"{v['calib_func_loss_post_export_stats']:.6f} |")
         A("")
 
     # per-layer post table

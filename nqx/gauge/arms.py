@@ -31,6 +31,7 @@ ARM3_LR = 3e-3
 ITQ_ROUNDS = 20
 ARM1_SAMPLES = 16
 ARM1_SEED = 777
+ITQ_INIT_SEED = 4242
 DELTA = 0.0031          # determinism floor, block 0
 
 
@@ -206,13 +207,23 @@ class Runner:
         rec = {"arm": f"2_{variant}", "layer": LAYER, "variant": variant, "rounds": rounds,
                "block_size": self.b, "E_ADMM": self.block_err(blk), "trace": []}
         sizes = C.block_sizes(base.rank, self.b)
-        Rs = C.identity_Rs(base.rank, self.b, "cuda")
+        if variant.endswith("_rand"):
+            # Classic ITQ starts from a *random* rotation.  Starting at R = I is a
+            # trivial fixed point of the Procrustes step (the sign-magnitude target
+            # is built from X0 in its own basis), so this cell asks whether the
+            # alignment finds anything when it is not started at the answer.
+            gi = torch.Generator(device="cuda"); gi.manual_seed(ITQ_INIT_SEED)
+            Rs = [C.haar_so(sz, gi) for sz in sizes]
+            rec["init"] = f"haar_so seed {ITQ_INIT_SEED}"
+        else:
+            Rs = C.identity_Rs(base.rank, self.b, "cuda")
+            rec["init"] = "identity"
         V0m = base.V0.transpose(0, 1).contiguous()          # math V0 : [in, rank]
         with torch.no_grad():
             for t in range(rounds):
                 U_R, V_R = C.gauge(base, Rs)
                 B_U, B_V, sp, so = C.q_nq(U_R, V_R, base)
-                if variant == "frozen":
+                if variant.startswith("frozen"):
                     M_U, M_V = base.so0, base.sp0           # ADMM magnitude targets, fixed
                 else:
                     M_U, M_V = so, sp                       # refreshed through Q_NQ
